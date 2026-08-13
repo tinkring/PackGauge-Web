@@ -201,15 +201,20 @@ svg { display: block; }
 .release-status small { margin-top: .2rem; color: rgba(255,255,255,.88); font-size: .62rem; }
 .download-panel .status-dot { background: white; box-shadow: 0 0 12px rgba(255,255,255,.7); }
 .download-panel .button-primary { background: white; color: #151516; }
+.download-panel .button-disabled { cursor: not-allowed; opacity: .72; }
+.download-panel .button-disabled:hover { transform: none; }
 .download-action p { max-width: 260px; color: rgba(255,255,255,.9); font-size: .72rem; line-height: 1.5; }
 .download-panel :focus-visible { outline-color: white; outline-offset: 5px; }
 .resource-list { border-top: 1px solid var(--line); }
 .resource-row { display: grid; grid-template-columns: 3rem 1fr auto; gap: 2rem; align-items: center; padding: 2rem 0; border-bottom: 1px solid var(--line); transition: padding .2s, background .2s; }
 .resource-row:hover { padding-inline: 1rem; background: #0e0e10; }
+.resource-row-disabled { cursor: default; }
+.resource-row-disabled:hover { padding-inline: 0; background: transparent; }
 .resource-row > span { color: var(--red); font: .62rem var(--mono); }
 .resource-row h3 { margin: 0; font-size: 1.15rem; }
 .resource-row p { margin: .45rem 0 0; color: var(--muted); font-size: .8rem; }
 .resource-row > b { color: #85858c; font: 500 .62rem var(--mono); }
+.resource-availability { margin: 1.25rem 0 0; color: var(--muted); font: .7rem/1.6 var(--mono); }
 .releases { border-top: 1px solid var(--line-soft); }
 .release-architecture { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 2rem; align-items: center; }
 .release-architecture > div { min-height: 180px; padding: 1.5rem; border: 1px solid var(--line); }
@@ -218,6 +223,7 @@ svg { display: block; }
 .release-architecture p { margin: 0; color: var(--muted); font-size: .75rem; }
 .release-architecture > i { color: #606067; font-style: normal; }
 .text-link { display: inline-flex; gap: 1rem; margin-top: 2rem; padding-bottom: .5rem; border-bottom: 1px solid #555; font-size: .8rem; }
+.text-link-disabled { border-color: var(--line); color: var(--muted); cursor: default; }
 .about { display: grid; grid-template-columns: .7fr 1fr; gap: clamp(3rem,9vw,9rem); align-items: center; border-top: 1px solid var(--line-soft); }
 .about-mark { display: grid; place-items: center; min-height: 430px; border: 1px solid var(--line); background: radial-gradient(circle,rgba(227,38,54,.12),transparent 60%); }
 .about-mark svg { width: min(240px,50%); fill: #343439; }

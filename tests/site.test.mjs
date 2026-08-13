@@ -16,14 +16,16 @@ test('homepage contains required product sections and grounded claims', async ()
   assert.match(html, /Milwaukee M18/i);
   assert.match(html, /184[\s\S]{0,40}registers/i);
   assert.match(html, /five[\s\S]{0,40}cell banks/i);
-  assert.doesNotMatch(html, /lorem ipsum|coming soon|placeholder|industry[- ]leading|revolutionary/i);
+  assert.doesNotMatch(html, /lorem ipsum|placeholder|industry[- ]leading|revolutionary/i);
 });
 
-test('download and documentation links use canonical GitHub sources', async () => {
+test('public links never target the private application repository', async () => {
   const html = await read('index.html');
-  assert.match(html, /https:\/\/github\.com\/tinkring\/PackGauge\/releases\/latest/);
-  assert.match(html, /https:\/\/github\.com\/tinkring\/PackGauge\/blob\/main\/README\.md/);
-  assert.match(html, /https:\/\/github\.com\/tinkring\/PackGauge/);
+  assert.doesNotMatch(html, /https:\/\/github\.com\/tinkring\/PackGauge(?:[\/#"'])/);
+  assert.match(html, /https:\/\/github\.com\/tinkring\/PackGauge-Web/);
+  assert.doesNotMatch(html, /PackGauge-Web\/releases/);
+  assert.match(html, /Downloads not yet available/i);
+  assert.match(html, /Documentation coming soon/i);
   assert.doesNotMatch(html, /href=["']#["']/);
 });
 

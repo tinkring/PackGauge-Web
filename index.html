@@ -40,7 +40,7 @@
           <p class="hero-lede">PackGauge talks directly to Milwaukee M18 battery packs and turns their onboard data into a clear, field-ready health report—no laptop required.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#interface">Explore the diagnostics <span>↓</span></a>
-            <a class="button button-text" href="https://github.com/tinkring/PackGauge" target="_blank" rel="noreferrer">View on GitHub <span>↗</span></a>
+            <a class="button button-text" href="https://github.com/tinkring/PackGauge-Web" target="_blank" rel="noreferrer">View website on GitHub <span>↗</span></a>
           </div>
           <dl class="hero-facts" aria-label="Product facts">
             <div><dt>184</dt><dd>registers scanned</dd></div>
@@ -135,33 +135,34 @@
 
       <section id="download" class="section download-section">
         <div class="download-panel reveal">
-          <div class="download-copy"><p class="eyebrow">05 / Download</p><h2>Builds live where the code does.</h2><p>PackGauge release files will be distributed through GitHub Releases, keeping firmware, release notes, and source history together. No large binaries are stored in this website.</p><div class="release-status"><span class="status-dot"></span><div><strong>Release availability is shown on GitHub</strong><small>Firmware, notes, and source history together</small></div></div></div>
-          <div class="download-action"><a class="button button-primary button-large" href="https://github.com/tinkring/PackGauge/releases/latest" target="_blank" rel="noreferrer">Open latest release <span>↗</span></a><p>Release availability and installation instructions are maintained on GitHub.</p></div>
+          <div class="download-copy"><p class="eyebrow">05 / Download</p><h2>Builds will live where the code does.</h2><p>PackGauge release files will be distributed through a public release destination with firmware, release notes, and installation guidance together. No large binaries are stored in this website.</p><div class="release-status release-status-pending"><span class="status-dot"></span><div><strong>Downloads not yet available</strong><small>The first public release is coming soon</small></div></div></div>
+          <div class="download-action"><span class="button button-primary button-large button-disabled" aria-disabled="true">Release coming soon <span>—</span></span><p>There is not yet a public downloadable release. This area will be updated when one is available.</p></div>
         </div>
       </section>
 
       <section id="help" class="section resources">
         <div class="section-heading reveal"><p class="eyebrow">06 / Documentation</p><h2>From first flash to protocol detail.</h2></div>
         <div class="resource-list">
-          <a class="resource-row reveal" href="https://github.com/tinkring/PackGauge/blob/main/README.md" target="_blank" rel="noreferrer"><span>01</span><div><h3>Build & setup guide</h3><p>Hardware list, wiring, first-run calibration, WiFi, email, and day-to-day operation.</p></div><b>README ↗</b></a>
-          <a class="resource-row reveal" href="https://github.com/tinkring/PackGauge/blob/main/docs/FINDINGS.md" target="_blank" rel="noreferrer"><span>02</span><div><h3>Measured findings</h3><p>Hardware-observed protocol behavior, Forge differences, electrical notes, and known limitations.</p></div><b>FINDINGS ↗</b></a>
-          <a class="resource-row reveal" href="https://github.com/tinkring/PackGauge/issues" target="_blank" rel="noreferrer"><span>03</span><div><h3>Questions & issues</h3><p>Report a reproducible problem or search the project’s existing technical discussions.</p></div><b>GITHUB ↗</b></a>
+          <div class="resource-row resource-row-disabled reveal"><span>01</span><div><h3>Build & setup guide</h3><p>Hardware list, wiring, first-run calibration, WiFi, email, and day-to-day operation.</p></div><b>COMING SOON</b></div>
+          <div class="resource-row resource-row-disabled reveal"><span>02</span><div><h3>Measured findings</h3><p>Hardware-observed protocol behavior, Forge differences, electrical notes, and known limitations.</p></div><b>COMING SOON</b></div>
+          <div class="resource-row resource-row-disabled reveal"><span>03</span><div><h3>Questions & issues</h3><p>Public support and issue reporting are not yet available.</p></div><b>NOT YET AVAILABLE</b></div>
         </div>
+        <p class="resource-availability reveal">Documentation coming soon. These resources will be linked when public versions are available.</p>
       </section>
 
       <section id="releases" class="section releases">
         <div class="section-heading reveal"><p class="eyebrow">07 / Releases</p><h2>Every change, traceable.</h2><p>The on-device About screen includes the Git revision and build date. Published release notes and downloadable artifacts belong in GitHub Releases.</p></div>
         <div class="release-architecture reveal"><div><span>01</span><h3>Source</h3><p>Versioned in Git</p></div><i>→</i><div><span>02</span><h3>CI</h3><p>Host tests + firmware build</p></div><i>→</i><div><span>03</span><h3>Release</h3><p>Notes + downloadable artifacts</p></div></div>
-        <a class="text-link reveal" href="https://github.com/tinkring/PackGauge/releases" target="_blank" rel="noreferrer">Browse all releases <span>↗</span></a>
+        <span class="text-link text-link-disabled reveal" aria-disabled="true">Public releases coming soon <span>—</span></span>
       </section>
 
       <section id="about" class="section about">
         <div class="about-mark reveal" aria-hidden="true"><svg viewBox="0 0 160 160"><path d="M15 15h130v30H45v70h70V85H73V57h72v88H15z"/><path class="brand-cell" d="M60 120h42v11H60z"/></svg></div>
-        <div class="about-copy reveal"><p class="eyebrow">08 / About PackGauge</p><h2>A diagnostic instrument built from measured behavior.</h2><p>PackGauge began as a standalone C++ port of the community M18 protocol work, then grew through direct testing against real packs. The project documents where pack generations differ, validates its decoder against generated reference output, and treats missing data as a fact—not a number to fill in.</p><p>It is an independent project and is not affiliated with or endorsed by Milwaukee Tool.</p><a class="button button-text" href="https://github.com/tinkring/PackGauge" target="_blank" rel="noreferrer">Explore the source <span>↗</span></a></div>
+        <div class="about-copy reveal"><p class="eyebrow">08 / About PackGauge</p><h2>A diagnostic instrument built from measured behavior.</h2><p>PackGauge began as a standalone C++ port of the community M18 protocol work, then grew through direct testing against real packs. The project documents where pack generations differ, validates its decoder against generated reference output, and treats missing data as a fact—not a number to fill in.</p><p>It is an independent project and is not affiliated with or endorsed by Milwaukee Tool.</p><a class="button button-text" href="https://github.com/tinkring/PackGauge-Web" target="_blank" rel="noreferrer">Explore the website source <span>↗</span></a></div>
       </section>
     </main>
 
-    <footer class="site-footer"><a class="brand" href="#overview"><svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M4 4h34v8H12v18h18v-8H19v-7h19v23H4z"/><path class="brand-cell" d="M16 32h11v3H16z"/></svg><span>PACK<span>GAUGE</span></span></a><p>Standalone diagnostics for Milwaukee M18 battery packs.</p><nav aria-label="Footer"><a href="#diagnostics">Features</a><a href="#compatibility">Compatibility</a><a href="#help">Documentation</a><a href="https://github.com/tinkring/PackGauge" target="_blank" rel="noreferrer">GitHub ↗</a></nav><small>Independent project. Not affiliated with Milwaukee Tool.</small></footer>
+    <footer class="site-footer"><a class="brand" href="#overview"><svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M4 4h34v8H12v18h18v-8H19v-7h19v23H4z"/><path class="brand-cell" d="M16 32h11v3H16z"/></svg><span>PACK<span>GAUGE</span></span></a><p>Standalone diagnostics for Milwaukee M18 battery packs.</p><nav aria-label="Footer"><a href="#diagnostics">Features</a><a href="#compatibility">Compatibility</a><a href="#help">Documentation</a><a href="https://github.com/tinkring/PackGauge-Web" target="_blank" rel="noreferrer">Website GitHub ↗</a></nav><small>Independent project. Not affiliated with Milwaukee Tool.</small></footer>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
