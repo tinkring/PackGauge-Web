@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="PackGauge reads Milwaukee M18 battery pack data directly, revealing individual cell-bank voltage, imbalance, charging history, tool use, and the diagnostics each pack makes available." />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta property="og:title" content="PackGauge — See inside your M18 battery" />
+    <meta property="og:description" content="A standalone diagnostic reader for Milwaukee M18 battery packs." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://packgauge.com/" />
+    <link rel="canonical" href="https://packgauge.com/" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <title>PackGauge — Milwaukee M18 battery diagnostics</title>
+    <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" data-header>
+      <a class="brand" href="#overview" aria-label="PackGauge home">
+        <svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M4 4h34v8H12v18h18v-8H19v-7h19v23H4z"/><path class="brand-cell" d="M16 32h11v3H16z"/></svg>
+        <span>PACK<span>GAUGE</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary">
+        <a href="#diagnostics">Diagnostics</a>
+        <a href="#workflow">How it works</a>
+        <a href="#compatibility">Compatibility</a>
+        <a href="#help">Help</a>
+        <a class="nav-download" href="#download">Download</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section id="overview" class="hero">
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span class="status-dot"></span> Standalone M18 diagnostics</p>
+          <h1>See what’s really happening <em>inside your battery.</em></h1>
+          <p class="hero-lede">PackGauge talks directly to Milwaukee M18 battery packs and turns their onboard data into a clear, field-ready health report—no laptop required.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#interface">Explore the diagnostics <span>↓</span></a>
+            <a class="button button-text" href="https://github.com/tinkring/PackGauge" target="_blank" rel="noreferrer">View on GitHub <span>↗</span></a>
+          </div>
+          <dl class="hero-facts" aria-label="Product facts">
+            <div><dt>184</dt><dd>registers scanned</dd></div>
+            <div><dt>5</dt><dd>cell banks visible</dd></div>
+            <div><dt>5–10s</dt><dd>typical scan</dd></div>
+          </dl>
+        </div>
+
+        <div class="instrument-wrap reveal" data-delay="1">
+          <div class="instrument-aura"></div>
+          <div class="instrument" aria-label="Recreation of the PackGauge Pack screen using bundled firmware self-test data">
+            <div class="instrument-top"><span>Type 424 — 59 mV imbalance</span><span><i>WiFi</i> SD</span></div>
+            <div class="instrument-tabs" role="tablist" aria-label="Diagnostic screen preview">
+              <button id="tab-pack" class="is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-pack" tabindex="0" data-screen="pack">Pack</button>
+              <button id="tab-charge" type="button" role="tab" aria-selected="false" aria-controls="panel-charge" tabindex="-1" data-screen="charge">Chg</button>
+              <button id="tab-tool" type="button" role="tab" aria-selected="false" aria-controls="panel-tool" tabindex="-1" data-screen="tool">Tool</button>
+              <button id="tab-amps" type="button" role="tab" aria-selected="false" aria-controls="panel-amps" tabindex="-1" data-screen="amps">Amps</button>
+              <button id="tab-conditions" type="button" role="tab" aria-selected="false" aria-controls="panel-conditions" tabindex="-1" data-screen="conditions">Cond</button>
+            </div>
+            <div class="instrument-screen">
+              <div id="panel-pack" class="screen-panel is-active" role="tabpanel" aria-labelledby="tab-pack" data-panel="pack">
+                <h2>5Ah XC <small>5s2p 18650</small></h2>
+                <div class="telemetry-list"><p><span>E-serial</span><b>1234567</b></p><p><span>Manufactured</span><b>2017-07-14</b></p><p><span>Pack voltage</span><b>17.84 V</b></p><p><span>Cell imbalance</span><b class="reading-warn">59 mV · Minor</b></p></div>
+                <div class="cells"><div class="cells-title"><span>Cells (mV)</span><span>3540–3599</span></div><div class="cell-bars"><i style="--v:63%"></i><i style="--v:63%"></i><i style="--v:63%"></i><i class="lo" style="--v:61%"></i><i class="hi" style="--v:65%"></i></div><div class="cell-values"><span>3568</span><span>3567</span><span>3570</span><span>3540 <small>lo</small></span><span>3599 <small>hi</small></span></div></div>
+              </div>
+              <div id="panel-charge" class="screen-panel" role="tabpanel" aria-labelledby="tab-charge" data-panel="charge"><h2>Charging</h2><div class="telemetry-list"><p><span>Total charges</span><b>437194016</b></p><p><span>Redlink charges</span><b>2830</b></p><p><span>Dumb charges</span><b>9986</b></p><p><span>Total charge time</span><b>34h 17m</b></p><p><span>Idle on charger</span><b>2h 11m</b></p><p><span>Charges below 2.5V</span><b class="reading-warn">36</b></p></div></div>
+              <div id="panel-tool" class="screen-panel" role="tabpanel" aria-labelledby="tab-tool" data-panel="tool"><h2>Tool use</h2><div class="telemetry-list"><p><span>Total discharge</span><b>60.00 Ah</b></p><p><span>Discharge cycles</span><b>12.0</b></p><p><span>Time above 10A</span><b>1d 3h 20m</b></p><p><span>Discharged to empty</span><b class="reading-warn">529</b></p><p><span>Overheat events</span><b class="reading-good">0</b></p></div></div>
+              <div id="panel-amps" class="screen-panel" role="tabpanel" aria-labelledby="tab-amps" data-panel="amps"><div class="chart-head"><span>10A bins</span><span>Log</span><b>1d 3h 20m</b></div><div class="histogram" aria-hidden="true"><i style="--h:58%"></i><i style="--h:71%"></i><i style="--h:85%"></i><i style="--h:42%"></i><i style="--h:64%"></i><i style="--h:49%"></i><i style="--h:76%"></i><i style="--h:36%"></i><i style="--h:54%"></i><i style="--h:29%"></i><i style="--h:62%"></i><i style="--h:45%"></i><i style="--h:23%"></i><i style="--h:39%"></i><i style="--h:17%"></i><i style="--h:33%"></i><i style="--h:13%"></i><i style="--h:25%"></i><i style="--h:9%"></i><i style="--h:19%"></i></div><div class="chart-axis"><span>10</span><span>50</span><span>100</span><span>150</span><span>200+ A</span></div><p class="chart-note">Discharge-current history</p></div>
+              <div id="panel-conditions" class="screen-panel" role="tabpanel" aria-labelledby="tab-conditions" data-panel="conditions"><h2>Charge conditions</h2><div class="condition-summary"><p><span>Below freezing</span><b class="reading-warn">Visible when recorded</b></p><p><span>Started under 17V</span><b>Visible when recorded</b></p></div><div class="mini-histogram"><i style="--h:10%"></i><i style="--h:15%"></i><i style="--h:8%"></i><i style="--h:25%"></i><i style="--h:44%"></i><i style="--h:68%"></i><i style="--h:88%"></i><i style="--h:72%"></i><i style="--h:48%"></i><i style="--h:31%"></i><i style="--h:19%"></i><i style="--h:12%"></i></div><p class="chart-note">Start/end voltage, temperature, and charge-duration histories where the pack exposes them</p></div>
+            </div>
+            <div class="instrument-footer"><span>Home</span><span>Note</span><span>Email</span><strong>Rescan</strong></div>
+          </div>
+          <p class="data-note"><span></span> Interface recreated from the firmware · values from its bundled self-test dataset</p>
+        </div>
+      </section>
+
+      <section class="signal-strip" aria-label="Product capabilities"><div>Direct pack communication</div><div>Read-only by design</div><div>On-device reporting</div><div>SD scan archive</div></section>
+
+      <section id="diagnostics" class="section diagnostics">
+        <div class="section-heading reveal"><p class="eyebrow">01 / Diagnostics</p><h2>One scan. The pack’s own story.</h2><p>PackGauge reads what the battery management system records and keeps unknown or unavailable data honest—never turning an empty register into a reassuring zero.</p></div>
+        <div class="diagnostic-layout">
+          <article class="feature-primary reveal"><div class="feature-index">01</div><div><p class="feature-kicker">Cell-bank visibility</p><h3>Find the spread a pack-voltage reading hides.</h3><p>See all five series cell banks individually, identify the high and low bank, and read the total spread in millivolts. PackGauge labels imbalance as Normal, Minor, Significant, or Severe without pretending voltage alone is a capacity test.</p></div><div class="cell-detail" aria-label="Five example cell banks"><div><span>01</span><b>3.568</b><i style="--v:68%"></i></div><div><span>02</span><b>3.567</b><i style="--v:67%"></i></div><div><span>03</span><b>3.570</b><i style="--v:70%"></i></div><div class="is-low"><span>04 · LOW</span><b>3.540</b><i style="--v:40%"></i></div><div class="is-high"><span>05 · HIGH</span><b>3.599</b><i style="--v:99%"></i></div></div></article>
+          <div class="feature-list">
+            <article class="feature-row reveal"><span>02</span><div><h3>Charging history</h3><p>Review total, Redlink, and dumb charge counts; charge and idle time; low-voltage charge starts; and charge-condition distributions when recorded by the pack.</p></div></article>
+            <article class="feature-row reveal"><span>03</span><div><h3>Tool-use history</h3><p>Inspect total discharged amp-hours, estimated equivalent cycles for known pack types, time under load, and 5A or 10A discharge-current histograms.</p></div></article>
+            <article class="feature-row reveal"><span>04</span><div><h3>Fault evidence</h3><p>Surface recorded discharged-to-empty, overheat, overcurrent, low-voltage, and low-voltage bounce counters where that firmware provides them.</p></div></article>
+            <article class="feature-row reveal"><span>05</span><div><h3>Evidence you can keep</h3><p>Write every scan to micro-SD as a full CSV and spreadsheet-ready column, add a note, browse saved scans, compare readings, or email the files.</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow" class="section workflow">
+        <div class="section-heading reveal"><p class="eyebrow">02 / How it works</p><h2>Connect. Scan. Understand.</h2></div>
+        <ol class="steps">
+          <li class="reveal"><span>01</span><div class="step-line"></div><h3>Connect the pack</h3><p>Power PackGauge over USB-C, then connect a supported M18 pack through the purpose-built signal interface. The battery remains a data source, not a power supply.</p></li>
+          <li class="reveal"><span>02</span><div class="step-line"></div><h3>Read the registers</h3><p>Tap <strong>Scan Pack</strong>. PackGauge wakes the battery, refreshes its statistics, and walks the complete 184-register map in roughly 5–10 seconds.</p></li>
+          <li class="reveal"><span>03</span><div class="step-line"></div><h3>Inspect and archive</h3><p>Move through Pack, Chg, Tool, Amps, and Cond views. The scan is stored on micro-SD for later review and comparison.</p></li>
+        </ol>
+        <aside class="read-only-note reveal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14v11H5z"/></svg><div><strong>Read-only by design.</strong><p>The protocol can write to a pack. PackGauge deliberately does not expose that ability.</p></div></aside>
+      </section>
+
+      <section id="compatibility" class="section compatibility">
+        <div class="section-heading reveal"><p class="eyebrow">03 / Compatibility</p><h2>Built specifically for Milwaukee M18.</h2><p>PackGauge is not a universal battery tester. Its protocol, electrical interface, and model knowledge are purpose-built for the M18 platform.</p></div>
+        <div class="compat-grid">
+          <div class="family-rail reveal" role="group" aria-label="Filter battery families">
+            <button class="is-active" type="button" data-family="all"><span>All known type codes</span><b>17</b></button>
+            <button type="button" data-family="cp"><span>Compact · CP</span><b>2</b></button>
+            <button type="button" data-family="xc"><span>XC / HD</span><b>8</b></button>
+            <button type="button" data-family="ho"><span>High Output · HO</span><b>5</b></button>
+            <button type="button" data-family="forge"><span>Forge</span><b>2</b></button>
+          </div>
+          <div class="pack-table-wrap reveal" tabindex="0" role="region" aria-label="Supported M18 battery type codes; scroll horizontally on small screens">
+            <table class="pack-table"><thead><tr><th>Family</th><th>Capacity</th><th>Cell layout</th><th>Type codes</th></tr></thead><tbody>
+              <tr data-family="cp"><td>CP</td><td>1.5Ah</td><td>5s1p · 18650</td><td>036</td></tr><tr data-family="cp"><td>CP</td><td>2.0Ah</td><td>5s1p · 18650</td><td>037</td></tr>
+              <tr data-family="xc"><td>XC</td><td>3.0Ah</td><td>5s2p · 18650</td><td>038</td></tr><tr data-family="xc"><td>XC</td><td>4.0Ah</td><td>5s2p · 18650</td><td>039</td></tr><tr data-family="xc"><td>XC</td><td>5.0Ah</td><td>5s2p · 18650</td><td>040 / 165 / 306 / 424</td></tr><tr data-family="xc"><td>XC</td><td>6.0Ah</td><td>5s2p · 18650</td><td>046</td></tr><tr data-family="xc"><td>HD</td><td>9.0Ah</td><td>5s3p · 18650</td><td>047</td></tr>
+              <tr data-family="ho"><td>HO</td><td>3.0Ah</td><td>5s1p · 21700</td><td>104</td></tr><tr data-family="ho"><td>HO</td><td>5.5Ah EU</td><td>5s2p · 21700</td><td>150</td></tr><tr data-family="ho"><td>HO</td><td>6.0Ah / 8.0Ah / 12.0Ah</td><td>5s2p / 5s3p · 21700</td><td>106 / 107 / 108</td></tr>
+              <tr data-family="forge"><td>Forge</td><td>8.0Ah / 12.0Ah</td><td>5s2p / 5s3p · 21700 tabless</td><td>383 / 384</td></tr>
+            </tbody></table>
+            <div class="compat-note"><strong>Unknown type does not mean unreadable.</strong><p>PackGauge can still show core identity and cell data from an unlisted type code when the pack exposes those registers. Capacity-based cycle estimates require a known type.</p></div>
+          </div>
+        </div>
+        <p class="forge-note reveal"><span>Forge note</span> Forge firmware tested by the project exposes identity, cells, dates, and core charge/discharge totals—but not the fault, load-histogram, or charge-condition blocks found on many earlier packs. PackGauge reports those blocks as unavailable instead of zero.</p>
+      </section>
+
+      <section id="interface" class="section interface-section">
+        <div class="interface-copy reveal"><p class="eyebrow">04 / Product interface</p><h2>Real pack data.<br />No translation layer.</h2><p>The screen is designed around the questions you ask at the bench: Which bank is low? Has the spread changed? How has this pack been charged and loaded? What did the BMS actually record?</p><ul><li>Five direct-access result tabs</li><li>Green, amber, and red condition bands</li><li>Chart and exact table views for histories</li><li>Saved-scan search, notes, email, and comparison</li></ul></div>
+        <div class="screen-sequence reveal">
+          <div class="screen-card screen-card-main"><div class="mini-top">PACK <span>WiFi&nbsp;&nbsp;SD</span></div><h3>5Ah XC</h3><dl><div><dt>Pack voltage</dt><dd>17.84 V</dd></div><div><dt>Cell imbalance</dt><dd class="reading-warn">59 mV</dd></div><div><dt>Temperature</dt><dd>102.1 °F</dd></div></dl><div class="mini-cells"><i style="--h:78%"></i><i style="--h:77%"></i><i style="--h:79%"></i><i class="warn" style="--h:63%"></i><i class="warn" style="--h:92%"></i></div></div>
+          <div class="screen-card screen-card-compare"><div class="mini-top">COMPARE <span>#1234567</span></div><small>ACCUMULATED</small><dl><div><dt>Charges</dt><dd>+17</dd></div><div><dt>Dumb charges</dt><dd class="reading-warn">+1</dd></div><div><dt>Discharged</dt><dd>+4.8 Ah</dd></div><div><dt>Faults</dt><dd class="reading-good">none new</dd></div></dl><small>CONDITION</small><dl><div><dt>Imbalance</dt><dd class="reading-warn">+24 mV</dd></div></dl></div>
+        </div>
+      </section>
+
+      <section id="download" class="section download-section">
+        <div class="download-panel reveal">
+          <div class="download-copy"><p class="eyebrow">05 / Download</p><h2>Builds live where the code does.</h2><p>PackGauge release files will be distributed through GitHub Releases, keeping firmware, release notes, and source history together. No large binaries are stored in this website.</p><div class="release-status"><span class="status-dot"></span><div><strong>Release availability is shown on GitHub</strong><small>Firmware, notes, and source history together</small></div></div></div>
+          <div class="download-action"><a class="button button-primary button-large" href="https://github.com/tinkring/PackGauge/releases/latest" target="_blank" rel="noreferrer">Open latest release <span>↗</span></a><p>Release availability and installation instructions are maintained on GitHub.</p></div>
+        </div>
+      </section>
+
+      <section id="help" class="section resources">
+        <div class="section-heading reveal"><p class="eyebrow">06 / Documentation</p><h2>From first flash to protocol detail.</h2></div>
+        <div class="resource-list">
+          <a class="resource-row reveal" href="https://github.com/tinkring/PackGauge/blob/main/README.md" target="_blank" rel="noreferrer"><span>01</span><div><h3>Build & setup guide</h3><p>Hardware list, wiring, first-run calibration, WiFi, email, and day-to-day operation.</p></div><b>README ↗</b></a>
+          <a class="resource-row reveal" href="https://github.com/tinkring/PackGauge/blob/main/docs/FINDINGS.md" target="_blank" rel="noreferrer"><span>02</span><div><h3>Measured findings</h3><p>Hardware-observed protocol behavior, Forge differences, electrical notes, and known limitations.</p></div><b>FINDINGS ↗</b></a>
+          <a class="resource-row reveal" href="https://github.com/tinkring/PackGauge/issues" target="_blank" rel="noreferrer"><span>03</span><div><h3>Questions & issues</h3><p>Report a reproducible problem or search the project’s existing technical discussions.</p></div><b>GITHUB ↗</b></a>
+        </div>
+      </section>
+
+      <section id="releases" class="section releases">
+        <div class="section-heading reveal"><p class="eyebrow">07 / Releases</p><h2>Every change, traceable.</h2><p>The on-device About screen includes the Git revision and build date. Published release notes and downloadable artifacts belong in GitHub Releases.</p></div>
+        <div class="release-architecture reveal"><div><span>01</span><h3>Source</h3><p>Versioned in Git</p></div><i>→</i><div><span>02</span><h3>CI</h3><p>Host tests + firmware build</p></div><i>→</i><div><span>03</span><h3>Release</h3><p>Notes + downloadable artifacts</p></div></div>
+        <a class="text-link reveal" href="https://github.com/tinkring/PackGauge/releases" target="_blank" rel="noreferrer">Browse all releases <span>↗</span></a>
+      </section>
+
+      <section id="about" class="section about">
+        <div class="about-mark reveal" aria-hidden="true"><svg viewBox="0 0 160 160"><path d="M15 15h130v30H45v70h70V85H73V57h72v88H15z"/><path class="brand-cell" d="M60 120h42v11H60z"/></svg></div>
+        <div class="about-copy reveal"><p class="eyebrow">08 / About PackGauge</p><h2>A diagnostic instrument built from measured behavior.</h2><p>PackGauge began as a standalone C++ port of the community M18 protocol work, then grew through direct testing against real packs. The project documents where pack generations differ, validates its decoder against generated reference output, and treats missing data as a fact—not a number to fill in.</p><p>It is an independent project and is not affiliated with or endorsed by Milwaukee Tool.</p><a class="button button-text" href="https://github.com/tinkring/PackGauge" target="_blank" rel="noreferrer">Explore the source <span>↗</span></a></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a class="brand" href="#overview"><svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M4 4h34v8H12v18h18v-8H19v-7h19v23H4z"/><path class="brand-cell" d="M16 32h11v3H16z"/></svg><span>PACK<span>GAUGE</span></span></a><p>Standalone diagnostics for Milwaukee M18 battery packs.</p><nav aria-label="Footer"><a href="#diagnostics">Features</a><a href="#compatibility">Compatibility</a><a href="#help">Documentation</a><a href="https://github.com/tinkring/PackGauge" target="_blank" rel="noreferrer">GitHub ↗</a></nav><small>Independent project. Not affiliated with Milwaukee Tool.</small></footer>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
