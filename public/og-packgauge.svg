@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111212"/>
+      <stop offset="0.66" stop-color="#090a0a"/>
+      <stop offset="1" stop-color="#150d0c"/>
+    </linearGradient>
+    <radialGradient id="screen" cx="50%" cy="38%" r="78%">
+      <stop offset="0" stop-color="#17211e"/>
+      <stop offset="1" stop-color="#090e0c"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <path d="M0 0H1200V630H0Z" fill="none" stroke="#222423"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="72" y="88" fill="#f1efe9" font-size="21" font-weight="700" letter-spacing="5">PACK</text>
+    <text x="260" y="88" fill="#ed4b32" font-size="21" font-weight="700" letter-spacing="5">GAUGE</text>
+    <rect x="72" y="135" width="34" height="2" fill="#ed4b32"/>
+    <text x="122" y="142" fill="#ff6247" font-size="11" font-weight="700" letter-spacing="4">INDEPENDENT BATTERY DIAGNOSTICS</text>
+    <text x="72" y="250" fill="#f1efe9" font-size="64" font-weight="300">See what your</text>
+    <text x="72" y="323" fill="#f1efe9" font-size="64" font-weight="300">battery has recorded.</text>
+    <text x="75" y="382" fill="#9a9993" font-size="20">Five cell banks. Pack-recorded history.</text>
+    <text x="75" y="414" fill="#9a9993" font-size="20">One dedicated instrument.</text>
+  </g>
+  <g transform="translate(700 115)">
+    <rect width="420" height="360" fill="#171818" stroke="#484a49"/>
+    <rect x="18" y="18" width="384" height="324" fill="url(#screen)" stroke="#44514b"/>
+    <g font-family="monospace">
+      <text x="44" y="57" fill="#85b99a" font-size="11" letter-spacing="2">PACK</text>
+      <text x="342" y="57" fill="#85b99a" font-size="11" text-anchor="end" letter-spacing="2">SELF-TEST</text>
+      <line x1="44" y1="74" x2="376" y2="74" stroke="#557064" stroke-opacity=".45"/>
+      <text x="44" y="130" fill="#789082" font-size="11" letter-spacing="1">PACK VOLTAGE</text>
+      <text x="346" y="155" fill="#dcebe4" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="300" text-anchor="end">17.84</text>
+      <text x="354" y="155" fill="#85a193" font-family="Arial, Helvetica, sans-serif" font-size="18">V</text>
+      <g font-size="13" text-anchor="middle">
+        <text x="78" y="218" fill="#b5c8be">3568</text>
+        <text x="148" y="218" fill="#b5c8be">3567</text>
+        <text x="218" y="218" fill="#b5c8be">3570</text>
+        <text x="288" y="218" fill="#e6a85d">3540</text>
+        <text x="358" y="218" fill="#ff7862">3599</text>
+      </g>
+      <line x1="44" y1="248" x2="376" y2="248" stroke="#557064" stroke-opacity=".45"/>
+      <text x="44" y="282" fill="#789082" font-size="11">CELL SPREAD</text>
+      <text x="376" y="282" fill="#ff7862" font-size="12" text-anchor="end">59 mV</text>
+    </g>
+    <rect x="140" y="360" width="140" height="7" fill="#8f2d21"/>
+  </g>
+  <text x="75" y="568" fill="#74756f" font-family="monospace" font-size="12">Screen study · bundled firmware self-test data</text>
+</svg>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Compatibility scope and data availability for the independent PackGauge battery diagnostic reader." />
+    <meta name="theme-color" content="#090909" />
+    <meta property="og:title" content="Compatibility — PackGauge" />
+    <meta property="og:description" content="Compatibility scope and data availability for the independent PackGauge battery diagnostic reader." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://packgauge.com/compatibility.html" />
+    <meta property="og:image" content="https://packgauge.com/og-packgauge.png" />
+    <meta property="og:image:alt" content="PackGauge screen study showing five cell-bank readings and calculated spread" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://packgauge.com/compatibility.html" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="./fonts/dm-sans-300.woff2" as="font" type="font/woff2" crossorigin />
+    <title>Compatibility — PackGauge</title>
+  </head>
+  <body class="detail-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header is-scrolled" data-header>
+      <a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="./index.html#product">Product</a><a href="./index.html#workflow">How it works</a><a aria-current="page" href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav>
+    </header>
+    <main id="main">
+      <header class="detail-hero"><p class="kicker">Compatibility</p><h1>Designed for compatible Milwaukee M18 battery packs.</h1><p>PackGauge is not a universal battery tester. Pack hardware and firmware vary, so a family name or tested type code cannot guarantee that every data block will be available.</p></header>
+      <section class="detail-section" aria-labelledby="scope-title"><p class="section-number">01</p><div><h2 id="scope-title">What the scanner asks for.</h2><p>The scanner iterates 184 register definitions. Core identity and five series cell-bank readings are broadly useful, while charge counts and times, discharge totals, fault counters, current/load histograms, and charge conditions appear only where the connected pack exposes them. Availability differs by pack firmware.</p><p>Capacity-based estimated equivalent cycles require a recognized capacity and remain calculations—not direct pack measurements.</p></div></section>
+      <section class="detail-section" aria-labelledby="families-title"><p class="section-number">02</p><div><h2 id="families-title">Tested type-code reference.</h2><p>This is a project test reference, not a compatibility guarantee. Revisions can differ within a nominal family.</p><div class="table-region" tabindex="0" role="region" aria-label="Tested battery type-code reference; scroll horizontally on small screens"><table><thead><tr><th>Family</th><th>Nominal capacity</th><th>Cell layout</th><th>Tested type codes</th></tr></thead><tbody><tr><td>CP</td><td>1.5 / 2.0 Ah</td><td>5s1p · 18650</td><td>036 / 037</td></tr><tr><td>XC</td><td>3.0 / 4.0 / 5.0 / 6.0 Ah</td><td>5s2p · 18650</td><td>038 / 039 / 040 / 046 / 165 / 306 / 424</td></tr><tr><td>HD</td><td>9.0 Ah</td><td>5s3p · 18650</td><td>047</td></tr><tr><td>High Output</td><td>3.0 / 5.5 / 6.0 / 8.0 / 12.0 Ah</td><td>5s1p–5s3p · 21700</td><td>104 / 106 / 107 / 108 / 150</td></tr><tr><td>Forge</td><td>8.0 / 12.0 Ah</td><td>5s2p / 5s3p · 21700 tabless</td><td>383 / 384</td></tr></tbody></table></div></div></section>
+      <section class="detail-section feature-note" aria-labelledby="forge-title"><p class="section-number">03</p><div><h2 id="forge-title">Forge reports less history.</h2><p>Forge firmware tested by the project exposes identity, cells, dates, and core charge/discharge totals, but lacks many fault, load-histogram, and charge-condition blocks at the known addresses. PackGauge reports those fields as unavailable instead of zero.</p><p>An unavailable field is not evidence that an event did not occur.</p></div></section>
+      <section class="detail-section" aria-labelledby="language-title"><p class="section-number">04</p><div><h2 id="language-title">How to read compatibility language.</h2><dl class="definition-list"><div><dt>Observed</dt><dd>Returned by the connected pack during this scan.</dd></div><div><dt>Calculated</dt><dd>Derived from observed values, such as five-bank voltage spread or estimated equivalent cycles.</dd></div><div><dt>Unavailable</dt><dd>The expected data block was not exposed; it is not converted to a reassuring zero.</dd></div></dl><p>Compatibility does not imply safety, authentication, capacity, health, warranty status, or fitness for use. Review the <a class="text-link" href="./safety.html">safety and diagnostic limits</a> before scanning.</p></div></section>
+      <aside class="detail-legal"><strong>Independent product notice</strong><p>PackGauge is an independent third-party product and is not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool. MILWAUKEE and M18 are trademarks of Milwaukee Electric Tool Corporation and are used only to identify compatible products.</p></aside>
+    </main>
+    <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="./index.html">Home</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Safety guidance and diagnostic limits for the PackGauge battery diagnostic reader." />
+    <meta name="theme-color" content="#090909" />
+    <meta property="og:title" content="Safety & diagnostic limits — PackGauge" />
+    <meta property="og:description" content="Safety guidance and diagnostic limits for the PackGauge battery diagnostic reader." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://packgauge.com/safety.html" />
+    <meta property="og:image" content="https://packgauge.com/og-packgauge.png" />
+    <meta property="og:image:alt" content="PackGauge screen study showing five cell-bank readings and calculated spread" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://packgauge.com/safety.html" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="./fonts/dm-sans-300.woff2" as="font" type="font/woff2" crossorigin />
+    <title>Safety & diagnostic limits — PackGauge</title>
+  </head>
+  <body class="detail-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header is-scrolled" data-header>
+      <a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="./index.html#product">Product</a><a href="./index.html#workflow">How it works</a><a href="./compatibility.html">Compatibility</a><a aria-current="page" href="./safety.html">Safety</a></nav>
+    </header>
+    <main id="main">
+      <header class="detail-hero safety-hero"><p class="kicker">Safety & diagnostic limits</p><h1>A scan is evidence.<br />Not a safety certificate.</h1><p>PackGauge displays available pack-reported readings and history. A scan does not establish battery safety, authentication, capacity, or health.</p></header>
+      <aside class="stop-warning"><span>Stop before scanning</span><p>Do not connect or rely on PackGauge for a pack that is damaged, swollen, leaking, unusually hot, wet, modified, recalled, or otherwise suspect. Stop using the pack and follow the battery manufacturer’s safety and service guidance.</p></aside>
+      <section class="detail-section" aria-labelledby="evidence-title"><p class="section-number">01</p><div><h2 id="evidence-title">Separate observation from interpretation.</h2><dl class="definition-list"><div><dt>Observed data</dt><dd>Cell-bank voltage, temperature, identity fields, counters, and history records made available by the pack at the time of scanning.</dd></div><div><dt>Calculations</dt><dd>Values derived by PackGauge, including voltage spread and estimated equivalent cycles where capacity is known.</dd></div><div><dt>Conclusions not established</dt><dd>Safety, authenticity, capacity, internal condition, electrical integrity, future performance, warranty status, and fitness for use.</dd></div></dl><p>Balanced voltage, a small spread, or no recorded faults cannot establish any of those conclusions. Voltage spread is evidence, not a capacity or health test.</p></div></section>
+      <section class="detail-section" aria-labelledby="workflow-title"><p class="section-number">02</p><div><h2 id="workflow-title">A read-oriented current user workflow.</h2><p>The current user workflow requests diagnostic data. It does not present controls to repair, reset, rebalance, rejuvenate, unlock, reprogram, erase history, change configuration, or set stored pack values. PackGauge does not charge or authenticate a battery.</p><p>The scan sequence can cause the pack to wake, respond, and update its own counters. The pack may refresh its own recorded statistics during scanning; that pack behavior is distinct from a user command to rewrite stored values.</p></div></section>
+      <section class="detail-section feature-note" aria-labelledby="unknown-title"><p class="section-number">03</p><div><h2 id="unknown-title">Unknown must stay unknown.</h2><p>Data availability varies by firmware. Missing or unavailable data is not converted to a reassuring zero. An absent fault counter does not mean there were no faults, and a pack-reported value is not independently verified by PackGauge.</p><p>Green, amber, or red interface bands are diagnostic cues only. They are not safety ratings, pass/fail certifications, or authorization to continue using a pack.</p></div></section>
+      <section class="detail-section" aria-labelledby="practice-title"><p class="section-number">04</p><div><h2 id="practice-title">Use ordinary lithium-ion precautions.</h2><ul class="plain-list"><li>Inspect the pack physically before connecting it.</li><li>Use PackGauge only as documented and keep the work area dry.</li><li>Do not open, modify, bypass, or probe a battery pack based on a scan result.</li><li>Follow the battery manufacturer’s handling, charging, storage, recall, and disposal guidance.</li><li>Treat unexpected heat, odor, sound, smoke, leakage, or deformation as a reason to stop and move away safely.</li></ul><p>PackGauge supplements appropriate electrical and physical inspection; it does not replace manufacturer instructions, qualified service judgment, or applicable workplace procedures.</p></div></section>
+      <aside class="detail-legal"><strong>Independent product notice</strong><p>PackGauge is an independent third-party product and is not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool. MILWAUKEE and M18 are trademarks of Milwaukee Electric Tool Corporation and are used only to identify compatible products.</p></aside>
+    </main>
+    <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="./index.html">Home</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
