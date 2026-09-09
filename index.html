@@ -3,125 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A standalone diagnostic reader for compatible Milwaukee M18 battery packs. Explore cell-bank readings, available history, and saved scans." />
-  <meta name="theme-color" content="#101412" />
-  <meta property="og:title" content="PackGauge — More than a voltage reading." />
-  <meta property="og:description" content="A standalone diagnostic reader for compatible Milwaukee M18 battery packs. Explore cell-bank readings, available history, and saved scans." />
+  <meta name="description" content="PackGauge is a standalone diagnostic reader for compatible 18V tool battery packs. Explore cell-bank readings, available history, saved scans, and comparison on the reader itself." />
+  <meta name="theme-color" content="#0b0b0d" />
+  <meta property="og:title" content="PackGauge — More than a voltage reading" />
+  <meta property="og:description" content="A standalone diagnostic reader for compatible tool battery packs, with cell-bank readings, available history, and saved scan comparison." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://packgauge.com/" />
-  <meta property="og:image" content="https://packgauge.com/og-packgauge.png" />
-  <meta property="og:image:alt" content="Illustrative PackGauge cell-bank readings, not a hardware scan" />
+  <meta property="og:image" content="https://packgauge.com/renders/hero-reader.webp" />
+  <meta property="og:image:alt" content="Rendered PackGauge standalone diagnostic reader at an angle" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://packgauge.com/" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./src/styles.css" />
-  <title>PackGauge — More than a voltage reading.</title>
+  <title>PackGauge — More than a voltage reading</title>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header" data-header>
-  <div class="header-inner"><a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>PACK<span>GAUGE</span></span></a>
-    <button class="nav-toggle js-only" type="button" aria-expanded="false" aria-controls="site-nav"><span class="menu-lines" aria-hidden="true"></span><span data-menu-label>Menu</span></button>
-    <nav id="site-nav" class="site-nav" aria-label="Primary">
-      <a href="#demo">Explore the reader</a><a href="#workflow">How it works</a><a href="./compatibility.html">Compatibility</a>
-      <a class="nav-cta" href="#availability">Project status <span aria-hidden="true">↗</span></a>
-    </nav>
-  </div>
-</header>
-<main id="main">
-  <section class="hero container" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Independent M18 diagnostics</p>
-      <h1 id="hero-title">More than a<br /><em>voltage reading.</em></h1>
-      <p class="hero-lede">Get to know the pack behind the power.</p>
-      <p class="hero-description">PackGauge reads the data your compatible Milwaukee M18 battery makes available. See the cell-bank readings, explore its recorded history, and keep scans for comparison—all from a standalone touchscreen reader.</p>
-      <div class="hero-actions"><a class="button button-primary" href="#demo">Explore a sample scan <span aria-hidden="true">↗</span></a><a class="text-link" href="./compatibility.html">Will it read my pack? <span aria-hidden="true">→</span></a></div>
-      <p class="hero-note"><span class="status-dot" aria-hidden="true"></span> In development <span aria-hidden="true">·</span> No computer needed for scanning</p>
-    </div>
-    <div class="demo-wrap" id="demo" aria-labelledby="demo-title">
-      <div class="demo-caption"><h2 id="demo-title">A closer look.</h2><span class="sample-badge">Interactive sample</span></div>
-      <div class="reader">
-        <div class="reader-top"><span class="reader-wordmark">PACKGAUGE<span class="tiny-bars" aria-hidden="true">▂▄▆</span></span><span class="reader-mode">WEB DEMO / NOT CONNECTED</span></div>
-        <div class="sample-picker js-only"><label for="sample-profile">Sample profile</label><select id="sample-profile"><option value="detailed">Fuller history</option><option value="limited">Limited history</option></select></div>
-        <div class="screen-tabs js-only" role="tablist" aria-label="Sample diagnostic views">
-          <button id="tab-pack" type="button" role="tab" aria-selected="true" aria-controls="panel-pack" tabindex="0">Pack</button>
-          <button id="tab-charge" type="button" role="tab" aria-selected="false" aria-controls="panel-charge" tabindex="-1">Charge</button>
-          <button id="tab-use" type="button" role="tab" aria-selected="false" aria-controls="panel-use" tabindex="-1">Use</button>
-          <button id="tab-load" type="button" role="tab" aria-selected="false" aria-controls="panel-load" tabindex="-1">Load</button>
-          <button id="tab-conditions" type="button" role="tab" aria-selected="false" aria-controls="panel-conditions" tabindex="-1">Conditions</button>
-        </div>
-        <div class="reader-screen">
-          <section class="demo-panel" id="panel-pack" role="tabpanel" aria-labelledby="tab-pack" tabindex="0">
-            <div class="readout-heading"><h3>Pack overview</h3><span>01 / 05</span></div>
-            <div class="voltage-readout"><div><span class="metric-label">Pack voltage</span><p class="big-number"><span data-value="voltage">17.84</span><small>V</small></p></div><div class="spread-readout"><span class="metric-label">Cell-bank spread</span><p><span data-value="spread">59</span> <small>mV</small></p></div></div>
-            <div class="cell-chart" aria-label="Five illustrative cell-bank voltages, with bars scaled from zero to 4.2 volts">
-              <div class="cell"><div class="cell-track"><i style="--level:84.95%"></i></div><span class="cell-value">3.568</span><span class="cell-label">BANK 01</span></div>
-              <div class="cell"><div class="cell-track"><i style="--level:84.93%"></i></div><span class="cell-value">3.567</span><span class="cell-label">BANK 02</span></div>
-              <div class="cell"><div class="cell-track"><i style="--level:85%"></i></div><span class="cell-value">3.570</span><span class="cell-label">BANK 03</span></div>
-              <div class="cell is-low"><div class="cell-track"><i style="--level:84.29%"></i></div><span class="cell-value">3.540</span><span class="cell-label">BANK 04</span></div>
-              <div class="cell is-high"><div class="cell-track"><i style="--level:85.69%"></i></div><span class="cell-value">3.599</span><span class="cell-label">BANK 05</span></div>
-            </div>
-            <p class="chart-caption">Readings in volts <span>Bar scale: 0–4.2 V</span></p>
-            <p class="panel-insight">Five readings. One clearer picture.<span>Spread is the difference between the highest and lowest bank—not a capacity or safety test.</span></p>
-          </section>
-          <section class="demo-panel" id="panel-charge" role="tabpanel" aria-labelledby="tab-charge" tabindex="0">
-            <div class="readout-heading"><h3>Charging history</h3><span>02 / 05</span></div>
-            <div class="feature-reading"><span class="metric-label">Recorded charge count</span><p class="big-number" data-value="charges">128</p></div>
-            <dl class="screen-metrics"><div><dt>Total charge time</dt><dd data-value="chargeTime">34h 17m</dd></div><div><dt>Low-voltage charge starts</dt><dd data-value="lowStarts">3</dd></div></dl>
-            <p class="panel-insight">Look beyond the last charge.<span>These are pack-reported counters where available, not an independently measured usage record.</span></p>
-          </section>
-          <section class="demo-panel" id="panel-use" role="tabpanel" aria-labelledby="tab-use" tabindex="0">
-            <div class="readout-heading"><h3>Tool-use history</h3><span>03 / 05</span></div>
-            <div class="feature-reading"><span class="metric-label">Cumulative discharge</span><p class="big-number"><span data-value="discharge">60.00</span><small>Ah</small></p></div>
-            <dl class="screen-metrics"><div><dt>Estimated equivalent cycles</dt><dd data-value="cycles">12.0</dd></div><div><dt>Recorded fault events</dt><dd data-value="faults">2</dd></div></dl>
-            <p class="panel-insight">Put the work in context.<span>Equivalent cycles divide cumulative discharge by known nominal capacity. They do not measure remaining capacity.</span></p>
-          </section>
-          <section class="demo-panel" id="panel-load" role="tabpanel" aria-labelledby="tab-load" tabindex="0">
-            <div class="readout-heading"><h3>Recorded load</h3><span>04 / 05</span></div>
-            <p class="metric-label load-label">Illustrative distribution of recorded use</p>
-            <div class="load-chart" data-load-chart role="img" aria-label="Illustrative relative activity in eight increasing load bands: 40, 95, 70, 43, 30, 14, 7, and 2">
-              <i style="--level:42.1%"></i><i style="--level:100%"></i><i style="--level:73.7%"></i><i style="--level:45.3%"></i><i style="--level:31.6%"></i><i style="--level:14.7%"></i><i style="--level:7.4%"></i><i style="--level:2.1%"></i>
-            </div><p class="chart-caption" data-load-axis><span>Lower load</span><span>Higher load</span></p>
-            <p class="empty-state" data-load-empty hidden><strong>Not available in this sample.</strong>The pack did not expose this history. That does not mean it recorded no load.</p>
-            <p class="panel-insight">See the shape of the work.<span>This simplified eight-band web illustration is not the firmware’s exact histogram or a live current measurement.</span></p>
-          </section>
-          <section class="demo-panel" id="panel-conditions" role="tabpanel" aria-labelledby="tab-conditions" tabindex="0">
-            <div class="readout-heading"><h3>Charge conditions</h3><span>05 / 05</span></div>
-            <p class="metric-label conditions-label">Illustrative recorded conditions</p>
-            <dl class="screen-metrics"><div><dt>Start temperature</dt><dd data-value="startTemp">22 °C</dd></div><div><dt>End temperature</dt><dd data-value="endTemp">29 °C</dd></div><div><dt>Lowest start bank</dt><dd data-value="startBank">3.250 V</dd></div><div><dt>Highest end bank</dt><dd data-value="endBank">4.180 V</dd></div></dl>
-            <p class="panel-insight">Unknown stays unknown.<span>Some firmware does not expose these records. Missing values appear as unavailable, never as a reassuring zero.</span></p>
-          </section>
-        </div>
-        <div class="reader-bottom"><span><i class="sample-dot" aria-hidden="true"></i> ILLUSTRATIVE DATA</span><button class="download-button js-only" type="button" data-download>Sample CSV <span aria-hidden="true">↓</span></button></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="#reader">The reader</a><a href="#screens">On the screen</a><a href="./compatibility.html">Compatibility</a><a class="nav-action" href="#status">Project status <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section id="product" class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="kicker">Independent battery diagnostics</p>
+        <h1 id="hero-title">More than<br /><span>a voltage</span><br />reading.</h1>
+        <p class="hero-lede">Get to know the pack behind the power. See cell-bank readings, explore available history, and keep a record—with a standalone touchscreen reader.</p>
+        <div class="hero-actions"><a class="button" href="#screens">Explore the screens <span aria-hidden="true">↗</span></a><a class="text-link" href="./compatibility.html">Check compatibility <span aria-hidden="true">→</span></a></div>
+        <p class="micro">Designed for supported 18V lithium-ion tool battery packs.<br />Independent third-party diagnostic project.</p>
       </div>
-      <p class="demo-disclaimer">Try the tabs and profiles. This web preview uses illustrative data—not a hardware scan, product photograph, or exact firmware screen.</p>
-      <p class="demo-feedback" role="status" aria-live="polite" data-demo-status></p>
-      <noscript><p class="demo-disclaimer">JavaScript is off. All sample views are shown below each other; switching profiles and downloading the sample require JavaScript.</p></noscript>
-    </div>
-  </section>
-  <div class="capabilities container" aria-label="Reader capabilities"><p><span>01</span> Five cell-bank readings</p><p><span>02</span> Standalone touchscreen</p><p><span>03</span> Saved scans &amp; comparison</p><a href="#workflow">Meet the workflow <span aria-hidden="true">↓</span></a></div>
+      <figure class="hero-product render-hero">
+        <div class="photo-index"><span>PACKGAUGE / PRODUCT RENDER</span><span>01</span></div>
+        <img src="./renders/hero-reader.webp" alt="Rendered PackGauge standalone touchscreen diagnostic reader at an angle, without a battery attached" width="819" height="640" fetchpriority="high" />
+        <figcaption><strong>PackGauge / standalone reader</strong><span>Concept-quality render based on the current prototype · no battery branding shown</span></figcaption>
+      </figure>
+      <div class="feature-strip"><p><span>01</span> Standalone touchscreen</p><p><span>02</span> Five cell-bank readings</p><p><span>03</span> Saved scans &amp; comparison</p></div>
+    </section>
 
-  <section class="section section-light" aria-labelledby="picture-title">
-    <div class="container"><div class="section-heading"><p class="eyebrow">Behind the indicator lights</p><h2 id="picture-title">One pack.<br />A better picture.</h2><p>A few battery bars can’t tell the whole story. PackGauge brings the available readings and records into one place.</p></div>
-    <div class="feature-grid">
-      <article class="feature"><span class="feature-index">01 / THE READINGS</span><div class="feature-symbol cell-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h3>Look at every bank.</h3><p>View the five series cell-bank voltages together, with the difference between the highest and lowest reading calculated for you.</p><a class="text-link" href="#demo">Explore the readings <span aria-hidden="true">↗</span></a></article>
-      <article class="feature"><span class="feature-index">02 / THE HISTORY</span><div class="feature-symbol history-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>See what it recorded.</h3><p>Inspect charge counts, discharge totals, and other history where the pack exposes it. A missing record is shown as unavailable.</p><a class="text-link" href="./compatibility.html">Understand availability <span aria-hidden="true">↗</span></a></article>
-      <article class="feature"><span class="feature-index">03 / THE RECORD</span><div class="feature-symbol record-symbol" aria-hidden="true"><i></i><i></i></div><h3>Keep more than a glance.</h3><p>Save scans to micro-SD, revisit them on the reader, compare saved readings, and email scan files once Wi-Fi and email are configured.</p><a class="text-link" href="#records">See the comparison <span aria-hidden="true">↗</span></a></article>
-    </div></div>
-  </section>
+    <section id="screens" class="screens-section section-pad" aria-labelledby="screens-title" data-gallery>
+      <div class="wrap">
+        <div class="section-intro"><div><p class="kicker">On the screen</p><h2 id="screens-title">Your pack.<br /><span>A closer look.</span></h2></div><p>These polished interface renders are based on the working PackGauge layout and controls. They show the real interaction model without publishing raw prototype photos, battery branding, or identifying pack information.</p></div>
+        <div class="gallery-bar"><span class="eyebrow">Rendered interface previews</span><div class="photo-tabs" role="tablist" aria-label="Choose a PackGauge interface render" hidden><button id="tab-home" type="button" role="tab" aria-selected="false" aria-controls="photo-home" tabindex="-1">Home</button><button id="tab-pack" type="button" role="tab" aria-selected="true" aria-controls="photo-pack" tabindex="0">Pack</button><button id="tab-amps" type="button" role="tab" aria-selected="false" aria-controls="photo-amps" tabindex="-1">Amps</button></div></div>
+        <section id="photo-home" class="photo-panel" role="tabpanel" aria-labelledby="home-heading" tabindex="0">
+          <figure class="screen-photo"><img src="./renders/screen-home.svg" alt="Rendered PackGauge home screen with a Scan Pack button and Settings, Saved, and Compare controls" width="1280" height="960" loading="lazy" /><figcaption>Home screen · interface render <button class="enlarge" type="button" data-enlarge hidden>Enlarge render <span aria-hidden="true">↗</span></button></figcaption></figure>
+          <div class="photo-copy"><p class="kicker">01 / Home</p><h3 id="home-heading">Connect a pack.<br />Then scan.</h3><p>A direct starting point. Start a scan, open saved readings, or compare previous scans from the home screen.</p><dl class="photo-notes"><div><dt>Scan Pack</dt><dd>The main action, right on the touchscreen.</dd></div><div><dt>Saved &amp; Compare</dt><dd>Return to previous readings without a computer.</dd></div><div><dt>Wi-Fi &amp; SD</dt><dd>Status indicators stay at the top of the display.</dd></div></dl></div>
+        </section>
+        <section id="photo-pack" class="photo-panel" role="tabpanel" aria-labelledby="pack-heading" tabindex="0">
+          <figure class="screen-photo"><img src="./renders/screen-pack.svg" alt="Rendered PackGauge Pack tab showing demo pack voltage, cell imbalance, temperature, and five cell-bank readings without identifying battery information" width="1280" height="960" loading="lazy" /><figcaption>Pack tab · sanitized interface render <button class="enlarge" type="button" data-enlarge hidden>Enlarge render <span aria-hidden="true">↗</span></button></figcaption></figure>
+          <div class="photo-copy"><p class="kicker">02 / Pack</p><h3 id="pack-heading">Five readings.<br />A closer look.</h3><p>Pack voltage, temperature, and individual cell-bank readings together on one screen. The render uses demo-only identifiers and no battery-brand information.</p><dl class="photo-notes"><div><dt>Pack / Chg / Tool / Amps / Cond</dt><dd>The five-tab result layout used by the reader.</dd></div><div><dt>Cells &amp; imbalance</dt><dd>Compare the bank readings and the calculated difference.</dd></div><div><dt>Home / Note / Email / Back</dt><dd>Core navigation and saved-record actions.</dd></div></dl><p class="photo-caution">Displayed values are representative interface content, not a live measurement or a health/safety certification.</p></div>
+        </section>
+        <section id="photo-amps" class="photo-panel" role="tabpanel" aria-labelledby="amps-heading" tabindex="0">
+          <figure class="screen-photo"><img src="./renders/screen-amps.svg" alt="Rendered PackGauge Amps tab with a red current-history histogram and on-screen chart controls" width="1280" height="960" loading="lazy" /><figcaption>Amps tab · interface render <button class="enlarge" type="button" data-enlarge hidden>Enlarge render <span aria-hidden="true">↗</span></button></figcaption></figure>
+          <div class="photo-copy"><p class="kicker">03 / Amps</p><h3 id="amps-heading">See the history<br />behind the load.</h3><p>A clean rendering of the reader's current-load histogram and chart controls.</p><dl class="photo-notes"><div><dt>Current bands</dt><dd>A view of recorded time across load ranges.</dd></div><div><dt>On-screen chart controls</dt><dd>Bins, chart, and scale controls match the device workflow.</dd></div><div><dt>When the pack provides it</dt><dd>Not every supported pack exposes load history. Unavailable is not zero.</dd></div></dl></div>
+        </section>
+        <p class="gallery-note">Interface images are polished renders based on the current PackGauge design. They are not live measurements, battery-brand artwork, or identifying pack records.</p>
+        <noscript><p class="gallery-note">All three rendered interface previews are shown below each other because JavaScript is off.</p></noscript>
+      </div>
+    </section>
 
-  <section class="section container records" id="records" aria-labelledby="records-title">
-    <div class="records-copy"><p class="eyebrow">Not just a one-time reading</p><h2 id="records-title">A snapshot today.<br /><em>Context tomorrow.</em></h2><p>Keep a record instead of trying to remember a number. PackGauge’s saved-scan browser lets you revisit readings and compare two scans.</p><div class="record-points"><p><span>01</span> Save and browse scans on micro-SD.</p><p><span>02</span> Select saved readings for comparison.</p><p><span>03</span> Export CSV or send configured email reports.</p></div></div>
-    <div class="comparison"><div class="comparison-heading"><span class="eyebrow">Saved-scan comparison</span><span class="sample-badge">Illustrative</span></div><h3>The same sample pack.<br />Two points in time.</h3><div class="table-scroll" role="region" aria-label="Illustrative saved-scan comparison" tabindex="0"><table class="comparison-table"><caption class="sr-only">Invented example values, not actual scan records.</caption><thead><tr><th scope="col">Recorded value</th><th scope="col">Earlier</th><th scope="col">Later</th></tr></thead><tbody><tr><th scope="row">Charge count</th><td>92</td><td>128</td></tr><tr><th scope="row">Total discharge</th><td>44.00 Ah</td><td>60.00 Ah</td></tr><tr><th scope="row">Cell-bank spread</th><td>22 mV</td><td>59 mV</td></tr></tbody></table></div><p class="comparison-note"><span aria-hidden="true">↳</span> Readings can change with charge level and conditions. A comparison is not a capacity or safety verdict.</p></div>
-  </section>
+    <section id="reader" class="wrap section-pad reader-section" aria-labelledby="reader-title">
+      <div class="reader-copy"><p class="kicker">Built around the workflow</p><h2 id="reader-title">A reader.<br /><span>Not another app.</span></h2><p class="section-copy">A black screen enclosure, red adapter, and the information in front of you. PackGauge keeps scanning and review on the unit instead of requiring a laptop beside it.</p><dl class="record-features"><div><dt>Scan &amp; inspect</dt><dd>Use the touchscreen to review the data a compatible pack makes available.</dd></div><div><dt>Save &amp; compare</dt><dd>Keep scans on micro-SD. Browse and compare saved readings on the reader.</dd></div><div><dt>Share when needed</dt><dd>Email scan logs over Wi-Fi after configuration.</dd></div></dl></div>
+      <figure class="hardware-detail render-detail"><img src="./renders/hero-reader.webp" alt="Rendered standalone PackGauge reader without a battery attached" width="819" height="640" loading="lazy" /><figcaption><span>THE READER / STANDALONE</span><strong>Black enclosure. Red adapter.</strong><p>Rendered from the current prototype direction, with battery branding intentionally omitted.</p></figcaption></figure>
+    </section>
 
-  <section class="section section-light" id="workflow" aria-labelledby="workflow-title"><div class="container"><div class="section-heading workflow-heading"><p class="eyebrow">From the workbench</p><h2 id="workflow-title">Connect. Scan.<br />Take a closer look.</h2><p>A dedicated reader. A touchscreen. Your pack’s available data—without a computer in the loop.</p></div><ol class="workflow-grid"><li><span class="step-number">01</span><h3>Connect the reader.</h3><p>Provide USB-C power and attach a compatible pack through the documented signal interface. Inspect the pack first and follow the safety guidance.</p></li><li><span class="step-number">02</span><h3>Run a scan.</h3><p>Start a scan on the touchscreen. PackGauge requests the diagnostic records the pack exposes and organizes the returned data.</p></li><li><span class="step-number">03</span><h3>Explore and save.</h3><p>Move through the readings and available history. Save the scan to micro-SD to revisit, compare, or share later.</p></li></ol><a class="text-link workflow-safety" href="./safety.html">Read the connection precautions &amp; limitations <span aria-hidden="true">↗</span></a></div></section>
+    <section id="workflow" class="workflow-section" aria-labelledby="workflow-title"><div class="wrap section-pad"><div class="section-intro"><div><p class="kicker">At the workbench</p><h2 id="workflow-title">Connect. Scan.<br />Take a closer look.</h2></div><p>No laptop needed for scanning. A straightforward workflow, from the first connection to the next saved record.</p></div><ol class="steps"><li><span class="step-number">01 / CONNECT</span><h3>Power up.</h3><p>Provide USB-C power. Inspect the pack and connect a supported battery using the documented interface.</p></li><li><span class="step-number">02 / SCAN</span><h3>Tap Scan Pack.</h3><p>Let the reader request the available data, then move through its result tabs.</p></li><li><span class="step-number">03 / REVIEW</span><h3>Keep the details.</h3><p>Review the readings, revisit saved scans, and compare the records your pack exposes.</p></li></ol><p class="workflow-safety">Do not connect damaged, swollen, wet, unusually hot, or otherwise suspect packs. <a class="text-link" href="./safety.html">Read safety &amp; diagnostic limits <span aria-hidden="true">→</span></a></p></div></section>
 
-  <section class="section container practical" aria-labelledby="practical-title"><div><p class="eyebrow">A few things worth knowing</p><h2 id="practical-title">Useful data.<br />Clear boundaries.</h2><p class="section-intro">Built for a closer look, not a blanket verdict.</p></div><div class="faq"><details><summary>Does it tell me whether a battery is safe?</summary><p>No. PackGauge displays available pack-reported data. A scan does not establish safety, authenticity, capacity, or health. Balanced readings and an absent fault record are not an approval to keep using a suspect pack. <a href="./safety.html">Read the full limitations.</a></p></details><details><summary>Will every M18 pack show the same data?</summary><p>No. Hardware and firmware vary, including within a nominal family. Some tested Forge firmware exposes core readings and totals but not many detailed history blocks. Unavailable data stays unavailable. <a href="./compatibility.html">Check the compatibility scope.</a></p></details><details><summary>Do I need Wi-Fi or a computer to scan?</summary><p>The standalone reader does not require a computer for scanning. Wi-Fi is used for configured network features such as emailing reports. Saved-scan storage requires a micro-SD card.</p></details><details><summary>Can PackGauge charge or repair a pack?</summary><p>No. It is a diagnostic reader, not a charger or repair tool. The current user workflow does not offer battery reset, balancing, unlocking, or reprogramming controls.</p></details></div></section>
+    <section class="wrap section-pad faq-layout" aria-labelledby="faq-title"><div><p class="kicker">Before you connect</p><h2 id="faq-title">Know what<br /><span>you're looking at.</span></h2></div><div class="faq-list">
+      <details><summary>Which batteries is it designed for?</summary><p>Selected compatible 18V lithium-ion tool battery packs—not every battery platform. Pack hardware and firmware revisions affect the available data. <a class="text-link" href="./compatibility.html">Read the compatibility details.</a></p></details>
+      <details><summary>Are these the real screens?</summary><p>The renders are based on the current PackGauge interface and controls, but have been cleaned up for the website. Identifying pack details and third-party branding are intentionally omitted.</p></details>
+      <details><summary>Does an on-screen status mean a battery is safe?</summary><p>No. Interface labels and colored readings are diagnostic cues, not an independent health, capacity, authenticity, or safety certification. A small voltage spread or missing fault counter is not a pass result.</p></details>
+      <details><summary>Does it repair or reset a battery?</summary><p>No. The current user workflow reads diagnostic data; it does not offer repair, reset, rebalance, unlock, or reprogram controls. Scanning may cause a pack to refresh its own recorded statistics.</p></details>
+      <details><summary>Do I need a computer or Wi-Fi to scan?</summary><p>The standalone reader is USB-powered and does not need a computer for scanning. Wi-Fi is used for configured network features such as sending email. Saved scan records use micro-SD.</p></details>
+    </div></section>
 
-  <section class="availability-section" id="availability" aria-labelledby="availability-title"><div class="container availability"><div><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Project status · In development</p><h2 id="availability-title">A closer look<br />is taking shape.</h2><p>PackGauge is still in development. There is no public downloadable release or ordering option on this site yet. Release details will appear here when available.</p><div class="hero-actions"><a class="button button-primary" href="https://github.com/tinkring/PackGauge-Web">Follow website development <span aria-hidden="true">↗</span></a><a class="text-link" href="./compatibility.html">Check compatibility <span aria-hidden="true">→</span></a></div></div><div class="availability-aside"><span class="availability-glyph" aria-hidden="true">PG<span>↗</span></span><p>Independent by design.<br />Built for compatible M18 packs.</p><a class="text-link" href="./safety.html">Safety &amp; limitations <span aria-hidden="true">↗</span></a></div></div></section>
-</main>
-<footer class="site-footer"><div class="container footer-top"><a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>PACK<span>GAUGE</span></span></a><p>More than a voltage reading.</p><nav aria-label="Footer"><a href="./index.html">Home</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety &amp; limitations</a><a href="https://github.com/tinkring/PackGauge-Web">Website project <span aria-hidden="true">↗</span></a></nav></div><div class="container footer-bottom"><p>PackGauge is an independent third-party project. It is not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool. MILWAUKEE and M18 are trademarks of Milwaukee Electric Tool Corporation and are used only to identify compatible products.</p><span>© PackGauge</span></div></footer>
-<script type="module" src="./src/main.js"></script>
+    <section id="status" class="status-section" aria-labelledby="status-title"><div class="wrap status-inner"><div><p class="kicker">Project status / In development</p><h2 id="status-title">Meet PackGauge.<br />Follow what's next.</h2><p>The hardware and interface are still being refined. There is no public downloadable release or purchase option on this site yet.</p></div><a class="button button-white" href="https://github.com/tinkring/PackGauge-Web">View website project <span aria-hidden="true">↗</span></a></div></section>
+    <aside class="wrap legal-note"><strong>Independent product. Clear limits.</strong><p>PackGauge is an independent third-party diagnostic project. Third-party product names, logos, and battery branding are intentionally omitted from the website artwork. A scan does not establish battery safety, authenticity, capacity, or health. <a href="./safety.html">Safety &amp; diagnostic limits.</a></p></aside>
+  </main>
+  <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="#screens">Screens</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
+  <dialog class="photo-dialog" aria-labelledby="photo-dialog-title"><div class="dialog-heading"><h2 id="photo-dialog-title">PackGauge interface render</h2><button type="button" class="dialog-close" autofocus>Close <span aria-hidden="true">×</span></button></div><img alt="" /><p>Rendered interface preview. Not a live connection or an independently verified battery assessment.</p></dialog>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>

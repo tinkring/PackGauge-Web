@@ -2,7 +2,13 @@
 
 Static product website for [packgauge.com](https://packgauge.com), built with Vite and deployed through GitHub Pages.
 
-This repository contains only the public website. It is intentionally standalone and does not require or contain the private PackGauge application source, build system, tests, or Git history.
+This repository contains only the public website. It is intentionally standalone and does not require or contain the private PackGauge firmware source, build system, tests, or Git history.
+
+## Product presentation
+
+The homepage uses a red / black / white industrial visual system, a rendered standalone reader, and sanitized interface renders based on the current PackGauge UI. Raw prototype photographs, third-party battery logos, battery model marks, and identifying pack information are intentionally not used in the public artwork.
+
+The interface images under `public/renders/` are website presentation assets. They are not live scans, health certifications, or screenshots of an identified physical battery. The Pack screen uses demo-only identifiers and representative values.
 
 ## Local development
 
@@ -16,30 +22,11 @@ npm run dev
 ```sh
 npm run check
 npm run build
+npm run preview
 ```
 
-The output is written to `dist/`. The website currently offers an illustrative CSV sample, not a firmware download. There is no public product release or ordering flow. Add release links only after a public release destination exists.
-
-## Website structure and browser checks
-
-The homepage contains one interactive sample scan, two data-availability profiles, a clearly illustrative saved-scan comparison, a workflow, FAQ, and project-status section. Compatibility and safety remain separate pages with the same visual system.
-
-See [docs/WEBSITE.md](docs/WEBSITE.md) for the public-content contract and browser-test instructions. `npm run check` covers data calculations, initial HTML, local links, truthful missing-data handling, CSV contents, safety language, and deployment configuration. The separate PR workflow tests the production build in Chromium without deploying it. No framework, runtime dependencies, tracking, or external signup service was added.
+The output is written to `dist/`. Pull requests run `.github/workflows/checks.yml`, which tests and builds without deploying. Production publishing remains restricted to pushes to `main` through `.github/workflows/pages.yml`.
 
 ## GitHub Pages and custom domain
 
-The repository workflow at `.github/workflows/pages.yml` tests and builds the repository root on pushes to `main`, then publishes `dist`. The `public/CNAME` file is copied into that artifact.
-
-After the workflow has deployed successfully:
-
-1. In GitHub, open **Settings → Pages** and confirm the source is **GitHub Actions**.
-2. Set the custom domain to `packgauge.com` if GitHub has not inferred it from `CNAME`.
-3. At the DNS provider, create these apex `A` records:
-   - `185.199.108.153`
-   - `185.199.109.153`
-   - `185.199.110.153`
-   - `185.199.111.153`
-4. Optionally create `www` as a `CNAME` to `tinkring.github.io` and add `www.packgauge.com` as a redirect at the DNS/registrar layer if desired.
-5. Wait for GitHub’s DNS check to succeed, then enable **Enforce HTTPS**.
-
-Do not create a `CNAME` record at the zone apex unless the DNS provider explicitly supports ALIAS/ANAME flattening. GitHub documents the current values at <https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site>.
+The `public/CNAME` file configures `packgauge.com`. Merging to `main` triggers the existing GitHub Pages deployment workflow.
