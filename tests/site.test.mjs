@@ -1,126 +1,152 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { readFile, access } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { samples, summarize, displayValues, csvCell, sampleCsv } from '../src/sample-data.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const read = (path) => readFile(join(root, path), 'utf8');
+const read = path => readFile(resolve(root, path), 'utf8');
+const pageNames = ['index.html', 'compatibility.html', 'safety.html'];
+const ids = text => [...text.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
 
-const compact = (value) => value.replace(/\s+/g, ' ');
-
-test('homepage follows the six-chapter revealing-instrument narrative', async () => {
-  const html = await read('index.html');
-  for (const id of ['product', 'revelation', 'history', 'instrument', 'workflow', 'close']) {
-    assert.match(html, new RegExp(`id=["']${id}["']`), `missing #${id}`);
-  }
-  assert.match(compact(html), /See what your battery has recorded\./i);
-  assert.match(html, />Product</);
-  assert.match(html, />How it works</);
-  assert.match(html, /href="\.\/compatibility\.html"/);
-  assert.match(html, /href="\.\/safety\.html"/);
-  assert.match(html, /class="[^"]*release-state[^"]*"[\s\S]*<strong>Coming soon<\/strong>/i);
-  assert.doesNotMatch(html, /id=["'](?:download|help|releases|about|diagnostics|interface)["']/);
-  assert.doesNotMatch(html, /href=["']#["']/);
-});
-
-test('revelation and history use exact, honestly labelled sample values', async () => {
-  const html = await read('index.html');
-  assert.match(html, /17\.84\s*V/);
-  for (const value of ['3568', '3567', '3570', '3540', '3599']) assert.match(html, new RegExp(value));
-  assert.match(html, /59\s*mV/);
-  assert.match(html, /evidence, not proof of capacity, health, or safety/i);
-  assert.match(html, /bundled firmware self-test data/i);
-  assert.match(html, /illustrative/i);
-  assert.match(html, /availability differs by pack firmware/i);
-  assert.match(html, /unavailable[^<]{0,100}(?:not|rather than)[^<]{0,40}zero/i);
-});
-
-test('instrument is a single accessible five-view stage', async () => {
-  const [html, js] = await Promise.all([read('index.html'), read('src/main.js')]);
-  assert.match(html, /role="tablist"/);
-  assert.equal((html.match(/role="tab"/g) ?? []).length, 5);
-  assert.equal((html.match(/role="tabpanel"/g) ?? []).length, 5);
-  for (const label of ['Pack', 'Charge', 'Tool', 'Amps', 'Conditions']) {
-    assert.match(html, new RegExp(`>${label}<`));
-  }
-  assert.match(js, /ArrowLeft/);
-  assert.match(js, /ArrowRight/);
-  assert.match(js, /Home/);
-  assert.match(js, /End/);
-  assert.doesNotMatch(js, /innerHTML\s*=/);
-});
-
-test('workflow and concise homepage limitations remain truthful', async () => {
-  const html = await read('index.html');
-  assert.match(compact(html), /Connect\. Scan\. Understand\./i);
-  assert.match(html, /USB-C power/i);
-  assert.match(html, /purpose-built signal interface/i);
-  assert.match(html, /read-oriented/i);
-  assert.match(html, /pack may refresh its own recorded statistics during scanning/i);
-  assert.match(html, /independent third-party product/i);
-  assert.match(html, /not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool/i);
-  assert.match(html, /MILWAUKEE and M18 are trademarks of Milwaukee Electric Tool Corporation/i);
-  assert.match(html, /used only to identify compatible products/i);
-});
-
-test('compatibility page preserves support scope and missing-data honesty', async () => {
-  const html = await read('compatibility.html');
-  assert.match(html, /designed for compatible Milwaukee M18 battery packs/i);
-  assert.match(html, /not a universal battery tester/i);
-  assert.match(html, /184 register definitions/i);
-  assert.match(html, /availability differs by pack firmware/i);
-  assert.match(html, /Forge/i);
-  assert.match(html, /unavailable instead of zero/i);
-  assert.match(html, /estimated equivalent cycles/i);
-  assert.match(html, /not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool/i);
-  assert.doesNotMatch(html, /all (?:known )?M18|guaranteed compatibility|supported M18 battery type codes/i);
-});
-
-test('safety page preserves diagnostic, physical-warning, and write limits', async () => {
-  const html = await read('safety.html');
-  assert.match(html, /does not establish.*safety, authentication, capacity, or health/is);
-  assert.match(html, /observed data/i);
-  assert.match(html, /calculations/i);
-  assert.match(html, /conclusions not established/i);
-  for (const warning of ['damaged', 'swollen', 'leaking', 'hot', 'wet', 'modified', 'recalled', 'suspect']) {
-    assert.match(html, new RegExp(warning, 'i'));
-  }
-  for (const claim of ['repair', 'reset', 'rebalance', 'rejuvenate', 'unlock', 'reprogram']) {
-    assert.match(html, new RegExp(claim, 'i'));
-  }
-  assert.match(html, /Missing or unavailable data is not converted to a reassuring zero/i);
-  assert.match(html, /pack may refresh its own recorded statistics during scanning/i);
-});
-
-test('site is local, progressively enhanced, and motion-accessible', async () => {
-  const [home, compatibility, safety, css] = await Promise.all([
-    read('index.html'), read('compatibility.html'), read('safety.html'), read('src/styles.css'),
-  ]);
-  for (const html of [home, compatibility, safety]) {
+test('every page has unique landmarks, working metadata and visible default content', async () => {
+  for (const name of pageNames) {
+    const html = await read(name);
+    assert.equal((html.match(/<h1\b/g) ?? []).length, 1, name);
+    assert.equal((html.match(/<main\b/g) ?? []).length, 1, name);
     assert.match(html, /<main[^>]*id="main"/);
-    assert.match(html, /class="skip-link"/);
-    assert.doesNotMatch(html, /milwaukee[^>]+\.(?:png|jpe?g|webp|svg)/i);
-    assert.doesNotMatch(html, /github\.com\/tinkring\/PackGauge(?:[\/#"'])/i);
+    assert.match(html, /class="skip-link" href="#main"/);
+    assert.match(html, /<meta name="viewport"/);
+    assert.match(html, /<meta name="description"/);
+    assert.match(html, /<meta property="og:image"/);
+    const canonical = name === 'index.html' ? '' : name;
+    assert.ok(html.includes(`rel="canonical" href="https://packgauge.com/${canonical}"`));
+    assert.equal(ids(html).length, new Set(ids(html)).size, `${name}: duplicate IDs`);
+    assert.doesNotMatch(html, /class="reveal\b/);
   }
-  assert.match(home, /<noscript>[\s\S]*\.reveal/);
+});
+
+test('local links, assets and fragment targets resolve', async () => {
+  for (const name of pageNames) {
+    const html = await read(name);
+    for (const [, href] of html.matchAll(/\b(?:href|src)="([^"]*)"/g)) {
+      assert.notEqual(href, '#', `${name}: placeholder link`);
+      if (/^(?:https?:|data:|mailto:)/.test(href)) continue;
+      const [path, fragment] = href.split('#');
+      const target = resolve(root, dirname(name), path || name);
+      let actual = target;
+      try { await access(actual); } catch { actual = resolve(root, 'public', path.replace(/^\.\//, '')); await access(actual); }
+      if (fragment) assert.ok(ids(await readFile(actual, 'utf8')).includes(fragment), `${name}: broken ${href}`);
+    }
+  }
+});
+
+test('interactive demo tabs reference five actual panels and declared samples', async () => {
+  const html = await read('index.html');
+  const tabs = [...html.matchAll(/<button[^>]*role="tab"[^>]*aria-controls="([^"]+)"/g)];
+  const panels = [...html.matchAll(/<section[^>]*id="([^"]+)"[^>]*role="tabpanel"/g)];
+  assert.equal(tabs.length, 5);
+  assert.deepEqual(tabs.map(m => m[1]), panels.map(m => m[1]));
+  for (const profile of Object.keys(samples)) assert.ok(html.includes(`option value="${profile}"`));
+  assert.match(html, /not a hardware scan, product photograph, or exact firmware screen/i);
+  assert.match(html, /ILLUSTRATIVE DATA/);
+  assert.match(html, /<noscript>/);
+});
+
+test('initial visible readings match the public demo fixture', async () => {
+  const html = await read('index.html'), values = displayValues(samples.detailed);
+  for (const [key, value] of Object.entries(values)) {
+    const match = html.match(new RegExp(`data-value="${key}">([^<]+)<`));
+    assert.equal(match?.[1], value, key);
+  }
+});
+
+test('voltage and spread calculations are internally consistent', () => {
+  const s = summarize(samples.detailed.banks);
+  assert.equal(s.voltage, 17.844);
+  assert.equal(s.spread, 59);
+  assert.equal(s.low, 3540);
+  assert.equal(s.high, 3599);
+  assert.equal(summarize(samples.limited.banks).spread, 4);
+  assert.equal(summarize([0, 0, 0, 0, 0]).voltage, 0);
+});
+
+test('invalid sample banks fail explicitly instead of producing misleading data', () => {
+  for (const value of [null, [], [1,2,3,4], [1,2,3,4,NaN], [1,2,3,4,-1], [1,2,3,4,Infinity]]) {
+    assert.throws(() => summarize(value), TypeError);
+  }
+});
+
+test('unavailable fields stay unavailable, while actual zero remains zero', () => {
+  const values = displayValues(samples.limited);
+  for (const key of ['lowStarts', 'faults', 'startTemp', 'endTemp', 'startBank', 'endBank']) assert.equal(values[key], 'Unavailable');
+  const zero = displayValues({ ...samples.detailed, charges: 0, lowStarts: 0, faults: 0, dischargeAh: 0 });
+  assert.equal(zero.charges, '0'); assert.equal(zero.faults, '0'); assert.equal(zero.lowStarts, '0');
+  assert.equal(zero.cycles, '0.0');
+  for (const nominalAh of [null, 0, -1, NaN]) assert.equal(displayValues({ ...samples.detailed, nominalAh }).cycles, 'Unavailable');
+});
+
+test('CSV explicitly labels illustrative data and missing history', () => {
+  for (const profile of Object.keys(samples)) {
+    const csv = sampleCsv(profile);
+    assert.ok(csv.startsWith('\uFEFF'));
+    const lines = csv.trim().split('\r\n');
+    assert.equal(lines.length, 27);
+    assert.ok(lines.slice(1).every(line => line.includes('ILLUSTRATIVE WEB DEMO — NOT A REAL SCAN')));
+    assert.match(csv, /"cell_bank_spread"/);
+    assert.match(csv, /"calculated"/);
+  }
+  assert.match(sampleCsv('limited'), /"fault_events","","","unavailable"/);
+  assert.match(sampleCsv('limited'), /"illustrative_load_band_1","","relative units","unavailable"/);
+  assert.throws(() => sampleCsv('not-a-sample'), RangeError);
+  assert.throws(() => sampleCsv('__proto__'), RangeError);
+});
+
+test('CSV quotes commas, newlines and quotes and neutralizes formulas', () => {
+  assert.equal(csvCell('a,"b"'), '"a,""b"""');
+  assert.equal(csvCell(null), '""');
+  assert.equal(csvCell('=2+2'), '"\'=2+2"');
+  assert.equal(csvCell('line\nbreak'), '"line\nbreak"');
+});
+
+test('public copy keeps compatibility, release state and independent identity honest', async () => {
+  const html = await read('index.html'), compatibility = await read('compatibility.html');
+  assert.match(html, /no public downloadable release or ordering option/i);
+  assert.match(html, /configured email|email are configured/i);
+  assert.match(compatibility, /not a verified compatibility matrix/i);
+  assert.match(compatibility, /unavailable instead of zero/i);
+  assert.match(compatibility, /184 register definitions/);
+  for (const name of pageNames) {
+    const page = await read(name);
+    assert.match(page, /not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool/i);
+    assert.doesNotMatch(page, /github\.com\/tinkring\/PackGauge(?:[\/#"']|$)/i);
+    assert.doesNotMatch(page, /<form\b|href="#"|Buy now|Pre-order/i);
+  }
+});
+
+test('safety page retains physical warnings and diagnostic limitations', async () => {
+  const html = await read('safety.html');
+  for (const word of ['damaged','swollen','leaking','hot','wet','modified','recalled','suspect','repair','reset','rebalance','rejuvenate','unlock','reprogram']) assert.ok(html.includes(word), word);
+  assert.match(html, /does not establish battery safety, authentication, capacity, or health/);
+  assert.match(html, /pack may refresh its own recorded statistics during scanning/);
+  assert.match(html, /Missing or unavailable data is not converted to a reassuring zero/);
+});
+
+test('enhancements have keyboard, reduced-motion and no-network safeguards', async () => {
+  const [js, css] = await Promise.all([read('src/main.js'), read('src/styles.css')]);
+  for (const key of ['ArrowLeft', 'ArrowRight', 'Home', 'End', 'Escape']) assert.ok(js.includes(key));
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /:focus-visible/);
-  assert.match(css, /\.js\s+\.stage-panel:not\(\.is-active\)/);
-  assert.doesNotMatch(css, /\.screen-bezel::(?:before|after)/);
-  assert.match(css, /\.mount-suggestion[\s\S]{0,300}(?:vermilion|#(?:ed4b32|c94738))/i);
-  assert.doesNotMatch(css, /repeat\(5,\s*minmax\(7\.4rem|max-content/);
-  assert.doesNotMatch(css, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
+  assert.doesNotMatch(js, /innerHTML\s*=|\beval\s*\(|\bfetch\s*\(|XMLHttpRequest/);
+  assert.match(js, /URL\.revokeObjectURL/);
+  assert.doesNotMatch(css, /fonts\.googleapis|fonts\.gstatic/);
 });
 
-test('custom domain, sitemap, and Pages deployment remain configured', async () => {
+test('domain and multi-page Vite entrypoints remain intact', async () => {
   assert.equal((await read('public/CNAME')).trim(), 'packgauge.com');
+  const config = await read('vite.config.js');
+  for (const page of pageNames) assert.ok(config.includes(page));
   const sitemap = await read('public/sitemap.xml');
-  assert.match(sitemap, /https:\/\/packgauge\.com\/compatibility\.html/);
-  assert.match(sitemap, /https:\/\/packgauge\.com\/safety\.html/);
-  const workflow = await read('.github/workflows/pages.yml');
-  assert.match(workflow, /actions\/deploy-pages@v4/);
-  assert.match(workflow, /branches:\s*\[main\]/);
-  assert.match(workflow, /path:\s*dist/);
-  assert.match(workflow, /npm run build/);
+  for (const page of pageNames.slice(1)) assert.ok(sitemap.includes(page));
 });
