@@ -4,6 +4,14 @@ Static product website for [packgauge.com](https://packgauge.com), built with Vi
 
 This repository contains only the public website. It is intentionally standalone and does not require or contain the private PackGauge application source, build system, tests, or Git history.
 
+## Product preview
+
+The homepage introduces the standalone reader, provides a five-view interactive sample, explains the scan/save/compare workflow, and links to compatibility and safety details. The current public release state remains **in development; no public downloadable release yet**. There is no checkout, signup backend, live battery connection, or firmware download disguised as a website demo.
+
+`src/sample-data.js` contains website-only illustrative profiles. These are not physical battery scans or a model compatibility matrix. The limited-history profile intentionally uses `null` for unavailable fields; do not substitute zero. The sample CSV is generated locally from the selected profile, explicitly labels its illustrative origin, and is not the device's canonical export format. The saved-scan comparison is also an illustration, not a real battery record or health assessment.
+
+The demonstration is not an exact firmware screenshot or product photograph. Replace or supplement it with verified hardware imagery when suitable public assets are available. Do not copy private firmware source, configuration, credentials, or private repository links into this public site.
+
 ## Local development
 
 ```sh
@@ -16,9 +24,14 @@ npm run dev
 ```sh
 npm run check
 npm run build
+npm run preview
 ```
 
-The output is written to `dist/`. Downloads are not stored in this directory; the website links to GitHub Releases as the canonical source for release availability, files, and notes.
+The output is written to `dist/`. The checks cover sample arithmetic, missing-data handling, CSV provenance, accessible control relationships, real anchor destinations, safety/compatibility language, and deployment configuration. They are not a substitute for browser QA.
+
+For browser QA, exercise all five views and both sample profiles; export each CSV; test arrow keys, Home, End, Escape, mobile navigation, and FAQ disclosure controls. Check 320, 390, 768, 900, 1024, and 1440px widths, disabled JavaScript, and reduced motion. Without JavaScript the homepage exposes all five sample panels and retains navigation; profile switching and CSV export require JavaScript.
+
+Pull requests run `.github/workflows/checks.yml`, which tests and builds without deploying. Production publishing remains restricted to the existing `main` workflow below. Review a redesign branch before merging it into the live site.
 
 ## GitHub Pages and custom domain
 

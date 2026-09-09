@@ -1,138 +1,116 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="PackGauge reveals pack-reported cell-bank readings and recorded history from compatible Milwaukee M18 battery packs." />
-    <meta name="theme-color" content="#090909" />
-    <meta property="og:title" content="PackGauge — See what your battery has recorded" />
-    <meta property="og:description" content="An independent, screen-first diagnostic reader for compatible Milwaukee M18 battery packs." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://packgauge.com/" />
-    <meta property="og:image" content="https://packgauge.com/og-packgauge.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="PackGauge screen study showing five cell-bank readings and calculated spread" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://packgauge.com/" />
-    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="./fonts/dm-sans-300.woff2" as="font" type="font/woff2" crossorigin />
-    <title>PackGauge — See what your battery has recorded</title>
-    <noscript><style>.reveal{opacity:1!important;transform:none!important}.wake-screen{opacity:1!important}.bank-reading{opacity:1!important;transform:none!important}</style></noscript>
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header" data-header>
-      <a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
-      <nav id="site-nav" class="site-nav" aria-label="Primary">
-        <a href="#product">Product</a>
-        <a href="#workflow">How it works</a>
-        <a href="./compatibility.html">Compatibility</a>
-        <a href="./safety.html">Safety</a>
-      </nav>
-    </header>
-
-    <main id="main">
-      <section id="product" class="hero chapter">
-        <div class="hero-copy reveal">
-          <p class="kicker">Independent battery diagnostics</p>
-          <h1 aria-label="See what your battery has recorded.">See what your<span class="desktop-break"><br /></span> battery has<span class="desktop-break"><br /></span> recorded.</h1>
-          <p class="hero-lede">PackGauge reads available onboard data from compatible Milwaukee M18 battery packs and presents it on a dedicated 320 × 240 display.</p>
-          <p class="legal-micro">Independent third-party product. Not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool.</p>
-        </div>
-        <div class="product-study reveal" data-delay="1" aria-label="Screen-centric illustration of PackGauge showing bundled firmware self-test data">
-          <div class="instrument-shadow" aria-hidden="true"></div>
-          <div class="screen-bezel">
-            <div class="wake-screen">
-              <div class="screen-status"><span>PACK</span><span>SELF-TEST</span></div>
-              <div class="screen-pack"><span>PACK VOLTAGE</span><strong>17.84<small>V</small></strong></div>
-              <div class="screen-cell-row" aria-label="Five cell-bank readings in millivolts"><span>3568</span><span>3567</span><span>3570</span><span class="low">3540</span><span class="high">3599</span></div>
-              <div class="screen-spread"><span>CELL SPREAD</span><b>59 mV</b></div>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="More than a voltage reading. Explore PackGauge, a standalone diagnostic reader for compatible Milwaukee M18 battery packs. View cell-bank readings, available history, and saved scans." />
+  <meta name="theme-color" content="#101512" />
+  <meta property="og:title" content="PackGauge — More than a voltage reading" />
+  <meta property="og:description" content="Meet the standalone reader. Explore cell-bank readings, available history, and a clearly labeled interactive sample scan." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://packgauge.com/" />
+  <meta property="og:image" content="https://packgauge.com/og-packgauge.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Illustrative PackGauge screen study with five cell-bank readings" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://packgauge.com/" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./src/styles.css" />
+  <title>PackGauge — More than a voltage reading</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="#demo">Explore the reader</a><a href="#workflow">How it works</a><a href="./compatibility.html">Compatibility</a><a class="nav-action" href="#status">Project status <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section id="product" class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="kicker">Independent M18 diagnostics</p>
+        <h1 id="hero-title">More than a<br /><span>voltage reading.</span></h1>
+        <p class="hero-tagline">Get to know the pack behind the power.</p>
+        <p class="hero-lede">PackGauge reads the data your compatible Milwaukee M18 battery makes available. See the cell-bank readings, explore its recorded history, and keep scans for comparison—all from a standalone touchscreen reader.</p>
+        <div class="hero-actions"><a class="button" href="#demo" data-explore>Explore a sample scan <span aria-hidden="true">↗</span></a><a class="text-link" href="./compatibility.html">Will it read my pack? <span aria-hidden="true">→</span></a></div>
+        <p class="micro">In development <span aria-hidden="true">·</span> No computer needed for scanning</p>
+      </div>
+      <section id="demo" class="demo" data-demo aria-labelledby="demo-title">
+        <div class="demo-heading"><h2 id="demo-title">A closer look.</h2><span class="badge">Illustrative sample</span></div>
+        <div class="reader">
+          <div class="reader-top"><strong>PACKGAUGE</strong><span>WEB DEMO / NOT CONNECTED</span></div>
+          <div class="demo-controls" data-enhanced hidden><label for="sample-profile">Sample profile</label><select id="sample-profile"><option value="full">Fuller history</option><option value="limited">Limited history</option></select></div>
+          <div class="demo-tabs" role="tablist" aria-label="Sample scan views" data-enhanced hidden>
+            <button id="tab-pack" type="button" role="tab" aria-selected="true" aria-controls="panel-pack" tabindex="0">Pack</button>
+            <button id="tab-charge" type="button" role="tab" aria-selected="false" aria-controls="panel-charge" tabindex="-1">Charge</button>
+            <button id="tab-use" type="button" role="tab" aria-selected="false" aria-controls="panel-use" tabindex="-1">Use</button>
+            <button id="tab-load" type="button" role="tab" aria-selected="false" aria-controls="panel-load" tabindex="-1">Load</button>
+            <button id="tab-conditions" type="button" role="tab" aria-selected="false" aria-controls="panel-conditions" tabindex="-1">Conditions</button>
           </div>
-          <div class="mount-suggestion" aria-hidden="true"></div>
-          <p class="sample-label">Screen study · bundled firmware self-test data</p>
-        </div>
-      </section>
-
-      <section id="revelation" class="revelation chapter" data-revelation>
-        <div class="revelation-intro reveal">
-          <p class="kicker">The total is only the beginning</p>
-          <p class="total-reading"><span>Pack voltage</span><strong>17.84<small>V</small></strong></p>
-        </div>
-        <div class="bank-field" aria-label="Five example cell-bank readings from bundled firmware self-test data">
-          <div class="bank-reading reveal"><span>01</span><strong>3568</strong><small>mV</small></div>
-          <div class="bank-reading reveal"><span>02</span><strong>3567</strong><small>mV</small></div>
-          <div class="bank-reading reveal"><span>03</span><strong>3570</strong><small>mV</small></div>
-          <div class="bank-reading bank-low reveal"><span>04 · LOW</span><strong>3540</strong><small>mV</small></div>
-          <div class="bank-reading bank-high reveal"><span>05 · HIGH</span><strong>3599</strong><small>mV</small></div>
-        </div>
-        <div class="spread-line reveal"><p><strong>59 mV</strong> spread becomes visible.</p><p>Voltage spread is evidence, not proof of capacity, health, or safety.</p></div>
-        <p class="sample-label reveal">Exact values shown are from the bundled firmware self-test data.</p>
-      </section>
-
-      <section id="history" class="history chapter">
-        <div class="chapter-heading reveal"><h2>What happened before now.</h2><p>Where a pack exposes it, PackGauge organizes charge, load, and event records as evidence you can inspect—not conclusions the instrument did not establish.</p></div>
-        <div class="data-moments">
-          <div class="data-moment reveal"><span>Charge time</span><strong>34<small>h</small> 17<small>m</small></strong><p>Pack-reported total in the bundled firmware self-test data.</p></div>
-          <div class="data-moment reveal"><span>Total discharge</span><strong>60.00<small>Ah</small></strong><p>Bundled firmware self-test value; equivalent cycles are estimates only when capacity is known.</p></div>
-          <div class="data-moment reveal"><span>Recorded event</span><strong>36</strong><p>Illustrative display of the self-test dataset’s low-voltage charge-start counter—not a safety rating.</p></div>
-        </div>
-        <p class="availability-note reveal"><span>Availability differs by pack firmware.</span> Missing or unavailable data is reported as unavailable rather than zero.</p>
-      </section>
-
-      <section id="instrument" class="instrument-chapter chapter">
-        <div class="chapter-heading reveal"><h2>Move through the evidence.</h2><p>The stage below uses bundled firmware self-test data and clearly marked illustrative charts.</p></div>
-        <div class="instrument-stage reveal">
-          <div class="stage-tabs" role="tablist" aria-label="PackGauge diagnostic views">
-            <button id="tab-pack" class="is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-pack" tabindex="0" data-screen="pack">Pack</button>
-            <button id="tab-charge" type="button" role="tab" aria-selected="false" aria-controls="panel-charge" tabindex="-1" data-screen="charge">Charge</button>
-            <button id="tab-tool" type="button" role="tab" aria-selected="false" aria-controls="panel-tool" tabindex="-1" data-screen="tool">Tool</button>
-            <button id="tab-amps" type="button" role="tab" aria-selected="false" aria-controls="panel-amps" tabindex="-1" data-screen="amps">Amps</button>
-            <button id="tab-conditions" type="button" role="tab" aria-selected="false" aria-controls="panel-conditions" tabindex="-1" data-screen="conditions">Conditions</button>
-          </div>
-          <div class="stage-screen">
-            <section id="panel-pack" class="stage-panel is-active" role="tabpanel" aria-labelledby="tab-pack" data-panel="pack">
-              <p class="panel-label">PACK · SELF-TEST SAMPLE</p><div class="panel-primary"><span>Pack voltage</span><strong>17.84 V</strong></div><div class="panel-grid"><p><span>Low bank</span><b>3540 mV</b></p><p><span>High bank</span><b>3599 mV</b></p><p><span>Calculated spread</span><b class="accent">59 mV</b></p></div>
+          <div class="screen">
+            <section id="panel-pack" class="demo-panel" role="tabpanel" aria-labelledby="tab-pack" tabindex="0">
+              <p class="screen-heading">PACK OVERVIEW <span>01 / 05</span></p>
+              <div class="readings"><div><span>Pack voltage</span><strong>17.84<small> V</small></strong></div><div class="spread"><span>Cell-bank spread</span><strong>59 <small>mV</small></strong></div></div>
+              <div class="banks" aria-label="Five illustrative cell-bank voltages; bar scale zero to 4.2 volts">
+                <div><div class="bank"><i style="--level:84.95%"></i></div><strong>3.568</strong><span>BANK 01</span></div><div><div class="bank"><i style="--level:84.93%"></i></div><strong>3.567</strong><span>BANK 02</span></div><div><div class="bank"><i style="--level:85%"></i></div><strong>3.570</strong><span>BANK 03</span></div><div><div class="bank low"><i style="--level:84.29%"></i></div><strong>3.540</strong><span>BANK 04 / LOW</span></div><div><div class="bank high"><i style="--level:85.69%"></i></div><strong>3.599</strong><span>BANK 05 / HIGH</span></div>
+              </div>
+              <p class="axis"><span>Readings in volts</span><span>Bar scale: 0–4.2 V</span></p>
+              <div class="screen-note"><strong>Five readings. One clearer picture.</strong><p>Spread is the difference between the highest and lowest bank—not a capacity or safety test.</p></div>
             </section>
-            <section id="panel-charge" class="stage-panel" role="tabpanel" aria-labelledby="tab-charge" data-panel="charge">
-              <p class="panel-label">CHARGE · SELF-TEST SAMPLE</p><div class="panel-primary"><span>Total charge time</span><strong>34h 17m</strong></div><div class="panel-grid"><p><span>Low-voltage starts</span><b>36</b></p><p><span>Other fields</span><b>When available</b></p></div>
+            <section id="panel-charge" class="demo-panel" role="tabpanel" aria-labelledby="tab-charge" tabindex="0">
+              <p class="screen-heading">CHARGE HISTORY <span>02 / 05</span></p>
+              <div class="readings"><div><span>Total charge time</span><strong class="medium" data-field="chargeTime">34h 17m</strong></div></div>
+              <dl class="screen-list"><div><dt>Recorded charges</dt><dd data-field="charges">112</dd></div><div><dt>Low-voltage charge starts</dt><dd data-field="events">36</dd></div></dl>
+              <div class="screen-note"><strong>Look beyond today's charge.</strong><p>Inspect the records a pack exposes. A missing counter is unavailable, not evidence of zero events.</p></div>
             </section>
-            <section id="panel-tool" class="stage-panel" role="tabpanel" aria-labelledby="tab-tool" data-panel="tool">
-              <p class="panel-label">TOOL · SELF-TEST SAMPLE</p><div class="panel-primary"><span>Total discharge</span><strong>60.00 Ah</strong></div><div class="panel-grid"><p><span>Equivalent cycles</span><b>Estimated only</b></p><p><span>Fault counters</span><b>When available</b></p></div>
+            <section id="panel-use" class="demo-panel" role="tabpanel" aria-labelledby="tab-use" tabindex="0">
+              <p class="screen-heading">RECORDED USE <span>03 / 05</span></p>
+              <div class="readings"><div><span>Total recorded discharge</span><strong data-field="discharge" data-unit="Ah">60 Ah</strong></div></div>
+              <dl class="screen-list"><div><dt>What this represents</dt><dd>Cumulative throughput</dd></div><div><dt>Remaining capacity</dt><dd>Not measured</dd></div></dl>
+              <div class="screen-note"><strong>A record of use, not a capacity test.</strong><p>Discharge totals describe recorded throughput. They do not tell you how much energy the pack can hold today.</p></div>
             </section>
-            <section id="panel-amps" class="stage-panel" role="tabpanel" aria-labelledby="tab-amps" data-panel="amps">
-              <p class="panel-label">AMPS · ILLUSTRATIVE HISTOGRAM</p><div class="histogram" aria-label="Illustrative current-load histogram"><i style="--h:20%"></i><i style="--h:43%"></i><i style="--h:72%"></i><i style="--h:91%"></i><i style="--h:64%"></i><i style="--h:40%"></i><i style="--h:27%"></i><i style="--h:14%"></i></div><p class="axis"><span>LOWER LOAD</span><span>HIGHER LOAD</span></p>
+            <section id="panel-load" class="demo-panel" role="tabpanel" aria-labelledby="tab-load" tabindex="0">
+              <p class="screen-heading">CURRENT-LOAD HISTORY <span>04 / 05</span></p>
+              <div data-load-chart><p class="chart-caption">Illustrative time share by current band</p><div class="histogram" role="img" aria-label="Illustrative time shares: zero to ten amps 18 percent; ten to twenty 32; twenty to thirty 24; thirty to forty 16; forty to fifty 7; fifty to sixty 3 percent."><div style="--level:56.25%"><span>18%</span><i></i><small>0–10A</small></div><div style="--level:100%"><span>32%</span><i></i><small>10–20</small></div><div style="--level:75%"><span>24%</span><i></i><small>20–30</small></div><div style="--level:50%"><span>16%</span><i></i><small>30–40</small></div><div style="--level:21.875%"><span>7%</span><i></i><small>40–50</small></div><div style="--level:9.375%"><span>3%</span><i></i><small>50–60</small></div></div></div>
+              <div class="empty-state" data-load-empty hidden><strong>Unavailable</strong><p>This illustrative profile has no load-history data. We do not replace it with an empty chart or zeroes.</p></div>
+              <div class="screen-note"><strong>See how recorded use is distributed.</strong><p>History availability varies by pack firmware. This chart illustrates the concept, not an exact firmware screen.</p></div>
             </section>
-            <section id="panel-conditions" class="stage-panel" role="tabpanel" aria-labelledby="tab-conditions" data-panel="conditions">
-              <p class="panel-label">CONDITIONS · AVAILABILITY VIEW</p><div class="panel-primary"><span>Charge conditions</span><strong>When recorded</strong></div><div class="panel-grid"><p><span>Start/end voltage</span><b>Pack-reported</b></p><p><span>Temperature history</span><b>Pack-reported</b></p><p><span>Missing block</span><b>Unavailable</b></p></div>
+            <section id="panel-conditions" class="demo-panel" role="tabpanel" aria-labelledby="tab-conditions" tabindex="0">
+              <p class="screen-heading">CHARGE CONDITIONS <span>05 / 05</span></p>
+              <p class="conditions-intro">Temperature and voltage records add context when a pack exposes them.</p>
+              <dl class="screen-list"><div><dt>Example start temperature</dt><dd data-field="startTemperature" data-unit="°C">25 °C</dd></div><div><dt>Example end temperature</dt><dd data-field="endTemperature" data-unit="°C">31 °C</dd></div><div><dt>Reading type</dt><dd>Illustrative history</dd></div></dl>
+              <div class="screen-note"><strong>Context without invented certainty.</strong><p>These are sample historical values, not live temperature measurements or a safety rating.</p></div>
             </section>
           </div>
+          <div class="reader-bottom"><span>ILLUSTRATIVE DATA</span><button type="button" data-download data-enhanced hidden>Sample CSV <span aria-hidden="true">↓</span></button></div>
+          <p class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
         </div>
+        <p class="demo-disclaimer">Try the tabs and profiles. This web preview uses illustrative data—not a hardware scan, product photograph, or exact firmware screen. Profiles do not certify model compatibility.</p>
+        <noscript><p class="demo-disclaimer">JavaScript is off. All five sample views are shown below each other; profile switching and CSV export require JavaScript.</p></noscript>
       </section>
-
-      <section id="workflow" class="workflow chapter">
-        <div class="chapter-heading reveal"><p class="kicker">How it works</p><h2>Connect. Scan. Understand.</h2></div>
-        <ol class="workflow-steps">
-          <li class="reveal"><h3>Connect.</h3><p>Provide USB-C power, then attach a compatible pack through the purpose-built signal interface.</p></li>
-          <li class="reveal"><h3>Scan.</h3><p>The read-oriented workflow iterates 184 register definitions. The pack may refresh its own recorded statistics during scanning.</p></li>
-          <li class="reveal"><h3>Understand.</h3><p>Review observed readings, calculated spread, and available history. Save CSV data to micro-SD for later comparison.</p></li>
-        </ol>
-      </section>
-
-      <section id="close" class="closing chapter">
-        <div class="closing-copy reveal">
-          <h2>For compatible M18 packs.<br />Built to reveal, not reassure.</h2>
-          <p>PackGauge is designed for compatible Milwaukee M18 battery packs. A scan is diagnostic evidence; it does not establish battery safety, authenticity, capacity, or health.</p>
-          <div class="closing-links"><a href="./compatibility.html">Read compatibility details <span>↗</span></a><a href="./safety.html">Read safety & limitations <span>↗</span></a></div>
-        </div>
-        <div class="release-state reveal"><span>Release state</span><strong>Coming soon</strong><p>There is no public downloadable release yet.</p></div>
-        <p class="trademark reveal">PackGauge is an independent third-party product and is not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool. MILWAUKEE and M18 are trademarks of Milwaukee Electric Tool Corporation and are used only to identify compatible products.</p>
-      </section>
-    </main>
-
-    <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="#product">Product</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
-    <script type="module" src="./src/main.js"></script>
-  </body>
+      <div class="feature-strip"><p><span>01</span> Five cell-bank readings</p><p><span>02</span> Standalone touchscreen</p><p><span>03</span> Saved scans &amp; comparison</p><a href="#workflow">Meet the workflow <span aria-hidden="true">↓</span></a></div>
+    </section>
+    <section id="workflow" class="light-section">
+      <div class="wrap section-pad"><div class="section-intro"><div><p class="kicker">From pack to perspective</p><h2>Connect. Scan.<br /><span>Take a closer look.</span></h2></div><p>No laptop on the workbench. PackGauge brings the available readings and history together on the reader, with records you can revisit later.</p></div>
+        <ol class="steps"><li><span class="step-number">01 / CONNECT</span><h3>Power up. Connect.</h3><p>Provide USB-C power and connect a compatible pack through the documented signal interface. Inspect the pack and follow the safety guidance before connecting.</p></li><li><span class="step-number">02 / SCAN</span><h3>Let the reader ask.</h3><p>Start a scan from the touchscreen. PackGauge requests the available pack data and organizes it into readings, records, and charts.</p></li><li><span class="step-number">03 / EXPLORE</span><h3>Keep the useful details.</h3><p>Move through the result pages, save scans to micro-SD, and return to the readings when you need to compare or share them.</p></li></ol>
+        <p class="workflow-safety">Do not connect damaged, swollen, wet, unusually hot, or otherwise suspect packs. <a class="text-link" href="./safety.html">Read safety &amp; diagnostic limits →</a></p>
+      </div>
+    </section>
+    <section id="records" class="wrap section-pad records">
+      <div><p class="kicker">A scan is a starting point</p><h2>Keep a record.<br /><span>Come back to it.</span></h2><p class="section-copy">A single reading is a moment. Saved scans let you revisit available records and compare them without relying on memory.</p><dl class="record-features"><div><dt>Save &amp; find</dt><dd>Store scans on micro-SD and browse them on the reader.</dd></div><div><dt>Compare</dt><dd>Select saved readings and inspect the differences.</dd></div><div><dt>Share</dt><dd>Export scan data or email logs over Wi-Fi after setup.</dd></div></dl></div>
+      <div class="comparison"><div class="comparison-heading"><span>SAVED SCANS</span><span class="badge">Illustrative comparison</span></div><h3>What changed between scans?</h3><table><caption class="sr-only">Illustrative comparison, not a real battery record</caption><thead><tr><th scope="col">Recorded field</th><th scope="col">Earlier</th><th scope="col">Later</th></tr></thead><tbody><tr><th scope="row">Cell-bank spread</th><td>59 mV</td><td>46 mV</td></tr><tr><th scope="row">Discharge total</th><td>60 Ah</td><td>65 Ah</td></tr><tr><th scope="row">Charge count</th><td>112</td><td>118</td></tr></tbody></table><p>Different readings are something to inspect—not, by themselves, evidence of improved or declining battery health.</p></div>
+    </section>
+    <section class="faq-section"><div class="wrap section-pad faq-layout"><div><p class="kicker">Good questions</p><h2>Before you<br /><span>connect a pack.</span></h2></div><div class="faq-list">
+      <details><summary>Which batteries is it designed for?</summary><p>Compatible Milwaukee M18 battery packs—not every battery platform. Hardware and firmware revisions affect what can be read. <a class="text-link" href="./compatibility.html">Read the compatibility details.</a></p></details>
+      <details><summary>Does it tell me whether a battery is healthy?</summary><p>It displays available pack-reported data, not an independent health, capacity, authenticity, or safety certification. A small voltage spread or an absent fault counter is not a pass result.</p></details>
+      <details><summary>Does it repair or reset a battery?</summary><p>No. The current user workflow reads diagnostic data; it does not offer repair, reset, rebalance, unlock, or reprogram controls. A scan can cause the pack to refresh its own recorded statistics.</p></details>
+      <details><summary>Do I need a computer or Wi-Fi to scan?</summary><p>The standalone reader is USB-powered and scans without a computer. Wi-Fi is used for network features such as emailing logs after configuration; scan storage uses micro-SD.</p></details>
+    </div></div></section>
+    <section id="status" class="wrap section-pad status-section"><div><p class="kicker">Project status / In development</p><h2>A closer look.<br /><span>Still taking shape.</span></h2></div><div><p>PackGauge is in development. There is no public downloadable release yet, and this site is a product preview—not a store or a battery-testing service.</p><p>Pricing, kit availability, and launch timing are not announced here. The interactive sample is available now so you can explore the idea.</p><div class="status-links"><a class="button" href="#demo">Explore the sample <span aria-hidden="true">↑</span></a><a class="text-link" href="https://github.com/tinkring/PackGauge-Web">Website project on GitHub ↗</a></div></div></section>
+    <aside class="legal wrap"><p>PackGauge is an independent third-party product and is not affiliated with, authorized by, sponsored by, or endorsed by Milwaukee Tool. MILWAUKEE and M18 are trademarks of Milwaukee Electric Tool Corporation and are used only to identify compatible products.</p><p>A scan does not establish battery safety, authenticity, capacity, or health. Data availability differs by pack firmware. <a href="./safety.html">Safety &amp; limitations</a></p></aside>
+  </main>
+  <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a><a href="#status">Project status</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
+  <script type="module" src="./src/main.js"></script>
+</body>
 </html>
