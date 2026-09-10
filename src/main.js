@@ -3,9 +3,9 @@ import './styles.css';
 // Replace the original text PG tile with the finalized PackGauge mark.
 document.querySelectorAll('.brand-glyph').forEach((glyph) => {
   glyph.textContent = '';
-  glyph.style.width = '40px';
-  glyph.style.height = '40px';
-  glyph.style.background = 'transparent url("./favicon.svg") center / contain no-repeat';
+  glyph.style.width = '44px';
+  glyph.style.height = '44px';
+  glyph.style.background = 'transparent url("./brand-mark.svg") center / contain no-repeat';
   glyph.style.flexShrink = '0';
 });
 
