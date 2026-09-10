@@ -23,8 +23,6 @@
     .story-copy p + p { margin-top: 20px; }
     .story-copy .story-question { color: #fff; font-size: 20px; line-height: 1.5; }
     .story-copy .story-close { color: #fff; font-size: 18px; line-height: 1.55; }
-    .story-copy .story-credit a { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #77777e; }
-    .story-copy .story-credit a:hover { text-decoration-color: currentColor; }
   </style>
 </head>
 <body>
@@ -85,9 +83,9 @@
         <h2 id="story-title">It started with a simple question<br /><span>from my dad.</span></h2>
       </div>
       <div class="story-copy">
-        <p>He had noticed that the battery packs for his Milwaukee mower would indicate a full charge while on the charger, but after removing them and pressing the battery’s fuel-gauge button, they would sometimes show only three bars instead of four. He asked me what might cause that.</p>
+        <p>He had noticed that the battery packs for his cordless mower would indicate a full charge while on the charger, but after removing them and pressing the battery’s fuel-gauge button, they would sometimes show only three bars instead of four. He asked me what might cause that.</p>
         <p>I started researching how the packs worked and learned more about the individual cell groups inside them and how differences in their voltages can affect the overall health and performance of a battery pack. The problem was that checking those voltages normally meant opening the pack and measuring each group individually — something I wanted to avoid.</p>
-        <p class="story-credit">While researching, I came across the open-source <a href="https://github.com/mnh-jansson/m18-protocol" target="_blank" rel="noreferrer">m18-protocol project</a> by mnh-jansson and its contributors. I was amazed by how much information they had been able to decode directly from the battery’s communication interface. Suddenly, it looked possible to see the individual cell-group voltages and other useful battery data without opening the pack at all.</p>
+        <p>While researching, I came across an open-source battery communication project by mnh-jansson and its contributors. I was amazed by how much information they had been able to decode directly from the battery’s communication interface. Suddenly, it looked possible to see the individual cell-group voltages and other useful battery data without opening the pack at all.</p>
         <p class="story-question"><strong>That immediately led to another thought: why should I need a laptop every time I want to check a battery?</strong></p>
         <p>I started looking for a small standalone platform and found the inexpensive ESP32-based display commonly known as the <em>Cheap Yellow Display</em>. It already combined a touchscreen, an ESP32 microcontroller, Wi-Fi, and Bluetooth in one compact package. It was more than capable of what I originally had in mind — and opened the door to doing quite a bit more.</p>
         <p>The idea grew from simply displaying cell voltages into creating a handheld battery diagnostic tool that could analyze the pack, make cell imbalance easy to understand, display a health report directly on the screen, and even send the results over Wi-Fi so they could be saved or shared.</p>
