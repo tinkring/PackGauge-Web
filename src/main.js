@@ -95,4 +95,31 @@ if (gallery) {
   dialog?.addEventListener('close', () => opener?.focus());
 }
 
+const readerRender = document.querySelector('#reader .hardware-detail img');
+if (readerRender) {
+  readerRender.src = './renders/product-showcase.webp';
+  readerRender.alt = 'Multi-angle PackGauge product render showing the black touchscreen enclosure, red battery-interface cradle, rear contacts, and side profiles';
+  readerRender.width = 1200;
+  readerRender.height = 800;
+  const readerCaption = readerRender.closest('figure')?.querySelector('figcaption p');
+  if (readerCaption) readerCaption.textContent = 'Multi-angle render based on the current PackGauge prototype geometry, with battery branding intentionally omitted.';
+}
+
+const statusInner = document.querySelector('#status .status-inner');
+if (statusInner && !statusInner.querySelector('a[href="mailto:contact@packgauge.com"]')) {
+  const contactButton = document.createElement('a');
+  contactButton.className = 'button button-white';
+  contactButton.href = 'mailto:contact@packgauge.com';
+  contactButton.textContent = 'contact@packgauge.com';
+  statusInner.append(contactButton);
+}
+
+const footerNav = document.querySelector('.site-footer nav');
+if (footerNav && !footerNav.querySelector('a[href="mailto:contact@packgauge.com"]')) {
+  const contactLink = document.createElement('a');
+  contactLink.href = 'mailto:contact@packgauge.com';
+  contactLink.textContent = 'Contact';
+  footerNav.append(contactLink);
+}
+
 document.documentElement.classList.add('js');
