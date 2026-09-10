@@ -7,26 +7,31 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const read = (path) => readFile(join(root, path), 'utf8');
 const pages = ['index.html', 'compatibility.html', 'safety.html'];
+const renderScreens = ['pack', 'charge', 'tool', 'amps', 'conditions'];
 const attrs = (tag) => Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map((m) => [m[1], m[2]]));
 
-test('homepage uses rendered PackGauge assets instead of raw prototype photographs', async () => {
+test('homepage uses current-firmware PackGauge renders instead of raw prototype photographs', async () => {
   const html = await read('index.html');
   assert.match(html, /renders\/hero-reader\.webp/);
-  for (const screen of ['home', 'pack', 'amps']) assert.match(html, new RegExp(`renders\\/screen-${screen}\\.svg`));
+  for (const screen of renderScreens) assert.match(html, new RegExp(`renders\\/screen-${screen}\\.svg`));
   assert.doesNotMatch(html, /\.\/photos\//);
-  assert.match(html, /Rendered interface previews/i);
-  assert.match(html, /third-party branding are intentionally omitted/i);
+  assert.match(html, /Rendered from current firmware/i);
+  assert.match(html, /rebuilt directly from working PackGauge prototype screenshots/i);
+  assert.match(html, /third-party-specific labels are sanitized/i);
 });
 
 test('render assets exist and have sensible sizes', async () => {
   const hero = await readFile(join(root, 'public/renders/hero-reader.webp'));
   assert.ok(hero.length > 5000 && hero.length < 1000000);
   assert.equal(hero.subarray(8, 12).toString(), 'WEBP');
-  for (const screen of ['home', 'pack', 'amps']) {
+  for (const screen of renderScreens) {
     const svg = await read(`public/renders/screen-${screen}.svg`);
     assert.match(svg, /<svg[\s\S]+width="1280"[\s\S]+height="960"/);
     assert.doesNotMatch(svg, /Milwaukee|M18|REDLITHIUM/i);
   }
+  const live = await read('public/renders/screen-live.svg');
+  assert.match(live, /<svg[\s\S]+width="480"[\s\S]+height="320"/);
+  assert.doesNotMatch(live, /Milwaukee|M18|REDLITHIUM/i);
 });
 
 test('render tabs and no-JavaScript panel labels point to real elements', async () => {
@@ -35,8 +40,8 @@ test('render tabs and no-JavaScript panel labels point to real elements', async 
   assert.equal(ids.length, new Set(ids).size);
   const tabs = [...html.matchAll(/<button\b[^>]*role="tab"[^>]*>/g)].map((m) => attrs(m[0]));
   const panels = [...html.matchAll(/<section\b[^>]*role="tabpanel"[^>]*>/g)].map((m) => attrs(m[0]));
-  assert.equal(tabs.length, 3);
-  assert.equal(panels.length, 3);
+  assert.equal(tabs.length, 5);
+  assert.equal(panels.length, 5);
   assert.equal(tabs.filter((tab) => tab['aria-selected'] === 'true').length, 1);
   for (const tab of tabs) assert.ok(panels.some((p) => p.id === tab['aria-controls']));
   for (const panel of panels) assert.ok(ids.includes(panel['aria-labelledby']));
