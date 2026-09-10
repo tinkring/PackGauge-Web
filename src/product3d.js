@@ -133,12 +133,12 @@ const buildPackGauge = async (THREE) => {
   group.add(glass);
 
   // Four flat spring contacts inside the outward-facing battery pocket.
-  // The previous pass had them buried behind the red face. These blades now
-  // start inside the center tongue and project through the pocket so their
-  // exposed ends are clearly visible, like the physical prototype.
-  [-13.2, -6.5, 6.5, 13.2].forEach((offset) => {
-    const pin = new THREE.Mesh(new THREE.BoxGeometry(0.95, 6.6, 5.2), metal);
-    pin.position.set(adapterCenterX + offset, -15.0, -34.0);
+  // Tightened toward the center of the red tongue and recessed slightly so the
+  // blades are visibly inset from the tongue edges, with only a short exposed tip.
+  // Arrangement stays two contacts, center gap, two contacts.
+  [-10.8, -5.2, 5.2, 10.8].forEach((offset) => {
+    const pin = new THREE.Mesh(new THREE.BoxGeometry(0.95, 5.6, 5.2), metal);
+    pin.position.set(adapterCenterX + offset, -13.8, -33.55);
     pin.castShadow = true;
     group.add(pin);
   });
