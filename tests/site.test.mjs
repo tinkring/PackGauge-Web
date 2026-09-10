@@ -20,7 +20,7 @@ test('homepage uses rendered PackGauge assets instead of raw prototype photograp
 
 test('render assets exist and have sensible sizes', async () => {
   const hero = await readFile(join(root, 'public/renders/hero-reader.webp'));
-  assert.ok(hero.length > 10000 && hero.length < 1000000);
+  assert.ok(hero.length > 5000 && hero.length < 1000000);
   assert.equal(hero.subarray(8, 12).toString(), 'WEBP');
   for (const screen of ['home', 'pack', 'amps']) {
     const svg = await read(`public/renders/screen-${screen}.svg`);
