@@ -16,13 +16,23 @@
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./src/styles.css" />
   <title>PackGauge — More than a voltage reading</title>
+  <style>
+    .story-section { border-top: 1px solid var(--line); }
+    .story-copy { max-width: 680px; }
+    .story-copy p { color: var(--muted); }
+    .story-copy p + p { margin-top: 20px; }
+    .story-copy .story-question { color: #fff; font-size: 20px; line-height: 1.5; }
+    .story-copy .story-close { color: #fff; font-size: 18px; line-height: 1.55; }
+    .story-copy .story-credit a { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #77777e; }
+    .story-copy .story-credit a:hover { text-decoration-color: currentColor; }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" data-header>
     <a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
-    <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="#reader">The reader</a><a href="#screens">On the screen</a><a href="./compatibility.html">Compatibility</a><a class="nav-action" href="#status">Project status <span aria-hidden="true">↗</span></a></nav>
+    <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="#reader">The reader</a><a href="#screens">On the screen</a><a href="#story">Our story</a><a href="./compatibility.html">Compatibility</a><a class="nav-action" href="#status">Project status <span aria-hidden="true">↗</span></a></nav>
   </header>
   <main id="main">
     <section id="product" class="hero wrap" aria-labelledby="hero-title">
@@ -69,6 +79,23 @@
 
     <section id="workflow" class="workflow-section" aria-labelledby="workflow-title"><div class="wrap section-pad"><div class="section-intro"><div><p class="kicker">At the workbench</p><h2 id="workflow-title">Connect. Scan.<br />Take a closer look.</h2></div><p>No laptop needed for scanning. A straightforward workflow, from the first connection to the next saved record.</p></div><ol class="steps"><li><span class="step-number">01 / CONNECT</span><h3>Power up.</h3><p>Provide USB-C power. Inspect the pack and connect a supported battery using the documented interface.</p></li><li><span class="step-number">02 / SCAN</span><h3>Tap Scan Pack.</h3><p>Let the reader request the available data, then move through its result tabs.</p></li><li><span class="step-number">03 / REVIEW</span><h3>Keep the details.</h3><p>Review the readings, revisit saved scans, and compare the records your pack exposes.</p></li></ol><p class="workflow-safety">Do not connect damaged, swollen, wet, unusually hot, or otherwise suspect packs. <a class="text-link" href="./safety.html">Read safety &amp; diagnostic limits <span aria-hidden="true">→</span></a></p></div></section>
 
+    <section id="story" class="wrap section-pad faq-layout story-section" aria-labelledby="story-title">
+      <div>
+        <p class="kicker">How PackGauge started</p>
+        <h2 id="story-title">It started with a simple question<br /><span>from my dad.</span></h2>
+      </div>
+      <div class="story-copy">
+        <p>He had noticed that the battery packs for his Milwaukee mower would indicate a full charge while on the charger, but after removing them and pressing the battery’s fuel-gauge button, they would sometimes show only three bars instead of four. He asked me what might cause that.</p>
+        <p>I started researching how the packs worked and learned more about the individual cell groups inside them and how differences in their voltages can affect the overall health and performance of a battery pack. The problem was that checking those voltages normally meant opening the pack and measuring each group individually — something I wanted to avoid.</p>
+        <p class="story-credit">While researching, I came across the open-source <a href="https://github.com/mnh-jansson/m18-protocol" target="_blank" rel="noreferrer">m18-protocol project</a> by mnh-jansson and its contributors. I was amazed by how much information they had been able to decode directly from the battery’s communication interface. Suddenly, it looked possible to see the individual cell-group voltages and other useful battery data without opening the pack at all.</p>
+        <p class="story-question"><strong>That immediately led to another thought: why should I need a laptop every time I want to check a battery?</strong></p>
+        <p>I started looking for a small standalone platform and found the inexpensive ESP32-based display commonly known as the <em>Cheap Yellow Display</em>. It already combined a touchscreen, an ESP32 microcontroller, Wi-Fi, and Bluetooth in one compact package. It was more than capable of what I originally had in mind — and opened the door to doing quite a bit more.</p>
+        <p>The idea grew from simply displaying cell voltages into creating a handheld battery diagnostic tool that could analyze the pack, make cell imbalance easy to understand, display a health report directly on the screen, and even send the results over Wi-Fi so they could be saved or shared.</p>
+        <p>With the hardware selected and the battery communication work provided by the open-source community as a foundation, I began developing PackGauge with the help of ChatGPT and Claude.</p>
+        <p class="story-close"><strong>What started as a simple question about one of my dad’s batteries became PackGauge — a standalone tool built to make battery health easier to see, understand, and share, without opening the pack or connecting it to a computer.</strong></p>
+      </div>
+    </section>
+
     <section class="wrap section-pad faq-layout" aria-labelledby="faq-title"><div><p class="kicker">Before you connect</p><h2 id="faq-title">Know what<br /><span>you're looking at.</span></h2></div><div class="faq-list">
       <details><summary>Which batteries is it designed for?</summary><p>Selected compatible 18V lithium-ion tool battery packs—not every battery platform. Pack hardware and firmware revisions affect the available data. <a class="text-link" href="./compatibility.html">Read the compatibility details.</a></p></details>
       <details><summary>Are these the real screens?</summary><p>The renders are based on the current PackGauge interface and controls, but have been cleaned up for the website. Identifying pack details and third-party branding are intentionally omitted.</p></details>
@@ -80,7 +107,7 @@
     <section id="status" class="status-section" aria-labelledby="status-title"><div class="wrap status-inner"><div><p class="kicker">Project status / In development</p><h2 id="status-title">Meet PackGauge.<br />Follow what's next.</h2><p>The hardware and interface are still being refined. There is no public downloadable release or purchase option on this site yet.</p></div></div></section>
     <aside class="wrap legal-note"><strong>Independent product. Clear limits.</strong><p>PackGauge is an independent third-party diagnostic project. Third-party product names, logos, and battery branding are intentionally omitted from the website artwork. A scan does not establish battery safety, authenticity, capacity, or health. <a href="./safety.html">Safety &amp; diagnostic limits.</a></p></aside>
   </main>
-  <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="#screens">Screens</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
+  <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="#screens">Screens</a><a href="#story">Our story</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
   <dialog class="photo-dialog" aria-labelledby="photo-dialog-title"><div class="dialog-heading"><h2 id="photo-dialog-title">PackGauge interface render</h2><button type="button" class="dialog-close" autofocus>Close <span aria-hidden="true">×</span></button></div><img alt="" /><p>Rendered interface preview. Not a live connection or an independently verified battery assessment.</p></dialog>
   <script type="module" src="./src/main.js"></script>
 </body>
