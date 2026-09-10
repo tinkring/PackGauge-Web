@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 40 380 391" role="img" aria-label="PackGauge logo">
+  <path fill="#f0141d" d="M74 50h291c38.1 0 69 30.9 69 69s-30.9 69-69 69H219v-76h-71v309H74V50Z"/>
+  <path fill="#fff" d="M362 142H221c-30.4 0-55 24.6-55 55v86c0 30.4 24.6 55 55 55h166V226H257v39h75v28h-90c-12.7 0-23-10.3-23-23v-61c0-11 9-20 20-20h81c23.2 0 42-18.8 42-42v-5Z"/>
+  <rect x="166" y="351" width="32" height="70" rx="6" fill="#fff"/>
+  <rect x="212" y="351" width="32" height="70" rx="6" fill="#fff"/>
+  <rect x="258" y="351" width="32" height="70" rx="6" fill="#fff"/>
+  <rect x="306" y="372" width="31" height="49" rx="6" fill="#f0141d"/>
+  <rect x="354" y="351" width="32" height="70" rx="6" fill="#fff"/>
+</svg>
