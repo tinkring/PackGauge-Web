@@ -1,4 +1,5 @@
 import './styles.css';
+import './product3d.js';
 
 // Replace the original text PG tile with the finalized PackGauge mark.
 const desktopHeaderBrand = window.matchMedia('(min-width: 801px)');
