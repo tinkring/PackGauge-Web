@@ -32,8 +32,7 @@ const buildPackGauge = async (THREE) => {
   group.name = 'PackGauge';
 
   // These are source-derived printable meshes. Double-sided, flat-shaded
-  // materials avoid the false holes and melted-looking normals that can
-  // appear when STL/3MF triangle winding is not perfectly uniform.
+  // materials avoid false holes and melted-looking normals in the browser.
   const black = new THREE.MeshPhysicalMaterial({
     color: 0x111216,
     roughness: 0.5,
@@ -65,25 +64,20 @@ const buildPackGauge = async (THREE) => {
   rear.position.z = -6.895;
   group.add(rear);
 
-  // Mount the battery adapter the same way it is assembled on the prototype:
-  // its large cavity/open side faces the black enclosure. The solid outer face
-  // and its four contact slots face away from the screen.
   // Black case width is 91.4 mm; the measured adapter left offset is 0.2605 in.
   const adapterLeftX = -45.7 + (0.2605 * 25.4); // -39.0833 mm
-  const adapterCenterX = adapterLeftX + 33.0;   // 66 mm-wide adapter
   const adapter = meshFromData(THREE, PACKGAUGE_MESHES.adapter, red);
   adapter.applyMatrix4(new THREE.Matrix4().set(
     1, 0, 0, adapterLeftX,
     0, 0, -1, 27.5,
-    0, 1, 0, -31.75,
+    0, 1, 0, -32.95,
     0, 0, 0, 1,
   ));
   group.add(adapter);
 
-  // A clean recessed screen backplate masks internal printable support/cavity
-  // faces while preserving the real bezel geometry around it.
+  // Fill the physical LCD opening instead of leaving a visible moat around it.
   const screenBack = new THREE.Mesh(
-    new THREE.PlaneGeometry(65.2, 43.3),
+    new THREE.PlaneGeometry(66.5, 44.5),
     new THREE.MeshStandardMaterial({ color: 0x07080a, roughness: 0.72, metalness: 0, side: THREE.DoubleSide }),
   );
   screenBack.position.set(-1.7, 0.35, 4.045);
@@ -93,14 +87,14 @@ const buildPackGauge = async (THREE) => {
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = 8;
   const screen = new THREE.Mesh(
-    new THREE.PlaneGeometry(60.4, 40.2),
+    new THREE.PlaneGeometry(65.7, 43.8),
     new THREE.MeshBasicMaterial({ map: texture, toneMapped: false, side: THREE.DoubleSide }),
   );
   screen.position.set(-1.7, 0.35, 4.085);
   group.add(screen);
 
   const glass = new THREE.Mesh(
-    new THREE.PlaneGeometry(60.9, 40.7),
+    new THREE.PlaneGeometry(66.0, 44.0),
     new THREE.MeshPhysicalMaterial({
       color: 0x131720,
       transparent: true,
@@ -116,11 +110,14 @@ const buildPackGauge = async (THREE) => {
   glass.position.set(-1.7, 0.35, 4.165);
   group.add(glass);
 
-  // Four flat battery contact blades. They sit behind the adapter's four slots
-  // and project slightly through the outer red face: two, center gap, two.
-  [-13.5, -7.0, 7.0, 13.5].forEach((offset) => {
-    const pin = new THREE.Mesh(new THREE.BoxGeometry(0.84, 8.6, 2.4), metal);
-    pin.position.set(adapterCenterX + offset, -16.7, -32.1);
+  // The real contacts are short flat spring blades inside the red battery pocket.
+  // They emerge from the central red body and sit close to it rather than hanging
+  // from the outer edge. Four blades, with the larger center gap visible.
+  const bladeX = adapterLeftX + 22.1;
+  const bladeY = [6.4, 2.0, -5.8, -10.2];
+  bladeY.forEach((y) => {
+    const pin = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.82, 1.18), metal);
+    pin.position.set(bladeX, y, -19.2);
     pin.castShadow = true;
     group.add(pin);
   });
@@ -134,23 +131,7 @@ const buildPackGauge = async (THREE) => {
     group.add(screw);
   });
 
-  // Small exposed wire bundle follows the real seam on the adapter's left side.
-  const wireColors = [0xd31b27, 0xe3ad25, 0x2f67db, 0x17181b];
-  wireColors.forEach((color, index) => {
-    const offsetY = (index - 1.5) * 0.95;
-    const curve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-39.0, -8.0 + offsetY, -22.0),
-      new THREE.Vector3(-40.7, -8.2 + offsetY, -18.0),
-      new THREE.Vector3(-42.5, -7.6 + offsetY, -12.0),
-      new THREE.Vector3(-43.4, -7.7 + offsetY, -6.8),
-    ]);
-    const wire = new THREE.Mesh(
-      new THREE.TubeGeometry(curve, 20, 0.38, 7, false),
-      new THREE.MeshStandardMaterial({ color, roughness: 0.58, metalness: 0 }),
-    );
-    wire.castShadow = true;
-    group.add(wire);
-  });
+  // Wire routing is intentionally omitted until its final path is locked down.
 
   return group;
 };
@@ -168,7 +149,6 @@ const addLights = (THREE, scene) => {
   fill.position.set(-95, 35, 80);
   scene.add(fill);
 
-  // Rear fill keeps the outer adapter face and contact blades readable.
   const rearFill = new THREE.DirectionalLight(0xffffff, 1.15);
   rearFill.position.set(-25, 50, -150);
   scene.add(rearFill);
@@ -207,8 +187,6 @@ const initViewer = async (THREE, root) => {
   floor.receiveShadow = true;
   scene.add(floor);
 
-  // Hero stays roomy for interaction. The lower view is intentionally more
-  // front-facing so the display remains the focus while still showing depth.
   const camera = new THREE.PerspectiveCamera(interactive ? 27 : 23, 1, 0.1, 1000);
   const cameraTarget = new THREE.Vector3(0, interactive ? 0 : -1.5, interactive ? -13 : -8);
   if (interactive) {
