@@ -92,9 +92,10 @@ const buildPackGauge = async (THREE) => {
   ));
   group.add(adapter);
 
-  // Fill the LCD opening so there is no visible moat around the interface.
+  // Oversize the display layers slightly behind the bezel. The bezel itself masks
+  // the excess, which eliminates the exposed cavity/void along the top edge.
   const screenBack = new THREE.Mesh(
-    new THREE.PlaneGeometry(66.5, 44.5),
+    new THREE.PlaneGeometry(66.8, 48.0),
     new THREE.MeshStandardMaterial({
       color: 0x07080a,
       roughness: 0.72,
@@ -102,21 +103,21 @@ const buildPackGauge = async (THREE) => {
       side: THREE.DoubleSide,
     }),
   );
-  screenBack.position.set(-1.7, 0.35, 4.045);
+  screenBack.position.set(-1.7, 1.95, 4.045);
   group.add(screenBack);
 
   const texture = await new THREE.TextureLoader().loadAsync('./renders/screen-live.svg');
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = 8;
   const screen = new THREE.Mesh(
-    new THREE.PlaneGeometry(65.7, 43.8),
+    new THREE.PlaneGeometry(66.0, 47.0),
     new THREE.MeshBasicMaterial({ map: texture, toneMapped: false, side: THREE.DoubleSide }),
   );
-  screen.position.set(-1.7, 0.35, 4.085);
+  screen.position.set(-1.7, 1.95, 4.085);
   group.add(screen);
 
   const glass = new THREE.Mesh(
-    new THREE.PlaneGeometry(66.0, 44.0),
+    new THREE.PlaneGeometry(66.3, 47.3),
     new THREE.MeshPhysicalMaterial({
       color: 0x131720,
       transparent: true,
@@ -129,7 +130,7 @@ const buildPackGauge = async (THREE) => {
       side: THREE.DoubleSide,
     }),
   );
-  glass.position.set(-1.7, 0.35, 4.165);
+  glass.position.set(-1.7, 1.95, 4.165);
   group.add(glass);
 
   // Four flat spring contacts inside the outward-facing battery pocket.
