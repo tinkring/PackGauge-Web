@@ -1,15 +1,29 @@
 import './styles.css';
 
 // Replace the original text PG tile with the finalized PackGauge mark.
-document.querySelectorAll('.brand-glyph').forEach((glyph) => {
-  glyph.textContent = '';
-  const isDesktopHeaderLogo = glyph.closest('.site-header') && window.matchMedia('(min-width: 801px)').matches;
-  const logoSize = isDesktopHeaderLogo ? '52px' : '44px';
-  glyph.style.width = logoSize;
-  glyph.style.height = logoSize;
-  glyph.style.background = 'transparent url("./brand-mark.svg") center / contain no-repeat';
-  glyph.style.flexShrink = '0';
-});
+const desktopHeaderBrand = window.matchMedia('(min-width: 801px)');
+const applyBrandSizing = () => {
+  document.querySelectorAll('.brand-glyph').forEach((glyph) => {
+    glyph.textContent = '';
+    const brand = glyph.closest('.brand');
+    const isHeaderLogo = Boolean(glyph.closest('.site-header'));
+    const isDesktopHeaderLogo = isHeaderLogo && desktopHeaderBrand.matches;
+    const logoSize = isDesktopHeaderLogo ? '64px' : '44px';
+
+    glyph.style.width = logoSize;
+    glyph.style.height = logoSize;
+    glyph.style.background = 'transparent url("./brand-mark.svg") center / contain no-repeat';
+    glyph.style.flexShrink = '0';
+
+    if (brand && isHeaderLogo) {
+      brand.style.fontSize = isDesktopHeaderLogo ? '24px' : '';
+      brand.style.gap = isDesktopHeaderLogo ? '14px' : '';
+    }
+  });
+};
+
+applyBrandSizing();
+desktopHeaderBrand.addEventListener?.('change', applyBrandSizing);
 
 const header = document.querySelector('[data-header]');
 const toggle = document.querySelector('.nav-toggle');
