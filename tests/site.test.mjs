@@ -16,8 +16,9 @@ test('homepage uses current-firmware PackGauge renders instead of raw prototype 
   for (const screen of renderScreens) assert.match(html, new RegExp(`renders\\/screen-${screen}\\.svg`));
   assert.doesNotMatch(html, /\.\/photos\//);
   assert.match(html, /Rendered from current firmware/i);
-  assert.match(html, /rebuilt directly from working PackGauge prototype screenshots/i);
+  assert.match(html, /Explore the same five diagnostic views used on PackGauge/i);
   assert.match(html, /third-party-specific labels are sanitized/i);
+  assert.doesNotMatch(html, /clean vector reconstructions of actual current PackGauge firmware screens/i);
 });
 
 test('render assets exist and have sensible sizes', async () => {
