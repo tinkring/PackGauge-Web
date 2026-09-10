@@ -65,11 +65,17 @@ const buildPackGauge = async (THREE) => {
   rear.position.z = -6.895;
   group.add(rear);
 
+  // Mount the battery adapter the same way it is assembled on the prototype:
+  // its large cavity/open side faces the black enclosure. The solid outer face
+  // and its four contact slots face away from the screen.
+  // Black case width is 91.4 mm; the measured adapter left offset is 0.2605 in.
+  const adapterLeftX = -45.7 + (0.2605 * 25.4); // -39.0833 mm
+  const adapterCenterX = adapterLeftX + 33.0;   // 66 mm-wide adapter
   const adapter = meshFromData(THREE, PACKGAUGE_MESHES.adapter, red);
   adapter.applyMatrix4(new THREE.Matrix4().set(
-    1, 0, 0, -27,
+    1, 0, 0, adapterLeftX,
     0, 0, -1, 27.5,
-    0, -1, 0, -9.77,
+    0, 1, 0, -31.75,
     0, 0, 0, 1,
   ));
   group.add(adapter);
@@ -110,10 +116,11 @@ const buildPackGauge = async (THREE) => {
   glass.position.set(-1.7, 0.35, 4.165);
   group.add(glass);
 
-  // Four battery contacts: two, center gap, two.
-  [-13.8, -7.4, 7.4, 13.8].forEach((offset) => {
-    const pin = new THREE.Mesh(new THREE.BoxGeometry(1.05, 8.1, 1.15), metal);
-    pin.position.set(6 + offset, -17.15, -36.05);
+  // Four flat battery contact blades. They sit behind the adapter's four slots
+  // and project slightly through the outer red face: two, center gap, two.
+  [-13.5, -7.0, 7.0, 13.5].forEach((offset) => {
+    const pin = new THREE.Mesh(new THREE.BoxGeometry(0.84, 8.6, 2.4), metal);
+    pin.position.set(adapterCenterX + offset, -16.7, -32.1);
     pin.castShadow = true;
     group.add(pin);
   });
@@ -127,14 +134,15 @@ const buildPackGauge = async (THREE) => {
     group.add(screw);
   });
 
-  // Small exposed wire bundle follows the actual red/black seam.
+  // Small exposed wire bundle follows the real seam on the adapter's left side.
   const wireColors = [0xd31b27, 0xe3ad25, 0x2f67db, 0x17181b];
   wireColors.forEach((color, index) => {
+    const offsetY = (index - 1.5) * 0.95;
     const curve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-26.2, -6.5 + index * 0.7, -11.2),
-      new THREE.Vector3(-29.8, -7 + index * 0.7, -13.2),
-      new THREE.Vector3(-31.4, -7.2 + index * 0.7, -16.4),
-      new THREE.Vector3(-31.1, -7.4 + index * 0.7, -19),
+      new THREE.Vector3(-39.0, -8.0 + offsetY, -22.0),
+      new THREE.Vector3(-40.7, -8.2 + offsetY, -18.0),
+      new THREE.Vector3(-42.5, -7.6 + offsetY, -12.0),
+      new THREE.Vector3(-43.4, -7.7 + offsetY, -6.8),
     ]);
     const wire = new THREE.Mesh(
       new THREE.TubeGeometry(curve, 20, 0.38, 7, false),
@@ -160,7 +168,7 @@ const addLights = (THREE, scene) => {
   fill.position.set(-95, 35, 80);
   scene.add(fill);
 
-  // Extra rear fill keeps the adapter cavity and contacts readable during rotation.
+  // Rear fill keeps the outer adapter face and contact blades readable.
   const rearFill = new THREE.DirectionalLight(0xffffff, 1.15);
   rearFill.position.set(-25, 50, -150);
   scene.add(rearFill);
@@ -199,16 +207,16 @@ const initViewer = async (THREE, root) => {
   floor.receiveShadow = true;
   scene.add(floor);
 
-  // Hero stays roomy for interaction; the lower static view gets a more classic
-  // front-right isometric that shows the screen and red adapter in one read.
-  const camera = new THREE.PerspectiveCamera(interactive ? 27 : 30, 1, 0.1, 1000);
-  const cameraTarget = new THREE.Vector3(0, interactive ? 0 : -2.5, interactive ? -13 : -9);
+  // Hero stays roomy for interaction. The lower view is intentionally more
+  // front-facing so the display remains the focus while still showing depth.
+  const camera = new THREE.PerspectiveCamera(interactive ? 27 : 23, 1, 0.1, 1000);
+  const cameraTarget = new THREE.Vector3(0, interactive ? 0 : -1.5, interactive ? -13 : -8);
   if (interactive) {
     camera.position.set(118, 70, 142);
     product.rotation.set(-0.06, -0.34, 0);
   } else {
-    camera.position.set(106, 68, 176);
-    product.rotation.set(-0.045, 0.16, 0);
+    camera.position.set(122, 58, 202);
+    product.rotation.set(-0.025, -0.08, 0);
   }
   camera.lookAt(cameraTarget);
 
