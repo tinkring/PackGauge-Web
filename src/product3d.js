@@ -77,16 +77,17 @@ const buildPackGauge = async (THREE) => {
   group.add(rear);
 
   // The adapter is offset on the rear of the black enclosure, not centered.
-  // The large U-shaped battery pocket faces outward, matching the physical prototype.
-  // The near face of the red adapter is positioned to butt against the rear black housing
-  // without intersecting it.
+  // IMPORTANT: the large open construction/cavity face of the printed adapter mounts
+  // against the black enclosure. The finished battery-contact pocket faces outward.
+  // The transformed near face is held just behind the rear housing so the parts butt
+  // together without intersecting.
   const adapterLeftX = -45.7 + (0.2605 * 25.4); // -39.0833 mm
   const adapterCenterX = adapterLeftX + 33.0;
   const adapter = meshFromData(THREE, PACKGAUGE_MESHES.adapter, red);
   adapter.applyMatrix4(new THREE.Matrix4().set(
     1, 0, 0, adapterLeftX,
     0, 0, -1, 27.5,
-    0, -1, 0, -9.80,
+    0, 1, 0, -35.79,
     0, 0, 0, 1,
   ));
   group.add(adapter);
@@ -131,12 +132,13 @@ const buildPackGauge = async (THREE) => {
   glass.position.set(-1.7, 0.35, 4.165);
   group.add(glass);
 
-  // Four flat spring contacts inside the red battery pocket. They are centered on
-  // the adapter, arranged as two contacts, a larger center gap, then two contacts.
-  // They sit close to the central red tongue rather than floating out near the lip.
+  // Four flat spring contacts inside the outward-facing battery pocket. They are
+  // centered on the adapter: two contacts, a larger center gap, then two contacts.
+  // The blades sit directly against the red center tongue with only a short exposed
+  // section, matching the prototype instead of floating in front of the housing.
   [-13.2, -6.5, 6.5, 13.2].forEach((offset) => {
     const pin = new THREE.Mesh(new THREE.BoxGeometry(0.95, 7.2, 0.85), metal);
-    pin.position.set(adapterCenterX + offset, -7.2, -34.75);
+    pin.position.set(adapterCenterX + offset, -7.2, -31.1);
     pin.castShadow = true;
     group.add(pin);
   });
@@ -150,6 +152,8 @@ const buildPackGauge = async (THREE) => {
     screw.castShadow = true;
     group.add(screw);
   });
+
+  // Wire routing is intentionally omitted until its final path is locked down.
 
   return group;
 };
