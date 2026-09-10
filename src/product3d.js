@@ -1,3 +1,4 @@
+import './product3d.css';
 import frontMesh from './mesh-front.js';
 import rearMesh from './mesh-rear.js';
 import adapterMesh from './mesh-adapter.js';
@@ -30,20 +31,8 @@ const buildPackGauge = async (THREE) => {
   const group = new THREE.Group();
   group.name = 'PackGauge';
 
-  const black = new THREE.MeshPhysicalMaterial({
-    color: 0x111216,
-    roughness: 0.43,
-    metalness: 0.04,
-    clearcoat: 0.25,
-    clearcoatRoughness: 0.38,
-  });
-  const red = new THREE.MeshPhysicalMaterial({
-    color: 0xe21b2a,
-    roughness: 0.4,
-    metalness: 0.0,
-    clearcoat: 0.12,
-    clearcoatRoughness: 0.5,
-  });
+  const black = new THREE.MeshPhysicalMaterial({ color: 0x111216, roughness: 0.43, metalness: 0.04, clearcoat: 0.25, clearcoatRoughness: 0.38 });
+  const red = new THREE.MeshPhysicalMaterial({ color: 0xe21b2a, roughness: 0.4, metalness: 0, clearcoat: 0.12, clearcoatRoughness: 0.5 });
   const metal = new THREE.MeshStandardMaterial({ color: 0xc8cbd0, roughness: 0.18, metalness: 0.92 });
 
   const front = meshFromData(THREE, PACKGAUGE_MESHES.front, black);
@@ -62,34 +51,20 @@ const buildPackGauge = async (THREE) => {
   ));
   group.add(adapter);
 
-  // Sanitized PackGauge interface, mapped directly onto the physical screen.
   const texture = await new THREE.TextureLoader().loadAsync('./renders/screen-live.svg');
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = 8;
-  const screen = new THREE.Mesh(
-    new THREE.PlaneGeometry(60.4, 40.2),
-    new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }),
-  );
+  const screen = new THREE.Mesh(new THREE.PlaneGeometry(60.4, 40.2), new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
   screen.position.set(-1.7, 0.35, 4.08);
   group.add(screen);
 
   const glass = new THREE.Mesh(
     new THREE.PlaneGeometry(60.9, 40.7),
-    new THREE.MeshPhysicalMaterial({
-      color: 0x131720,
-      transparent: true,
-      opacity: 0.12,
-      roughness: 0.06,
-      metalness: 0,
-      clearcoat: 1,
-      clearcoatRoughness: 0.08,
-      depthWrite: false,
-    }),
+    new THREE.MeshPhysicalMaterial({ color: 0x131720, transparent: true, opacity: 0.12, roughness: 0.06, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.08, depthWrite: false }),
   );
   glass.position.set(-1.7, 0.35, 4.16);
   group.add(glass);
 
-  // Four actual battery contacts: two, a center gap, then two.
   [-13.8, -7.4, 7.4, 13.8].forEach((offset) => {
     const pin = new THREE.Mesh(new THREE.BoxGeometry(1.05, 8.1, 1.15), metal);
     pin.position.set(6 + offset, -17.15, -36.05);
@@ -97,8 +72,7 @@ const buildPackGauge = async (THREE) => {
     group.add(pin);
   });
 
-  // Rear fasteners.
-  const screwGeometry = new THREE.CylinderGeometry(2.0, 2.0, 0.82, 24);
+  const screwGeometry = new THREE.CylinderGeometry(2, 2, 0.82, 24);
   screwGeometry.rotateX(Math.PI / 2);
   [[-40.8, -22.2], [-40.8, 22.2], [40.8, -22.2], [40.8, 22.2]].forEach(([x, y]) => {
     const screw = new THREE.Mesh(screwGeometry, metal);
@@ -107,20 +81,15 @@ const buildPackGauge = async (THREE) => {
     group.add(screw);
   });
 
-  // The real prototype's small exposed wire bundle is tucked along the red/black seam,
-  // not routed into a fake port in the black enclosure.
   const wireColors = [0xd31b27, 0xe3ad25, 0x2f67db, 0x17181b];
   wireColors.forEach((color, index) => {
     const curve = new THREE.CatmullRomCurve3([
       new THREE.Vector3(-26.2, -6.5 + index * 0.7, -11.2),
-      new THREE.Vector3(-29.8, -7.0 + index * 0.7, -13.2),
+      new THREE.Vector3(-29.8, -7 + index * 0.7, -13.2),
       new THREE.Vector3(-31.4, -7.2 + index * 0.7, -16.4),
-      new THREE.Vector3(-31.1, -7.4 + index * 0.7, -19.0),
+      new THREE.Vector3(-31.1, -7.4 + index * 0.7, -19),
     ]);
-    const wire = new THREE.Mesh(
-      new THREE.TubeGeometry(curve, 20, 0.38, 7, false),
-      new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0 }),
-    );
+    const wire = new THREE.Mesh(new THREE.TubeGeometry(curve, 20, 0.38, 7, false), new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0 }));
     wire.castShadow = true;
     group.add(wire);
   });
@@ -159,14 +128,10 @@ const initViewer = async (THREE, root) => {
 
   const scene = new THREE.Scene();
   addLights(THREE, scene);
-
   const product = await buildPackGauge(THREE);
   scene.add(product);
 
-  const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(240, 180),
-    new THREE.ShadowMaterial({ color: 0x000000, opacity: interactive ? 0.27 : 0.22 }),
-  );
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(240, 180), new THREE.ShadowMaterial({ color: 0x000000, opacity: interactive ? 0.27 : 0.22 }));
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -31.5;
   floor.position.z = -12;
@@ -175,8 +140,7 @@ const initViewer = async (THREE, root) => {
 
   const camera = new THREE.PerspectiveCamera(interactive ? 27 : 25, 1, 0.1, 1000);
   const cameraTarget = new THREE.Vector3(0, 0, -13);
-  if (interactive) camera.position.set(118, 70, 142);
-  else camera.position.set(125, 76, 145);
+  camera.position.set(interactive ? 118 : 125, interactive ? 70 : 76, interactive ? 142 : 145);
   camera.lookAt(cameraTarget);
 
   if (!interactive) {
@@ -197,12 +161,7 @@ const initViewer = async (THREE, root) => {
     pauseButton.setAttribute('aria-pressed', String(paused));
   };
   syncPauseLabel();
-
-  pauseButton?.addEventListener('click', () => {
-    paused = !paused;
-    resumeAt = 0;
-    syncPauseLabel();
-  });
+  pauseButton?.addEventListener('click', () => { paused = !paused; resumeAt = 0; syncPauseLabel(); });
 
   if (interactive) {
     canvas.addEventListener('pointerdown', (event) => {
@@ -214,10 +173,8 @@ const initViewer = async (THREE, root) => {
     });
     canvas.addEventListener('pointermove', (event) => {
       if (!drag) return;
-      const dx = event.clientX - lastX;
-      const dy = event.clientY - lastY;
-      product.rotation.y += dx * 0.008;
-      product.rotation.x = THREE.MathUtils.clamp(product.rotation.x + dy * 0.004, -0.32, 0.3);
+      product.rotation.y += (event.clientX - lastX) * 0.008;
+      product.rotation.x = THREE.MathUtils.clamp(product.rotation.x + (event.clientY - lastY) * 0.004, -0.32, 0.3);
       lastX = event.clientX;
       lastY = event.clientY;
     });
@@ -230,10 +187,7 @@ const initViewer = async (THREE, root) => {
     };
     canvas.addEventListener('pointerup', release);
     canvas.addEventListener('pointercancel', release);
-    reducedMotion.addEventListener?.('change', (event) => {
-      paused = event.matches;
-      syncPauseLabel();
-    });
+    reducedMotion.addEventListener?.('change', (event) => { paused = event.matches; syncPauseLabel(); });
   }
 
   const resize = () => {
@@ -260,6 +214,65 @@ const initViewer = async (THREE, root) => {
   requestAnimationFrame(render);
 };
 
+const create = (tag, className, text) => {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text) node.textContent = text;
+  return node;
+};
+
+const makeFallback = (alt) => {
+  const image = create('img', 'viewer-fallback');
+  image.src = './renders/hero-reader.webp';
+  image.alt = alt;
+  image.width = 520;
+  image.height = 347;
+  return image;
+};
+
+const upgradeProductPresentation = () => {
+  const originalHero = document.querySelector('.hero-product.render-hero');
+  if (originalHero) {
+    const viewer = create('div', 'hero-product-3d');
+    viewer.dataset.packgaugeViewer = 'hero';
+    viewer.setAttribute('aria-label', 'Interactive 3D view of the PackGauge standalone reader');
+    const index = create('div', 'viewer-index');
+    index.append(create('strong', '', 'PACKGAUGE / INTERACTIVE 3D'), create('span', '', '01'));
+    const stage = create('div', 'viewer-stage');
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('aria-hidden', 'true');
+    const loading = create('span', 'viewer-loading', 'Building PackGauge in 3D');
+    loading.dataset.viewerLoading = '';
+    stage.append(canvas, loading, makeFallback('Rendered PackGauge standalone diagnostic reader'));
+    const controls = create('div', 'viewer-controls');
+    controls.append(create('span', '', 'Drag to rotate'));
+    const toggle = create('button', 'rotation-toggle', 'Pause rotation');
+    toggle.type = 'button';
+    toggle.dataset.rotationToggle = '';
+    toggle.setAttribute('aria-pressed', 'false');
+    controls.append(toggle);
+    viewer.append(index, stage, controls);
+    originalHero.replaceWith(viewer);
+  }
+
+  const originalReader = document.querySelector('#reader .hardware-detail.render-detail');
+  if (originalReader) {
+    const figure = create('figure', 'reader-visual-3d');
+    const stage = create('div', 'reader-iso-stage');
+    stage.dataset.packgaugeViewer = 'static';
+    stage.setAttribute('aria-label', 'Isometric 3D view of the PackGauge standalone reader');
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('aria-hidden', 'true');
+    const loading = create('span', 'viewer-loading', 'Rendering PackGauge');
+    loading.dataset.viewerLoading = '';
+    stage.append(canvas, loading, makeFallback('Rendered PackGauge standalone diagnostic reader'));
+    const caption = document.createElement('figcaption');
+    caption.append(create('span', '', 'THE READER / STANDALONE'), create('strong', '', 'One model. Every angle.'), create('p', '', 'Source-derived 3D geometry from the current prototype, rendered directly in the browser.'));
+    figure.append(stage, caption);
+    originalReader.replaceWith(figure);
+  }
+};
+
 const boot = async () => {
   const roots = [...document.querySelectorAll('[data-packgauge-viewer]')];
   if (!roots.length) return;
@@ -272,4 +285,5 @@ const boot = async () => {
   }
 };
 
+upgradeProductPresentation();
 boot();
