@@ -99,8 +99,8 @@ const readerRender = document.querySelector('#reader .hardware-detail img');
 if (readerRender) {
   readerRender.src = './renders/product-showcase.webp';
   readerRender.alt = 'Multi-angle PackGauge product render showing the black touchscreen enclosure, red battery-interface cradle, rear contacts, and side profiles';
-  readerRender.width = 1200;
-  readerRender.height = 800;
+  readerRender.width = 520;
+  readerRender.height = 347;
   const readerCaption = readerRender.closest('figure')?.querySelector('figcaption p');
   if (readerCaption) readerCaption.textContent = 'Multi-angle render based on the current PackGauge prototype geometry, with battery branding intentionally omitted.';
 }
