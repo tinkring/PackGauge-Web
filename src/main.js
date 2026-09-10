@@ -16,7 +16,7 @@ const applyBrandSizing = () => {
     glyph.style.flexShrink = '0';
 
     if (brand && isHeaderLogo) {
-      brand.style.fontSize = isDesktopHeaderLogo ? '24px' : '';
+      brand.style.fontSize = isDesktopHeaderLogo ? '28px' : '';
       brand.style.gap = isDesktopHeaderLogo ? '14px' : '';
     }
   });
