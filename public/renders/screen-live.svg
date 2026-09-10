@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
+  <rect width="480" height="320" rx="9" fill="#101114"/>
+  <rect x="8" y="8" width="464" height="42" rx="6" fill="#ed1c24"/>
+  <text x="23" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#fff">PACKGAUGE / DEMO SCAN</text>
+  <text x="447" y="35" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#fff">SD</text>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#d8d9de">
+    <text x="24" y="74" fill="#fff" font-weight="700">Pack</text><text x="106" y="74">Chg</text><text x="177" y="74">Tool</text><text x="244" y="74">Amps</text><text x="324" y="74">Cond</text>
+  </g>
+  <line x1="18" x2="462" y1="84" y2="84" stroke="#ed1c24" stroke-width="2"/>
+  <g font-family="Arial, sans-serif" font-size="14" fill="#92939a">
+    <text x="24" y="111">Pack voltage</text><text x="24" y="136">Cell imbalance</text><text x="24" y="161">Temperature</text><text x="24" y="190">Cells (mV)</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="15" fill="#f4f4f6" font-weight="700">
+    <text x="174" y="111">18.21 V</text><text x="174" y="136" fill="#56dc59">16 mV</text><text x="174" y="161">76.5 °F</text>
+  </g>
+  <text x="246" y="136" font-family="Arial, sans-serif" font-size="13" fill="#56dc59">Observed</text>
+  <g transform="translate(24 204)">
+    <g fill="#272b31" stroke="#62656b"><rect x="0" y="0" width="70" height="28"/><rect x="86" y="0" width="70" height="28"/><rect x="172" y="0" width="70" height="28"/><rect x="258" y="0" width="70" height="28"/><rect x="344" y="0" width="70" height="28"/></g>
+    <g fill="#55dd4a"><rect x="3" y="3" width="64" height="22"/><rect x="89" y="3" width="64" height="22"/><rect x="175" y="3" width="62" height="22"/><rect x="261" y="3" width="62" height="22"/><rect x="347" y="3" width="66" height="22"/></g>
+    <g font-family="Arial, sans-serif" font-size="11" fill="#d7d8dc" text-anchor="middle"><text x="35" y="44">3642</text><text x="121" y="44">3642</text><text x="207" y="44">3637</text><text x="293" y="44">3637</text><text x="379" y="44">3653</text></g>
+  </g>
+  <g transform="translate(18 270)" font-family="Arial, sans-serif" font-size="12" fill="#fff" text-anchor="middle">
+    <g fill="#28364f" stroke="#ed1c24"><rect width="92" height="34" rx="5"/><rect x="113" width="92" height="34" rx="5"/><rect x="226" width="92" height="34" rx="5"/><rect x="339" width="92" height="34" rx="5"/></g>
+    <text x="46" y="22">Home</text><text x="159" y="22">Note</text><text x="272" y="22">Email</text><text x="385" y="22">Back</text>
+  </g>
+</svg>
