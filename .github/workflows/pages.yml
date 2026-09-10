@@ -29,6 +29,10 @@ jobs:
         run: npm ci
       - name: Run site checks
         run: npm run check
+      - name: Use versioned social preview
+        run: |
+          sed -i 's#https://packgauge.com/og-packgauge.png#https://packgauge.com/og-packgauge-v2.jpg#g' index.html
+          sed -i 's#content="image/png"#content="image/jpeg"#' index.html
       - name: Build site
         run: npm run build
       - name: Configure Pages
