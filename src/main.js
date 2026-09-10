@@ -3,8 +3,10 @@ import './styles.css';
 // Replace the original text PG tile with the finalized PackGauge mark.
 document.querySelectorAll('.brand-glyph').forEach((glyph) => {
   glyph.textContent = '';
-  glyph.style.width = '44px';
-  glyph.style.height = '44px';
+  const isDesktopHeaderLogo = glyph.closest('.site-header') && window.matchMedia('(min-width: 801px)').matches;
+  const logoSize = isDesktopHeaderLogo ? '52px' : '44px';
+  glyph.style.width = logoSize;
+  glyph.style.height = logoSize;
   glyph.style.background = 'transparent url("./brand-mark.svg") center / contain no-repeat';
   glyph.style.flexShrink = '0';
 });
