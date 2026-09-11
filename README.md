@@ -6,9 +6,18 @@ This repository contains only the public website. It is intentionally standalone
 
 ## Product presentation
 
-The homepage uses a red / black / white industrial visual system, a rendered standalone reader, and sanitized interface renders based on the current PackGauge UI. Raw prototype photographs, third-party battery logos, battery model marks, and identifying pack information are intentionally not used in the public artwork.
+The homepage uses a red / black / white industrial visual system, a sharp screen-on reader preview, optional 3D hardware views, and sanitized interface renders based on the current PackGauge UI. Raw prototype photographs, third-party battery logos, battery model marks, and identifying pack information are intentionally not used in the public artwork.
 
 The interface images under `public/renders/` are website presentation assets. They are not live scans, health certifications, or screenshots of an identified physical battery. The Pack screen uses demo-only identifiers and representative values.
+
+The 3D library loads only when a visitor chooses a 3D view. The still image stays
+visible if 3D cannot load. Rendering pauses outside the viewport and when the
+browser tab is hidden; a static view redraws only when needed.
+
+Development updates use a clearly labeled, prefilled email request to the project
+contact address. There is no automated mailing-list service connected. Compatibility
+examples come from documented bench observations, with limits stated for each sample.
+See [website content notes](docs/website-content-notes.md) for the evidence and scope.
 
 ## Local development
 
