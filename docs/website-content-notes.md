@@ -18,11 +18,12 @@ models. Do not infer compatibility from capacity alone or count the website's
 sanitized example screens as test evidence. The public table deliberately omits
 third-party branding, serials, and identifying sample information.
 
-## Development updates
+## Contact
 
-The updates action opens a prefilled email to `contact@packgauge.com`. The visitor
-must send it. It is a manual request, not an automated subscription form. The site
-does not store email addresses or claim that a visitor has been subscribed.
+The contact action opens a standard email to `contact@packgauge.com`. Public
+contact copy uses the PackGauge brand and does not include the owner's name,
+a prewritten message, or an invitation to subscribe. The site does not store
+email addresses or claim that a visitor has been subscribed.
 
 ## Presentation
 
