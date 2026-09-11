@@ -21,8 +21,8 @@ when needed. Visitors can pause rotation or turn the model themselves.
 The enlarged screen gallery has Previous/Next controls and supports the left and
 right arrow keys. Closing it returns focus to the matching screen's enlarge button.
 
-Development updates use a clearly labeled, prefilled email request to the project
-contact address. There is no automated mailing-list service connected. Compatibility
+Contact actions open a standard email to `contact@packgauge.com`, using the
+PackGauge brand without a personal salutation or signup language. Compatibility
 examples come from documented bench observations, with limits stated for each sample.
 See [website content notes](docs/website-content-notes.md) for the evidence and scope.
 
