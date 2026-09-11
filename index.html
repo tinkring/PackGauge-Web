@@ -47,7 +47,7 @@
           <button class="viewer-load" type="button" data-load-viewer hidden>Explore in 3D</button>
           <div class="viewer-controls" hidden>
             <button type="button" data-turn="left" aria-label="Rotate reader left">←</button>
-            <button type="button" data-rotation-toggle aria-pressed="false">Pause rotation</button>
+            <button type="button" data-rotation-toggle>Pause rotation</button>
             <button type="button" data-turn="right" aria-label="Rotate reader right">→</button>
             <button type="button" data-reset-view>Reset view</button>
           </div>
@@ -144,7 +144,12 @@
     <aside class="wrap legal-note"><strong>Independent product. Clear limits.</strong><p>PackGauge is an independent third-party diagnostic project. Third-party product names, logos, and battery branding are intentionally omitted from the website artwork. A scan does not establish battery safety, authenticity, capacity, or health. <a href="./safety.html">Safety &amp; diagnostic limits.</a></p></aside>
   </main>
   <footer class="site-footer"><a class="brand" href="./index.html"><img class="brand-glyph" src="./brand-mark.svg" width="64" height="64" alt="" aria-hidden="true" /><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="#screens">Screens</a><a href="#story">The Story</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a><a href="mailto:contact@packgauge.com">Contact</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
-  <dialog class="photo-dialog" aria-labelledby="photo-dialog-title"><div class="dialog-heading"><h2 id="photo-dialog-title">PackGauge interface render</h2><button type="button" class="dialog-close" autofocus>Close <span aria-hidden="true">×</span></button></div><img alt="" /><p>Vector reconstruction of a current firmware screen. Not a live connection or an independently verified battery assessment.</p></dialog>
+  <dialog class="photo-dialog" aria-labelledby="photo-dialog-title">
+    <div class="dialog-heading"><h2 id="photo-dialog-title" aria-live="polite" aria-atomic="true">PackGauge interface render</h2><button type="button" class="dialog-close" autofocus>Close <span aria-hidden="true">×</span></button></div>
+    <img alt="" width="1280" height="960" />
+    <div class="dialog-navigation" role="group" aria-label="Browse screen renders"><button type="button" data-dialog-step="-1"><span aria-hidden="true">←</span> Previous</button><span data-dialog-position>1 of 5</span><button type="button" data-dialog-step="1">Next <span aria-hidden="true">→</span></button></div>
+    <p>Vector reconstruction of a current firmware screen. Not a live connection or an independently verified battery assessment.</p>
+  </dialog>
   <script type="module" src="./src/main.js"></script>
 </body>
 </html>

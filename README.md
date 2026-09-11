@@ -10,9 +10,16 @@ The homepage uses a red / black / white industrial visual system, a sharp screen
 
 The interface images under `public/renders/` are website presentation assets. They are not live scans, health certifications, or screenshots of an identified physical battery. The Pack screen uses demo-only identifiers and representative values.
 
-The 3D library loads only when a visitor chooses a 3D view. The still image stays
+The hero opens its rotating 3D view automatically after the page loads and the
+preview is visible. Reduced-motion and data-saver preferences keep the still
+preview until the visitor chooses 3D. The pinned Three.js version is served as a
+separate site asset, without a runtime CDN dependency. The still image stays
 visible if 3D cannot load. Rendering pauses outside the viewport and when the
-browser tab is hidden; a static view redraws only when needed.
+browser tab is hidden; the lower hardware view opens on request and redraws only
+when needed. Visitors can pause rotation or turn the model themselves.
+
+The enlarged screen gallery has Previous/Next controls and supports the left and
+right arrow keys. Closing it returns focus to the matching screen's enlarge button.
 
 Development updates use a clearly labeled, prefilled email request to the project
 contact address. There is no automated mailing-list service connected. Compatibility

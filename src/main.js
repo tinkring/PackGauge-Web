@@ -18,7 +18,15 @@ function setMenu(open, restoreFocus = false) {
 toggle?.removeAttribute('hidden');
 toggle?.addEventListener('click', () => setMenu(!menuOpen()));
 nav?.addEventListener('click', (event) => {
-  if (event.target.closest('a')) setMenu(false);
+  const link = event.target.closest('a');
+  if (!link) return;
+  const wasOpen = menuOpen();
+  setMenu(false);
+  if (wasOpen && link.getAttribute('href').startsWith('#')) {
+    const target = document.getElementById(link.hash.slice(1));
+    target?.setAttribute('tabindex', '-1');
+    target?.focus({ preventScroll: true });
+  }
 });
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && menuOpen()) setMenu(false, true);
@@ -72,28 +80,53 @@ if (gallery) {
   const dialog = document.querySelector('.photo-dialog');
   const dialogImage = dialog?.querySelector('img');
   const dialogTitle = dialog?.querySelector('#photo-dialog-title');
+  const dialogPosition = dialog?.querySelector('[data-dialog-position]');
   const close = dialog?.querySelector('.dialog-close');
   let opener = null;
+  let dialogIndex = 0;
+
+  const showRender = (index) => {
+    dialogIndex = (index + panels.length) % panels.length;
+    const panel = panels[dialogIndex];
+    const image = panel.querySelector('img');
+    if (!dialogImage || !image) return;
+    dialogImage.src = image.src;
+    dialogImage.alt = image.alt;
+    if (dialogTitle) dialogTitle.textContent = `${tabs[dialogIndex].textContent.trim()} screen`;
+    if (dialogPosition) dialogPosition.textContent = `${dialogIndex + 1} of ${panels.length}`;
+    activate(tabs[dialogIndex]);
+    opener = panel.querySelector('[data-enlarge]');
+  };
 
   gallery.querySelectorAll('[data-enlarge]').forEach((button) => {
+    if (typeof dialog?.showModal !== 'function') return;
     button.removeAttribute('hidden');
     button.addEventListener('click', () => {
-      const figure = button.closest('figure');
-      const image = figure?.querySelector('img');
-      if (!dialog || !dialogImage || !image) return;
-      opener = button;
-      dialogImage.src = image.src;
-      dialogImage.alt = image.alt;
-      if (dialogTitle) dialogTitle.textContent = figure?.querySelector('figcaption')?.childNodes[0]?.textContent?.trim() || 'PackGauge interface render';
+      const index = panels.indexOf(button.closest('[role="tabpanel"]'));
+      if (index < 0) return;
+      showRender(index);
       dialog.showModal();
+      document.documentElement.classList.add('gallery-open');
     });
   });
 
+  dialog?.querySelectorAll('[data-dialog-step]').forEach((button) => {
+    button.addEventListener('click', () => showRender(dialogIndex + Number(button.dataset.dialogStep)));
+  });
+  dialog?.addEventListener('keydown', (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    showRender(dialogIndex + (event.key === 'ArrowRight' ? 1 : -1));
+  });
   close?.addEventListener('click', () => dialog.close());
   dialog?.addEventListener('click', (event) => {
     if (event.target === dialog) dialog.close();
   });
-  dialog?.addEventListener('close', () => opener?.focus());
+  dialog?.addEventListener('close', () => {
+    document.documentElement.classList.remove('gallery-open');
+    opener?.focus();
+  });
 }
 
 document.documentElement.classList.add('js');

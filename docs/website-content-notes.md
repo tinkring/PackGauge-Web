@@ -27,10 +27,17 @@ does not store email addresses or claim that a visitor has been subscribed.
 ## Presentation
 
 The existing `screen-pack.svg` is the sharp, screen-on poster for both viewers.
-It remains visible while loading and when 3D is unavailable. Three.js loads only
-after a visitor requests a 3D view. Static views redraw on demand; rotating views
-stop outside the viewport or when the page is hidden. Dragging and the directional
-buttons pause rotation until the visitor resumes it.
+It remains visible while loading and when 3D is unavailable. The hero starts 3D
+automatically once the page is loaded and the preview is visible, unless reduced
+motion or data saving is requested. The lower hardware view opens on request.
+Three.js is pinned at 0.180.0 and served from the site's own build output. Static
+views redraw on demand; rotating views stop outside the viewport or when the page
+is hidden. Dragging and the directional buttons pause rotation until the visitor
+resumes it. A manual request cancels any pending automatic start.
+
+The enlarged gallery uses the same five sanitized SVG renders, with Previous/Next
+buttons and left/right arrow keys. It keeps the selected tab in sync and returns
+keyboard focus to the corresponding enlarge button when closed.
 
 The approved social card is `public/og-packgauge-v3.jpg`. Its metadata lives in
 the three HTML pages; the deployment workflow does not rewrite that metadata.
