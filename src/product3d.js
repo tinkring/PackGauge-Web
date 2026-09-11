@@ -1,12 +1,12 @@
 import './product3d.css';
 import { createRenderLoop } from './viewer-loop.js';
+import { scheduleViewerStart } from './viewer-autostart.js';
 import frontMesh from './mesh-front.js';
 import rearMesh from './mesh-rear.js';
 import adapterMesh from './mesh-adapter.js';
 
 const PACKGAUGE_MESHES = { front: frontMesh, rear: rearMesh, adapter: adapterMesh };
 
-const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const decode = (value, Type) => {
@@ -229,19 +229,32 @@ const initViewer = async (THREE, root, onFailure) => {
   const pauseButton = root.querySelector('[data-rotation-toggle]');
   const loop = createRenderLoop({ draw: (_now, dt) => {
     if (interactive && !paused && !drag) product.rotation.y += dt * 0.22;
-    renderer.render(scene, camera);
+    try {
+      renderer.render(scene, camera);
+    } catch (error) {
+      cleanup();
+      onFailure();
+      return;
+    }
     if (!shown) {
       shown = true;
       root.classList.add('is-ready');
       const controls = root.querySelector('.viewer-controls');
       if (controls) controls.hidden = false;
+      const loadButton = root.querySelector('[data-load-viewer]');
+      const moveFocus = document.activeElement === loadButton;
+      loadButton.hidden = true;
+      if (moveFocus) {
+        const focusTarget = controls?.querySelector('button') ?? root;
+        if (focusTarget === root) root.tabIndex = -1;
+        focusTarget.focus({ preventScroll: true });
+      }
       status.textContent = interactive ? 'Drag sideways to rotate, or use the buttons.' : '';
     }
   } });
   const syncRotation = () => {
     if (pauseButton) {
       pauseButton.textContent = paused ? 'Resume rotation' : 'Pause rotation';
-      pauseButton.setAttribute('aria-pressed', String(paused));
     }
     loop.setContinuous(interactive && !paused && !drag);
   };
@@ -332,10 +345,10 @@ const initViewer = async (THREE, root, onFailure) => {
   return cleanup;
 };
 
-// No third-party requests or WebGL contexts until a visitor asks for 3D.
+// Vite serves this separate chunk from the same site, without a runtime CDN.
 let threePromise;
 const loadThree = () => {
-  if (!threePromise) threePromise = import(/* @vite-ignore */ THREE_URL).catch((error) => {
+  if (!threePromise) threePromise = import('./three-viewer.js').catch((error) => {
     threePromise = undefined;
     throw error;
   });
@@ -346,6 +359,7 @@ for (const root of document.querySelectorAll('[data-packgauge-viewer]')) {
   const status = root.querySelector('[data-viewer-status]');
   let cleanup;
   let loading = false;
+  let cancelAutomatic = () => {};
   if (!button || !status) continue;
   button.hidden = false;
   const failure = () => {
@@ -357,7 +371,7 @@ for (const root of document.querySelectorAll('[data-packgauge-viewer]')) {
     button.textContent = 'Try 3D again';
     status.textContent = '3D could not open here. You can still use the screen gallery.';
   };
-  button.addEventListener('click', async () => {
+  const startViewer = async (automatic = false) => {
     if (loading) return;
     loading = true;
     button.disabled = true;
@@ -377,9 +391,12 @@ for (const root of document.querySelectorAll('[data-packgauge-viewer]')) {
         new Promise((_, reject) => { deadline = setTimeout(() => reject(new Error('3D download timed out')), 15000); }),
       ]);
       cleanup = await initViewer(THREE, root, failure);
-      button.hidden = true;
     } catch (error) {
       failure();
+      if (automatic) {
+        button.textContent = 'Explore in 3D';
+        status.textContent = 'Showing the still preview. You can try 3D with the button.';
+      }
       console.warn('PackGauge 3D preview unavailable', error);
     } finally {
       clearTimeout(deadline);
@@ -387,5 +404,12 @@ for (const root of document.querySelectorAll('[data-packgauge-viewer]')) {
       button.disabled = false;
       root.removeAttribute('aria-busy');
     }
+  };
+  button.addEventListener('click', () => {
+    cancelAutomatic();
+    startViewer();
   });
+  if (root.dataset.packgaugeViewer === 'hero') {
+    cancelAutomatic = scheduleViewerStart(root, () => startViewer(true));
+  }
 }
