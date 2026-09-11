@@ -23,71 +23,74 @@
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./src/styles.css" />
   <title>PackGauge — More than a voltage reading</title>
-  <style>
-    .story-section { border-top: 1px solid var(--line); }
-    .story-copy { max-width: 680px; }
-    .story-copy p { color: var(--muted); }
-    .story-copy p + p { margin-top: 20px; }
-    .story-copy .story-question { color: #fff; font-size: 20px; line-height: 1.5; }
-    .story-copy .story-close { color: #fff; font-size: 18px; line-height: 1.55; }
-    .photo-tabs { flex-wrap: wrap; justify-content: flex-end; }
-    @media (max-width: 540px) {
-      .photo-tabs button { flex: 1 1 calc(33.333% - 7px); min-width: 92px; }
-    }
-  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" data-header>
-    <a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a>
+    <a class="brand" href="./index.html" aria-label="PackGauge home"><img class="brand-glyph" src="./brand-mark.svg" width="64" height="64" alt="" aria-hidden="true" /><span>PACK<span>GAUGE</span></span></a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
-    <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="#reader">The reader</a><a href="#screens">On the screen</a><a href="#story">The Story</a><a href="./compatibility.html">Compatibility</a><a class="nav-action" href="#status">Project status <span aria-hidden="true">↗</span></a></nav>
+    <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="#reader">The reader</a><a href="#screens">On the screen</a><a href="#story">The Story</a><a href="./compatibility.html">Compatibility</a><a class="nav-action" href="#status">Get updates <span aria-hidden="true">↗</span></a></nav>
   </header>
   <main id="main">
     <section id="product" class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="kicker">Independent battery diagnostics</p>
         <h1 id="hero-title">More than<br /><span>a voltage</span><br />reading.</h1>
-        <p class="hero-lede">See cell-bank balance, charging history, tool-use statistics, fault counters, load history, and operating-condition history—all from a standalone touchscreen reader.</p>
-        <div class="hero-actions"><a class="button" href="#screens">Explore the screens <span aria-hidden="true">↗</span></a><a class="text-link" href="./compatibility.html">Check compatibility <span aria-hidden="true">→</span></a></div>
-        <p class="micro">Designed for supported 18V lithium-ion tool battery packs.<br />Independent third-party diagnostic project.</p>
       </div>
-      <figure class="hero-product render-hero">
-        <div class="photo-index"><span>PACKGAUGE / PRODUCT RENDER</span><span>01</span></div>
-        <img src="./renders/hero-reader.webp" alt="Multi-angle PackGauge product render showing the black touchscreen enclosure and red battery-interface cradle" width="520" height="347" fetchpriority="high" />
-        <figcaption><strong>PackGauge / standalone reader</strong><span>Multi-angle render based on the current prototype · no battery branding shown</span></figcaption>
+      <figure class="hero-product product-viewer" data-packgauge-viewer="hero" aria-label="PackGauge reader preview">
+        <div class="viewer-stage">
+          <img class="viewer-poster" src="./renders/screen-pack.svg" alt="PackGauge reader with the Pack screen visible, showing five cell-bank readings and sample data" width="1280" height="960" fetchpriority="high" />
+          <canvas hidden aria-hidden="true"></canvas>
+        </div>
+        <figcaption><strong>PackGauge / standalone reader</strong><span>Current prototype · example screen</span></figcaption>
+        <div class="viewer-actions">
+          <button class="viewer-load" type="button" data-load-viewer hidden>Explore in 3D</button>
+          <div class="viewer-controls" hidden>
+            <button type="button" data-turn="left" aria-label="Rotate reader left">←</button>
+            <button type="button" data-rotation-toggle aria-pressed="false">Pause rotation</button>
+            <button type="button" data-turn="right" aria-label="Rotate reader right">→</button>
+            <button type="button" data-reset-view>Reset view</button>
+          </div>
+          <p class="viewer-status" data-viewer-status role="status" aria-live="polite"></p>
+        </div>
       </figure>
+      <div class="hero-summary">
+        <p class="hero-lede">See cell-group voltages and your battery’s recorded history—without opening the pack or connecting it to a computer.</p>
+        <div class="hero-actions"><a class="button" href="#screens">Explore the screens <span aria-hidden="true">↗</span></a><a class="text-link" href="./compatibility.html#bench-results">Check compatibility <span aria-hidden="true">→</span></a></div>
+        <p class="availability"><strong>Working prototype</strong><span>In development</span></p>
+        <p class="micro">Designed for supported 18V lithium-ion tool battery packs.<br />No purchase option or public release yet.</p>
+      </div>
       <div class="feature-strip"><p><span>01</span> Five cell-bank readings</p><p><span>02</span> Charge, use &amp; fault history</p><p><span>03</span> Load &amp; condition charts</p></div>
     </section>
 
     <section id="screens" class="screens-section section-pad" aria-labelledby="screens-title" data-gallery>
       <div class="wrap">
-        <div class="section-intro"><div><p class="kicker">On the screen</p><h2 id="screens-title">Your pack.<br /><span>A closer look.</span></h2></div><p>Explore the same five diagnostic views used on PackGauge: pack condition, charging history, tool use, current history, and operating conditions.</p></div>
+        <div class="section-intro"><div><p class="kicker">On the screen</p><h2 id="screens-title">Your pack.<br /><span>A closer look.</span></h2></div><p>Explore the same five diagnostic views used on PackGauge. Choose a tab to see the screen and learn what its readings mean.</p></div>
         <div class="gallery-bar"><span class="eyebrow">Rendered from current firmware</span><div class="photo-tabs" role="tablist" aria-label="Choose a PackGauge interface render" hidden><button id="tab-pack" type="button" role="tab" aria-selected="true" aria-controls="photo-pack" tabindex="0">Pack</button><button id="tab-charge" type="button" role="tab" aria-selected="false" aria-controls="photo-charge" tabindex="-1">Charge</button><button id="tab-tool" type="button" role="tab" aria-selected="false" aria-controls="photo-tool" tabindex="-1">Tool</button><button id="tab-amps" type="button" role="tab" aria-selected="false" aria-controls="photo-amps" tabindex="-1">Amps</button><button id="tab-conditions" type="button" role="tab" aria-selected="false" aria-controls="photo-conditions" tabindex="-1">Conditions</button></div></div>
 
         <section id="photo-pack" class="photo-panel" role="tabpanel" aria-labelledby="pack-heading" tabindex="0">
           <figure class="screen-photo"><img src="./renders/screen-pack.svg" alt="Rendered PackGauge Pack tab showing sanitized pack metadata, pack voltage, cell imbalance, temperature, and five cell-bank readings" width="1280" height="960" loading="lazy" /><figcaption>Pack tab · current-firmware render <button class="enlarge" type="button" data-enlarge hidden>Enlarge render <span aria-hidden="true">↗</span></button></figcaption></figure>
-          <div class="photo-copy"><p class="kicker">01 / Pack</p><h3 id="pack-heading">Five banks.<br />One quick picture.</h3><p>The pack view puts the voltage spread in context instead of stopping at total pack voltage.</p><dl class="photo-notes"><div><dt>Pack identity &amp; age</dt><dd>Pack configuration, electronic serial information, and manufacture date when the pack exposes them.</dd></div><div><dt>Voltage, temperature &amp; imbalance</dt><dd>See total voltage, pack temperature, calculated cell-bank spread, and a simple on-screen status cue.</dd></div><div><dt>Five cell-bank readings</dt><dd>Individual millivolt values with the lowest and highest banks called out directly.</dd></div></dl><p class="photo-caution">Displayed values are representative sanitized records, not a live measurement or a health/safety certification.</p></div>
+          <div class="photo-copy"><p class="kicker">01 / Pack</p><h3 id="pack-heading">Five banks.<br />One quick picture.</h3><p>The pack view puts the voltage spread in context instead of stopping at total pack voltage.</p><dl class="photo-notes"><div><dt>Pack identity &amp; age</dt><dd>Pack configuration, electronic serial information, and manufacture date when the pack exposes them.</dd></div><div><dt>Voltage, temperature &amp; imbalance</dt><dd>See total voltage, pack temperature, calculated cell-bank spread, and a simple on-screen status cue.</dd></div><div><dt>Five cell-bank readings</dt><dd>Individual millivolt values with the lowest and highest banks called out directly.</dd></div></dl><aside class="screen-explainer"><strong>How to read this view</strong><p>Each bank is a group of cells. Here, the highest bank is 4.120 V and the lowest is 4.097 V: a difference of 23 mV. That spread is one diagnostic reading, not a safety grade.</p></aside><p class="photo-caution">Displayed values are representative sanitized records, not a live measurement or a health/safety certification.</p></div>
         </section>
 
         <section id="photo-charge" class="photo-panel" role="tabpanel" aria-labelledby="charge-heading" tabindex="0">
           <figure class="screen-photo"><img src="./renders/screen-charge.svg" alt="Rendered PackGauge charging-history tab showing charge counts, charge time, charger-idle time, low-voltage charge events, and time since charging" width="1280" height="960" loading="lazy" /><figcaption>Charge tab · current-firmware render <button class="enlarge" type="button" data-enlarge hidden>Enlarge render <span aria-hidden="true">↗</span></button></figcaption></figure>
-          <div class="photo-copy"><p class="kicker">02 / Charge</p><h3 id="charge-heading">See how it<br />has been charged.</h3><p>When the pack provides the records, PackGauge can surface more than a simple charge count.</p><dl class="photo-notes"><div><dt>Charge counts</dt><dd>Total charges plus the charging-method counters reported by the pack.</dd></div><div><dt>Time on the charger</dt><dd>Accumulated charge time and the separate time the pack has remained idle on a charger.</dd></div><div><dt>Low-voltage history</dt><dd>Low-cell-voltage charge events plus days since the latest and first recorded charge.</dd></div></dl></div>
+          <div class="photo-copy"><p class="kicker">02 / Charge</p><h3 id="charge-heading">See how it<br />has been charged.</h3><p>When the pack provides the records, PackGauge can surface more than a simple charge count.</p><dl class="photo-notes"><div><dt>Charge counts</dt><dd>Total charges plus the charging-method counters reported by the pack.</dd></div><div><dt>Time on the charger</dt><dd>Accumulated charge time and the separate time the pack has remained idle on a charger.</dd></div><div><dt>Low-voltage history</dt><dd>Low-cell-voltage charge events plus days since the latest and first recorded charge.</dd></div></dl><aside class="screen-explainer"><strong>How to read this view</strong><p>Charging time and time left idle on a charger are separate records. Charge counts describe use over time; they do not measure the capacity the pack has left.</p></aside></div>
         </section>
 
         <section id="photo-tool" class="photo-panel" role="tabpanel" aria-labelledby="tool-heading" tabindex="0">
           <figure class="screen-photo"><img src="./renders/screen-tool.svg" alt="Rendered PackGauge tool-use tab showing total discharge, discharge cycles, high-current time, days since use, and pack fault counters" width="1280" height="960" loading="lazy" /><figcaption>Tool tab · current-firmware render <button class="enlarge" type="button" data-enlarge hidden>Enlarge render <span aria-hidden="true">↗</span></button></figcaption></figure>
-          <div class="photo-copy"><p class="kicker">03 / Tool</p><h3 id="tool-heading">The history<br />behind the work.</h3><p>Usage records help show what the pack has experienced between the times you put it on a meter.</p><dl class="photo-notes"><div><dt>Discharge &amp; cycles</dt><dd>Total discharged amp-hours and the pack's reported or derived discharge-cycle value.</dd></div><div><dt>Time under load</dt><dd>Accumulated time above 10 amps and days since the most recent recorded tool use.</dd></div><div><dt>Fault counters</dt><dd>Empty, overheat, overcurrent, low-voltage, and low-voltage-bounce counters when available.</dd></div></dl></div>
+          <div class="photo-copy"><p class="kicker">03 / Tool</p><h3 id="tool-heading">The history<br />behind the work.</h3><p>Usage records help show what the pack has experienced between the times you put it on a meter.</p><dl class="photo-notes"><div><dt>Discharge &amp; cycles</dt><dd>Total discharged amp-hours and the pack's reported or derived discharge-cycle value.</dd></div><div><dt>Time under load</dt><dd>Accumulated time above 10 amps and days since the most recent recorded tool use.</dd></div><div><dt>Fault counters</dt><dd>Empty, overheat, overcurrent, low-voltage, and low-voltage-bounce counters when available.</dd></div></dl><aside class="screen-explainer"><strong>How to read this view</strong><p>These counters describe recorded events over the pack’s life. A past overheating event is different from a measurement of its temperature right now.</p></aside></div>
         </section>
 
         <section id="photo-amps" class="photo-panel" role="tabpanel" aria-labelledby="amps-heading" tabindex="0">
           <figure class="screen-photo"><img src="./renders/screen-amps.svg" alt="Rendered PackGauge Amps tab showing current-use history in 10-amp bins with histogram and logarithmic-scale controls" width="1280" height="960" loading="lazy" /><figcaption>Amps tab · current-firmware render <button class="enlarge" type="button" data-enlarge hidden>Enlarge render <span aria-hidden="true">↗</span></button></figcaption></figure>
-          <div class="photo-copy"><p class="kicker">04 / Amps</p><h3 id="amps-heading">See where the<br />current went.</h3><p>The current-history view can turn a long list of counters into something you can read at a glance.</p><dl class="photo-notes"><div><dt>10-amp load bands</dt><dd>Recorded use grouped into current ranges so time under lighter and heavier loads is easy to compare.</dd></div><div><dt>Table or chart</dt><dd>Move between time-and-percentage tables and a histogram view on the touchscreen.</dd></div><div><dt>Linear or log scale</dt><dd>Switch scales when the long tail of higher-current use would otherwise be hard to see.</dd></div></dl></div>
+          <div class="photo-copy"><p class="kicker">04 / Amps</p><h3 id="amps-heading">See where the<br />current went.</h3><p>The current-history view can turn a long list of counters into something you can read at a glance.</p><dl class="photo-notes"><div><dt>10-amp load bands</dt><dd>Recorded use grouped into current ranges so time under lighter and heavier loads is easy to compare.</dd></div><div><dt>Table or chart</dt><dd>Move between time-and-percentage tables and a histogram view on the touchscreen.</dd></div><div><dt>Linear or log scale</dt><dd>Switch scales when the long tail of higher-current use would otherwise be hard to see.</dd></div></dl><aside class="screen-explainer"><strong>How to read this view</strong><p>A taller bar means more recorded time in that load range. This is a history of current use, not a live measurement of amps flowing now.</p></aside></div>
         </section>
 
         <section id="photo-conditions" class="photo-panel" role="tabpanel" aria-labelledby="conditions-heading" tabindex="0">
           <figure class="screen-photo"><img src="./renders/screen-conditions.svg" alt="Rendered PackGauge Conditions tab showing temperature-history bins, below-freezing events, under-17-volt events, and chart scale controls" width="1280" height="960" loading="lazy" /><figcaption>Conditions tab · current-firmware render <button class="enlarge" type="button" data-enlarge hidden>Enlarge render <span aria-hidden="true">↗</span></button></figcaption></figure>
-          <div class="photo-copy"><p class="kicker">05 / Conditions</p><h3 id="conditions-heading">Heat, cold,<br />and low voltage.</h3><p>Condition history adds another layer to the story of how a pack has been stored, charged, and used.</p><dl class="photo-notes"><div><dt>Temperature history</dt><dd>View recorded temperature ranges as a histogram, with temperature and time-oriented modes available.</dd></div><div><dt>Cold exposure</dt><dd>A separate count surfaces recorded events below freezing when that history is available.</dd></div><div><dt>Low-voltage events</dt><dd>Track records originating below 17 volts, with chart and linear/log display controls.</dd></div></dl></div>
+          <div class="photo-copy"><p class="kicker">05 / Conditions</p><h3 id="conditions-heading">Heat, cold,<br />and low voltage.</h3><p>Condition history adds another layer to the story of how a pack has been stored, charged, and used.</p><dl class="photo-notes"><div><dt>Temperature history</dt><dd>View recorded temperature ranges as a histogram, with temperature and time-oriented modes available.</dd></div><div><dt>Cold exposure</dt><dd>A separate count surfaces recorded events below freezing when that history is available.</dd></div><div><dt>Low-voltage events</dt><dd>Track records originating below 17 volts, with chart and linear/log display controls.</dd></div></dl><aside class="screen-explainer"><strong>How to read this view</strong><p>These charts summarize the conditions the pack has recorded. An unavailable temperature or low-voltage field does not mean that an event never happened.</p></aside></div>
         </section>
 
         <noscript><p class="gallery-note">All five current-firmware interface renders are shown below each other because JavaScript is off.</p></noscript>
@@ -96,7 +99,11 @@
 
     <section id="reader" class="wrap section-pad reader-section" aria-labelledby="reader-title">
       <div class="reader-copy"><p class="kicker">Built around the workflow</p><h2 id="reader-title">A reader.<br /><span>Not another app.</span></h2><p class="section-copy">PackGauge keeps the scan, history review, notes, saved records, and sharing workflow on the unit. The current prototype also includes on-device setup, touch calibration, Wi-Fi/SD status, and multiple appearance themes.</p><dl class="record-features"><div><dt>Pack snapshot</dt><dd>Pack voltage and temperature, five cell-bank readings, imbalance, and pack metadata when available.</dd></div><div><dt>History behind the pack</dt><dd>Charging records, discharge/use history, fault counters, current-load bins, and operating-condition history.</dd></div><div><dt>Save, annotate &amp; share</dt><dd>Store scans on micro-SD, add notes, revisit records, compare saved scans, and email logs over configured Wi-Fi.</dd></div><div><dt>Standalone controls</dt><dd>Touch calibration, setup flow, Wi-Fi and SD status, five appearance themes, and firmware/about information live on the reader.</dd></div></dl></div>
-      <figure class="hardware-detail render-detail"><img src="./renders/product-showcase.webp" alt="Multi-angle PackGauge product render showing the black touchscreen enclosure, red battery-interface cradle, rear contacts, and side profiles" width="520" height="347" loading="lazy" /><figcaption><span>THE READER / STANDALONE</span><strong>Black enclosure. Red adapter.</strong><p>Multi-angle render based on the current PackGauge prototype geometry, with battery branding intentionally omitted.</p></figcaption></figure>
+      <figure class="hardware-detail product-viewer" data-packgauge-viewer="static" aria-label="PackGauge hardware preview">
+        <div class="viewer-stage"><img class="viewer-poster" src="./renders/screen-pack.svg" alt="Front view of the PackGauge reader with its diagnostic screen illuminated" width="1280" height="960" loading="lazy" /><canvas hidden aria-hidden="true"></canvas></div>
+        <figcaption><span>THE READER / STANDALONE</span><strong>Ready for a closer look.</strong><p>A touchscreen, saved records, and a dedicated battery interface in one compact reader.</p></figcaption>
+        <div class="viewer-actions"><button class="viewer-load" type="button" data-load-viewer hidden>View hardware in 3D</button><p class="viewer-status" data-viewer-status role="status" aria-live="polite"></p></div>
+      </figure>
     </section>
 
     <section id="workflow" class="workflow-section" aria-labelledby="workflow-title"><div class="wrap section-pad"><div class="section-intro"><div><p class="kicker">At the workbench</p><h2 id="workflow-title">Connect. Scan.<br />Take a closer look.</h2></div><p>No laptop needed for scanning. A straightforward workflow, from the first connection to the next saved record.</p></div><ol class="steps"><li><span class="step-number">01 / CONNECT</span><h3>Power up.</h3><p>Provide USB-C power. Inspect the pack and connect a supported battery using the documented interface.</p></li><li><span class="step-number">02 / SCAN</span><h3>Tap Scan Pack.</h3><p>Let the reader request the available data, then move through Pack, Charge, Tool, Amps, and Conditions.</p></li><li><span class="step-number">03 / REVIEW</span><h3>Keep the details.</h3><p>Review the readings, add a note, revisit saved scans, compare records, or send a configured email log.</p></li></ol><p class="workflow-safety">Do not connect damaged, swollen, wet, unusually hot, or otherwise suspect packs. <a class="text-link" href="./safety.html">Read safety &amp; diagnostic limits <span aria-hidden="true">→</span></a></p></div></section>
@@ -108,13 +115,15 @@
       </div>
       <div class="story-copy">
         <p>My dad noticed that the battery packs for his cordless mower would indicate a full charge while on the charger, but after removing them and pressing the battery’s fuel-gauge button, they would sometimes show only three bars instead of four. He asked me what might cause that.</p>
-        <p>I started researching how the packs worked and learned more about the individual cell groups inside them and how differences in their voltages can affect the overall health and performance of a battery pack. The problem was that checking those voltages normally meant opening the pack and measuring each group individually — something I wanted to avoid.</p>
-        <p>While researching, I came across an open-source battery communication project by mnh-jansson and its contributors. I was amazed by how much information they had been able to decode directly from the battery’s communication interface. Suddenly, it looked possible to see the individual cell-group voltages and other useful battery data without opening the pack at all.</p>
-        <p class="story-question"><strong>That immediately led to another thought: why should I need a laptop every time I want to check a battery?</strong></p>
-        <p>I started looking for a small standalone platform and found the inexpensive ESP32-based display commonly known as the <em>Cheap Yellow Display</em>. It already combined a touchscreen, an ESP32 microcontroller, Wi-Fi, and Bluetooth in one compact package. It was more than capable of what I originally had in mind — and opened the door to doing quite a bit more.</p>
-        <p>The idea grew from simply displaying cell voltages into a handheld battery diagnostic tool that can show cell imbalance, charging and tool-use history, fault counters, current-load and condition charts, save scans, and send results over Wi-Fi.</p>
-        <p>With the hardware selected and the battery communication work provided by the open-source community as a foundation, I began developing PackGauge with the help of ChatGPT and Claude.</p>
+        <p class="story-question"><strong>Why should I need a laptop every time I want to check a battery?</strong></p>
         <p class="story-close"><strong>What started as a simple question about one of my dad’s batteries became PackGauge — a standalone tool built to make battery health easier to see, understand, and share, without opening the pack or connecting it to a computer.</strong></p>
+        <details class="story-full"><summary>Read the full build story</summary><div class="story-detail">
+          <p>I started researching how the packs worked and learned more about the individual cell groups inside them and how differences in their voltages can affect the overall health and performance of a battery pack. The problem was that checking those voltages normally meant opening the pack and measuring each group individually — something I wanted to avoid.</p>
+          <p>While researching, I came across an open-source battery communication project by mnh-jansson and its contributors. I was amazed by how much information they had been able to decode directly from the battery’s communication interface. Suddenly, it looked possible to see the individual cell-group voltages and other useful battery data without opening the pack at all.</p>
+          <p>I started looking for a small standalone platform and found the inexpensive ESP32-based display commonly known as the <em>Cheap Yellow Display</em>. It already combined a touchscreen, an ESP32 microcontroller, Wi-Fi, and Bluetooth in one compact package. It was more than capable of what I originally had in mind — and opened the door to doing quite a bit more.</p>
+          <p>The idea grew from simply displaying cell voltages into a handheld battery diagnostic tool that can show cell imbalance, charging and tool-use history, fault counters, current-load and condition charts, save scans, and send results over Wi-Fi.</p>
+          <p>With the hardware selected and the battery communication work provided by the open-source community as a foundation, I began developing PackGauge with the help of ChatGPT and Claude.</p>
+        </div></details>
       </div>
     </section>
 
@@ -126,10 +135,15 @@
       <details><summary>Do I need a computer or Wi-Fi to scan?</summary><p>The standalone reader is USB-powered and does not need a computer for scanning. Wi-Fi is used for configured network features such as sending email. Saved scan records use micro-SD.</p></details>
     </div></section>
 
-    <section id="status" class="status-section" aria-labelledby="status-title"><div class="wrap status-inner"><div><p class="kicker">Project status / In development</p><h2 id="status-title">Meet PackGauge.<br />Follow what's next.</h2><p>The hardware and interface are still being refined. There is no public downloadable release or purchase option on this site yet.</p></div></div></section>
+    <section id="status" class="status-section" aria-labelledby="status-title">
+      <div class="wrap status-inner">
+        <div><p class="kicker">Project status / In development</p><h2 id="status-title">Follow the build.<br />Hear what’s next.</h2><p>The hardware and interface are still being refined. There is no public downloadable release or purchase option on this site yet.</p></div>
+        <div class="updates-actions"><a class="button button-white" href="mailto:contact@packgauge.com?subject=PackGauge%20development%20updates&amp;body=Hi%20Jesse%2C%0A%0APlease%20email%20me%20when%20there%20is%20news%20about%20PackGauge%20development%20or%20availability.%0A%0AThanks%21">Request updates by email <span aria-hidden="true">↗</span></a><p>Opens a prefilled email to Jesse. Send it to request development and availability news.</p><a class="text-link" href="mailto:contact@packgauge.com">Have a question? Get in touch.</a></div>
+      </div>
+    </section>
     <aside class="wrap legal-note"><strong>Independent product. Clear limits.</strong><p>PackGauge is an independent third-party diagnostic project. Third-party product names, logos, and battery branding are intentionally omitted from the website artwork. A scan does not establish battery safety, authenticity, capacity, or health. <a href="./safety.html">Safety &amp; diagnostic limits.</a></p></aside>
   </main>
-  <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="#screens">Screens</a><a href="#story">The Story</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
+  <footer class="site-footer"><a class="brand" href="./index.html"><img class="brand-glyph" src="./brand-mark.svg" width="64" height="64" alt="" aria-hidden="true" /><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="#screens">Screens</a><a href="#story">The Story</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a><a href="mailto:contact@packgauge.com">Contact</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
   <dialog class="photo-dialog" aria-labelledby="photo-dialog-title"><div class="dialog-heading"><h2 id="photo-dialog-title">PackGauge interface render</h2><button type="button" class="dialog-close" autofocus>Close <span aria-hidden="true">×</span></button></div><img alt="" /><p>Vector reconstruction of a current firmware screen. Not a live connection or an independently verified battery assessment.</p></dialog>
   <script type="module" src="./src/main.js"></script>
 </body>

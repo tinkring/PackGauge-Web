@@ -12,7 +12,7 @@ const attrs = (tag) => Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g
 
 test('homepage uses current-firmware PackGauge renders instead of raw prototype photographs', async () => {
   const html = await read('index.html');
-  assert.match(html, /renders\/hero-reader\.webp/);
+  assert.match(html, /class="viewer-poster"[^>]+renders\/screen-pack\.svg/);
   for (const screen of renderScreens) assert.match(html, new RegExp(`renders\\/screen-${screen}\\.svg`));
   assert.doesNotMatch(html, /\.\/photos\//);
   assert.match(html, /Rendered from current firmware/i);
@@ -60,7 +60,6 @@ test('public pages omit third-party battery branding and identifying artwork', a
   }
   const home = await read('index.html');
   assert.match(home, /supported 18V lithium-ion tool battery packs/i);
-  assert.match(home, /no battery branding shown/i);
 });
 
 test('same-site anchors and relative page destinations exist', async () => {
@@ -68,7 +67,7 @@ test('same-site anchors and relative page destinations exist', async () => {
     const html = await read(path);
     for (const [, href] of html.matchAll(/<a\b[^>]*href="([^"]*)"/g)) {
       assert.notEqual(href, '#');
-      if (/^https?:/.test(href)) continue;
+      if (/^(?:https?:|mailto:)/.test(href)) continue;
       const [file, id] = href.split('#');
       const target = file ? resolve(root, dirname(path), file) : join(root, path);
       const content = await readFile(target, 'utf8');

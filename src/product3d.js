@@ -1,4 +1,5 @@
 import './product3d.css';
+import { createRenderLoop } from './viewer-loop.js';
 import frontMesh from './mesh-front.js';
 import rearMesh from './mesh-rear.js';
 import adapterMesh from './mesh-adapter.js';
@@ -13,22 +14,6 @@ const decode = (value, Type) => {
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
   return new Type(bytes.buffer);
-};
-
-const roundedRect = (THREE, width, height, radius) => {
-  const x = -width / 2;
-  const y = -height / 2;
-  const s = new THREE.Shape();
-  s.moveTo(x + radius, y);
-  s.lineTo(x + width - radius, y);
-  s.quadraticCurveTo(x + width, y, x + width, y + radius);
-  s.lineTo(x + width, y + height - radius);
-  s.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  s.lineTo(x + radius, y + height);
-  s.quadraticCurveTo(x, y + height, x, y + height - radius);
-  s.lineTo(x, y + radius);
-  s.quadraticCurveTo(x, y, x + radius, y);
-  return s;
 };
 
 const meshFromData = (THREE, data, material) => {
@@ -181,202 +166,226 @@ const addLights = (THREE, scene) => {
   scene.add(rim);
 };
 
-const initViewer = async (THREE, root) => {
-  const canvas = root.querySelector('canvas');
-  const loading = root.querySelector('[data-viewer-loading]');
-  const mode = root.dataset.packgaugeViewer;
-  const interactive = mode === 'hero';
+const disposeScene = (scene) => {
+  const textures = new Set();
+  const materials = new Set();
+  const geometries = new Set();
+  scene.traverse((node) => {
+    if (node.geometry) geometries.add(node.geometry);
+    for (const material of [node.material].flat().filter(Boolean)) {
+      materials.add(material);
+      if (material.map) textures.add(material.map);
+    }
+    node.shadow?.map?.dispose();
+  });
+  textures.forEach((texture) => texture.dispose());
+  materials.forEach((material) => material.dispose());
+  geometries.forEach((geometry) => geometry.dispose());
+};
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+const initViewer = async (THREE, root, onFailure) => {
+  const stage = root.querySelector('.viewer-stage');
+  const canvas = root.querySelector('canvas');
+  const status = root.querySelector('[data-viewer-status]');
+  const interactive = root.dataset.packgaugeViewer === 'hero';
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'default' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
   const scene = new THREE.Scene();
   addLights(THREE, scene);
-
-  const product = await buildPackGauge(THREE);
-  scene.add(product);
-
-  const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(240, 180),
-    new THREE.ShadowMaterial({ color: 0x000000, opacity: interactive ? 0.27 : 0.22 }),
-  );
+  let product;
+  try {
+    product = await buildPackGauge(THREE);
+    scene.add(product);
+  } catch (error) {
+    disposeScene(scene);
+    renderer.dispose();
+    throw error;
+  }
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(240, 180), new THREE.ShadowMaterial({ color: 0, opacity: interactive ? 0.27 : 0.22 }));
   floor.rotation.x = -Math.PI / 2;
-  floor.position.y = -31.5;
-  floor.position.z = -12;
+  floor.position.set(0, -31.5, -12);
   floor.receiveShadow = true;
   scene.add(floor);
-
   const camera = new THREE.PerspectiveCamera(interactive ? 27 : 23, 1, 0.1, 1000);
-  const cameraTarget = new THREE.Vector3(0, interactive ? 0 : -1.5, interactive ? -13 : -8);
-  if (interactive) {
-    camera.position.set(118, 70, 142);
-    product.rotation.set(-0.06, -0.34, 0);
-  } else {
-    camera.position.set(122, 58, 202);
-    product.rotation.set(-0.025, -0.08, 0);
-  }
-  camera.lookAt(cameraTarget);
-
+  const initialRotation = interactive ? [-0.06, -0.34, 0] : [-0.025, -0.08, 0];
+  product.rotation.set(...initialRotation);
+  camera.position.set(...(interactive ? [118, 70, 142] : [122, 58, 202]));
+  camera.lookAt(new THREE.Vector3(0, interactive ? 0 : -1.5, interactive ? -13 : -8));
+  let paused = reducedMotion.matches;
   let drag = false;
   let lastX = 0;
   let lastY = 0;
-  let resumeAt = 0;
-  let paused = reducedMotion.matches;
+  let shown = false;
+  let pageActive = true;
+  const bounds = stage.getBoundingClientRect();
+  let inViewport = bounds.bottom > 0 && bounds.top < window.innerHeight;
+  const events = new AbortController();
+  const options = { signal: events.signal };
   const pauseButton = root.querySelector('[data-rotation-toggle]');
-
-  const syncPauseLabel = () => {
-    if (!pauseButton) return;
-    pauseButton.textContent = paused ? 'Resume rotation' : 'Pause rotation';
-    pauseButton.setAttribute('aria-pressed', String(paused));
+  const loop = createRenderLoop({ draw: (_now, dt) => {
+    if (interactive && !paused && !drag) product.rotation.y += dt * 0.22;
+    renderer.render(scene, camera);
+    if (!shown) {
+      shown = true;
+      root.classList.add('is-ready');
+      const controls = root.querySelector('.viewer-controls');
+      if (controls) controls.hidden = false;
+      status.textContent = interactive ? 'Drag sideways to rotate, or use the buttons.' : '';
+    }
+  } });
+  const syncRotation = () => {
+    if (pauseButton) {
+      pauseButton.textContent = paused ? 'Resume rotation' : 'Pause rotation';
+      pauseButton.setAttribute('aria-pressed', String(paused));
+    }
+    loop.setContinuous(interactive && !paused && !drag);
   };
-  syncPauseLabel();
-
-  pauseButton?.addEventListener('click', () => {
-    paused = !paused;
-    resumeAt = 0;
-    syncPauseLabel();
+  const pauseRotation = () => { paused = true; syncRotation(); };
+  pauseButton?.addEventListener('click', () => { paused = !paused; syncRotation(); }, options);
+  root.querySelectorAll('[data-turn]').forEach((button) => {
+    button.addEventListener('click', () => {
+      pauseRotation();
+      product.rotation.y += button.dataset.turn === 'left' ? -Math.PI / 8 : Math.PI / 8;
+      loop.invalidate();
+    }, options);
   });
-
+  root.querySelector('[data-reset-view]')?.addEventListener('click', () => {
+    pauseRotation();
+    product.rotation.set(...initialRotation);
+    loop.invalidate();
+  }, options);
   if (interactive) {
     canvas.addEventListener('pointerdown', (event) => {
+      if (!event.isPrimary || event.button !== 0) return;
       drag = true;
+      pauseRotation();
       lastX = event.clientX;
       lastY = event.clientY;
       canvas.setPointerCapture(event.pointerId);
       root.classList.add('is-dragging');
-    });
+    }, options);
     canvas.addEventListener('pointermove', (event) => {
       if (!drag) return;
-      const dx = event.clientX - lastX;
-      const dy = event.clientY - lastY;
-      product.rotation.y += dx * 0.008;
-      product.rotation.x = THREE.MathUtils.clamp(product.rotation.x + dy * 0.004, -0.28, 0.24);
+      product.rotation.y += (event.clientX - lastX) * 0.008;
+      if (event.pointerType !== 'touch') product.rotation.x = THREE.MathUtils.clamp(product.rotation.x + (event.clientY - lastY) * 0.004, -0.28, 0.24);
       lastX = event.clientX;
       lastY = event.clientY;
-    });
+      loop.invalidate();
+    }, options);
     const release = (event) => {
-      if (!drag) return;
       drag = false;
       if (canvas.hasPointerCapture?.(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
       root.classList.remove('is-dragging');
-      resumeAt = performance.now() + 3200;
     };
-    canvas.addEventListener('pointerup', release);
-    canvas.addEventListener('pointercancel', release);
-    reducedMotion.addEventListener?.('change', (event) => {
-      paused = event.matches;
-      syncPauseLabel();
-    });
+    canvas.addEventListener('pointerup', release, options);
+    canvas.addEventListener('pointercancel', release, options);
+    reducedMotion.addEventListener('change', (event) => { if (event.matches) pauseRotation(); }, options);
   }
-
+  const syncVisibility = () => loop.setActive(inViewport && !document.hidden && pageActive);
+  const visibility = new IntersectionObserver(([entry]) => {
+    inViewport = entry.isIntersecting;
+    syncVisibility();
+  });
+  visibility.observe(stage);
+  document.addEventListener('visibilitychange', syncVisibility, options);
   const resize = () => {
-    const { width, height } = root.getBoundingClientRect();
+    const { width, height } = stage.getBoundingClientRect();
     if (!width || !height) return;
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    loop.invalidate();
   };
-  new ResizeObserver(resize).observe(root);
+  const dimensions = new ResizeObserver(resize);
+  dimensions.observe(stage);
+  let disposed = false;
+  const cleanup = () => {
+    if (disposed) return;
+    disposed = true;
+    loop.dispose();
+    visibility.disconnect();
+    dimensions.disconnect();
+    events.abort();
+    disposeScene(scene);
+    renderer.dispose();
+  };
+  canvas.addEventListener('webglcontextlost', (event) => {
+    event.preventDefault();
+    cleanup();
+    onFailure();
+  }, options);
+  window.addEventListener('pagehide', (event) => {
+    pageActive = false;
+    syncVisibility();
+    if (!event.persisted) cleanup();
+  }, options);
+  window.addEventListener('pageshow', () => { pageActive = true; syncVisibility(); }, options);
+  canvas.hidden = false;
   resize();
+  syncRotation();
+  syncVisibility();
+  return cleanup;
+};
 
-  loading?.classList.add('is-hidden');
-  root.classList.add('is-ready');
-
-  let previous = performance.now();
-  const render = (now) => {
-    const dt = Math.min((now - previous) / 1000, 0.05);
-    previous = now;
-    if (interactive && !drag && !paused && (!resumeAt || now > resumeAt)) product.rotation.y += dt * 0.22;
-    renderer.render(scene, camera);
-    requestAnimationFrame(render);
+// No third-party requests or WebGL contexts until a visitor asks for 3D.
+let threePromise;
+const loadThree = () => {
+  if (!threePromise) threePromise = import(/* @vite-ignore */ THREE_URL).catch((error) => {
+    threePromise = undefined;
+    throw error;
+  });
+  return threePromise;
+};
+for (const root of document.querySelectorAll('[data-packgauge-viewer]')) {
+  const button = root.querySelector('[data-load-viewer]');
+  const status = root.querySelector('[data-viewer-status]');
+  let cleanup;
+  let loading = false;
+  if (!button || !status) continue;
+  button.hidden = false;
+  const failure = () => {
+    root.classList.remove('is-ready', 'is-dragging');
+    const controls = root.querySelector('.viewer-controls');
+    if (controls) controls.hidden = true;
+    root.querySelector('canvas').hidden = true;
+    button.hidden = false;
+    button.textContent = 'Try 3D again';
+    status.textContent = '3D could not open here. You can still use the screen gallery.';
   };
-  requestAnimationFrame(render);
-};
-
-const create = (tag, className, text) => {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  if (text) node.textContent = text;
-  return node;
-};
-
-const makeFallback = (alt) => {
-  const image = create('img', 'viewer-fallback');
-  image.src = './renders/hero-reader.webp';
-  image.alt = alt;
-  image.width = 520;
-  image.height = 347;
-  return image;
-};
-
-const upgradeProductPresentation = () => {
-  const originalHero = document.querySelector('.hero-product.render-hero');
-  if (originalHero) {
-    const viewer = create('div', 'hero-product-3d');
-    viewer.dataset.packgaugeViewer = 'hero';
-    viewer.setAttribute('aria-label', 'Interactive 3D view of the PackGauge standalone reader');
-
-    const index = create('div', 'viewer-index');
-    index.append(create('strong', '', 'PACKGAUGE / INTERACTIVE 3D'), create('span', '', '01'));
-
-    const stage = create('div', 'viewer-stage');
-    const canvas = document.createElement('canvas');
-    canvas.setAttribute('aria-hidden', 'true');
-    const loading = create('span', 'viewer-loading', 'Building PackGauge in 3D');
-    loading.dataset.viewerLoading = '';
-    stage.append(canvas, loading, makeFallback('Rendered PackGauge standalone diagnostic reader'));
-
-    const controls = create('div', 'viewer-controls');
-    controls.append(create('span', '', 'Drag to rotate'));
-    const toggle = create('button', 'rotation-toggle', 'Pause rotation');
-    toggle.type = 'button';
-    toggle.dataset.rotationToggle = '';
-    toggle.setAttribute('aria-pressed', 'false');
-    controls.append(toggle);
-
-    viewer.append(index, stage, controls);
-    originalHero.replaceWith(viewer);
-  }
-
-  const originalReader = document.querySelector('#reader .hardware-detail.render-detail');
-  if (originalReader) {
-    const figure = create('figure', 'reader-visual-3d');
-    const stage = create('div', 'reader-iso-stage');
-    stage.dataset.packgaugeViewer = 'static';
-    stage.setAttribute('aria-label', 'Isometric 3D view of the PackGauge standalone reader');
-    const canvas = document.createElement('canvas');
-    canvas.setAttribute('aria-hidden', 'true');
-    const loading = create('span', 'viewer-loading', 'Rendering PackGauge');
-    loading.dataset.viewerLoading = '';
-    stage.append(canvas, loading, makeFallback('Rendered PackGauge standalone diagnostic reader'));
-
-    const caption = document.createElement('figcaption');
-    caption.append(
-      create('span', '', 'THE READER / STANDALONE'),
-      create('strong', '', 'One model. Every angle.'),
-      create('p', '', 'Source-derived 3D geometry from the current prototype, rendered directly in the browser.'),
-    );
-    figure.append(stage, caption);
-    originalReader.replaceWith(figure);
-  }
-};
-
-const boot = async () => {
-  const roots = [...document.querySelectorAll('[data-packgauge-viewer]')];
-  if (!roots.length) return;
-  try {
-    const THREE = await import(/* @vite-ignore */ THREE_URL);
-    await Promise.all(roots.map((root) => initViewer(THREE, root)));
-  } catch (error) {
-    console.error('PackGauge 3D viewer failed to start', error);
-    roots.forEach((root) => root.classList.add('viewer-failed'));
-  }
-};
-
-upgradeProductPresentation();
-boot();
+  button.addEventListener('click', async () => {
+    if (loading) return;
+    loading = true;
+    button.disabled = true;
+    root.setAttribute('aria-busy', 'true');
+    status.textContent = 'Loading 3D…';
+    let deadline;
+    try {
+      cleanup?.();
+      cleanup = undefined;
+      const oldCanvas = root.querySelector('canvas');
+      const canvas = document.createElement('canvas');
+      canvas.hidden = true;
+      canvas.setAttribute('aria-hidden', 'true');
+      oldCanvas.replaceWith(canvas);
+      const THREE = await Promise.race([
+        loadThree(),
+        new Promise((_, reject) => { deadline = setTimeout(() => reject(new Error('3D download timed out')), 15000); }),
+      ]);
+      cleanup = await initViewer(THREE, root, failure);
+      button.hidden = true;
+    } catch (error) {
+      failure();
+      console.warn('PackGauge 3D preview unavailable', error);
+    } finally {
+      clearTimeout(deadline);
+      loading = false;
+      button.disabled = false;
+      root.removeAttribute('aria-busy');
+    }
+  });
+}

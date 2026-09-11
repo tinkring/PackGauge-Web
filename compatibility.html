@@ -27,19 +27,36 @@
 <body class="detail-page">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header is-scrolled" data-header>
-    <a class="brand" href="./index.html" aria-label="PackGauge home"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a>
+    <a class="brand" href="./index.html" aria-label="PackGauge home"><img class="brand-glyph" src="./brand-mark.svg" width="64" height="64" alt="" aria-hidden="true" /><span>PACK<span>GAUGE</span></span></a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
     <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="./index.html#reader">The reader</a><a href="./index.html#screens">On the screen</a><a aria-current="page" href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav>
   </header>
   <main id="main">
     <header class="detail-hero"><p class="kicker">Compatibility</p><h1>Designed for supported 18V lithium-ion tool battery packs.</h1><p>PackGauge is not a universal battery tester. Hardware and firmware revisions vary, so visual similarity alone cannot guarantee communication or data availability.</p></header>
+    <section id="bench-results" class="detail-section bench-section" aria-labelledby="bench-title">
+      <p class="section-number">ON THE BENCH</p>
+      <div><h2 id="bench-title">What development testing has shown.</h2><p><strong>18V Red Tool Packs.</strong> These are examples from packs read during development, not a guarantee for every pack of the same capacity. Internal revisions and the reader’s interface affect the result.</p>
+        <div class="table-region" role="region" aria-label="Observed pack compatibility" tabindex="0"><table class="compatibility-table">
+          <caption>Observed samples · capacity alone does not identify a revision</caption>
+          <thead><tr><th scope="col">Pack sample</th><th scope="col">Observed data</th><th scope="col">Limits to know</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">3Ah</th><td>Cell readings, discharge totals, and recorded load history.</td><td>Discharge totals and the current-history chart were cross-checked on the observed revision.</td></tr>
+            <tr><th scope="row">5Ah</th><td>The observed newer revision communicated, but much of its recorded history was unavailable.</td><td>Some statistics returned blank records. Do not assume the full set of history screens will be populated.</td></tr>
+            <tr><th scope="row">6Ah</th><td>Charge counts and charging time were available on a nearly new sample.</td><td>Several fault, load-history, and condition records were still unwritten.</td></tr>
+            <tr><th scope="row">12Ah</th><td>Identity, cell-bank readings, dates, and high-level charge and discharge records.</td><td>Three observed samples did not expose the older fault, load-history, or condition blocks.</td></tr>
+          </tbody>
+        </table></div>
+        <p class="compatibility-note">A missing history field is different from a pack that cannot communicate. Other revisions and capacities remain unverified unless confirmed through testing.</p>
+        <a class="button" href="mailto:contact@packgauge.com?subject=PackGauge%20compatibility%20question">Ask about your pack <span aria-hidden="true">↗</span></a><p class="micro">Include its capacity and the model or revision shown on the label.</p>
+      </div>
+    </section>
     <section class="detail-section" aria-labelledby="scope-title"><p class="section-number">01</p><div><h2 id="scope-title">What the scanner asks for.</h2><p>The scanner requests identity, cell-bank readings, and other diagnostic records through the supported pack interface. Charge counts and times, discharge totals, fault counters, current/load histograms, and charge conditions are only shown where the connected pack exposes them.</p><p>Missing data stays unavailable. It is not turned into a reassuring zero.</p></div></section>
     <section class="detail-section" aria-labelledby="revision-title"><p class="section-number">02</p><div><h2 id="revision-title">Revision matters.</h2><p>Different internal revisions can exist inside packs that look nearly identical from the outside. Connector behavior, readable addresses, and recorded history can differ by firmware and electronics revision.</p><p>Compatibility therefore means “known to communicate with the PackGauge interface,” not “every data field is guaranteed to exist.”</p></div></section>
     <section class="detail-section feature-note" aria-labelledby="availability-title"><p class="section-number">03</p><div><h2 id="availability-title">Newer firmware may expose less history.</h2><p>Some supported packs provide core identity, cell-bank readings, dates, and high-level charge/discharge totals while omitting older fault, load-histogram, or charge-condition blocks.</p><p>An unavailable field is not evidence that an event did not occur.</p></div></section>
     <section class="detail-section" aria-labelledby="language-title"><p class="section-number">04</p><div><h2 id="language-title">How to read the language.</h2><dl class="definition-list"><div><dt>Observed</dt><dd>Returned by the connected pack during a scan.</dd></div><div><dt>Calculated</dt><dd>Derived from observed values, such as cell-bank voltage spread.</dd></div><div><dt>Unavailable</dt><dd>The expected data block was not exposed; it is not replaced with zero.</dd></div></dl><p>Compatibility does not imply safety, authentication, capacity, health, warranty status, or fitness for use. Review the <a class="text-link" href="./safety.html">safety and diagnostic limits</a> before scanning.</p></div></section>
     <aside class="detail-legal"><strong>Independent product notice</strong><p>PackGauge is an independent third-party diagnostic project. Third-party names, logos, and battery branding are intentionally omitted from the website artwork.</p></aside>
   </main>
-  <footer class="site-footer"><a class="brand" href="./index.html"><span class="brand-glyph" aria-hidden="true">P<span>G</span></span><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="./index.html">Home</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
+  <footer class="site-footer"><a class="brand" href="./index.html"><img class="brand-glyph" src="./brand-mark.svg" width="64" height="64" alt="" aria-hidden="true" /><span>PACK<span>GAUGE</span></span></a><nav aria-label="Footer"><a href="./index.html">Home</a><a href="./compatibility.html">Compatibility</a><a href="./safety.html">Safety</a><a href="mailto:contact@packgauge.com">Contact</a></nav><small>© PackGauge · Independent battery diagnostics</small></footer>
   <script type="module" src="./src/main.js"></script>
 </body>
 </html>
